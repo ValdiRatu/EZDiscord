@@ -7,15 +7,78 @@
 
 **Ideas so far for main language features**
 - Ability to set bot name
+```
+create bot FredBot
+```
 - Create basic variables
+```
+create string a_string= "hello"
+create string todo_list = ["todo1", "todo2"]
+create boolean a_boolean = true
+```
 - Create commands
-- Use previosly created commands in other commands in nested way
-- Looping
-- Add events that can trigger and repeat
-- Add bots to servers using list of discord tokens
-- Will provide a standard library of various functionalities built into the language
+```
+create command add_to_list(item): 
+    todo_list.add(item)
 
-Example:
+create command remove_from_list(index): 
+    todo_list.remove(index)
+```
+- Use previosly created commands in other commands in nested way
+```
+create command is_guess_correct(start, end, guess): 
+    create number random_number = random(start, end)
+    return random_number == guess
+
+create command test_guess(): 
+    create number start = 0
+    create number end = 10
+    create number guess = 5
+    create boolean is_correct = is_guess_correct(start, end, guess)
+    # or pass the values directly: create boolean is_correct = is_guess_correct(0, 10, 5)
+    if is_correct:
+        print("correct")
+    else:
+        print("incorrect")
+```
+- Looping
+```
+create command print_1_10(): 
+    create number a_number = 1
+    10 times:
+        print(a_number)
+        a_number += 1
+
+create command print_list(): 
+    # normal loop
+    # index is optional to get the index of the loop kinda like how .map() in javascript allows you to get the index optionally
+    todo_list.length times index:
+        print(todo_list[index])
+
+    # or 
+
+    # for each loop for lists
+    todo_list.each(item):
+        print(item)
+```
+- Add events that can trigger and repeat
+```
+# Time is a standard library that we will implement
+use cron from Time
+create command create_timer(): 
+    cron("0 0 0 * * *", print_1_10)
+```
+- Add bots to servers using list of discord tokens
+```
+# add both to all servers in list
+add bot FredBot to servers [DISCORD_TOKEN_1, DISCORD_TOKEN_2]
+```
+- Will provide a standard library of various functionalities built into the language
+```
+# example of importing a function from the Math standard library (we will support a bunch of common Math functions)
+use random from Math
+```
+Example Program:
 ```
 create bot FredBot
 
