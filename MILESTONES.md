@@ -27,20 +27,20 @@ create boolean a_boolean = true
 create command print_1_10(): 
     create number a_number = 1
     10 times:
-        print a_number
+        print(a_number)
         a_number += 1
 
 create command print_list(): 
     # normal loop
     # index is optional to get the index of the loop kinda like how .map() in javascript allows you to get the index optionally
     todo_list todo_list.length times index:
-        print todo_list[index]
+        print(todo_list[index])
 
-    or 
+    # or 
 
     # for each loop for lists
     todo_list.each(item):
-        print item
+        print(item)
 
 create command add_to_list(item): 
     todo_list.add(item)
@@ -62,9 +62,9 @@ create command test_guess():
     create boolean is_correct = is_guess_correct(start, end, guess)
     # or pass the values directly: create boolean is_correct = is_guess_correct(0, 10, 5)
     if is_correct:
-        print "correct"
+        print("correct")
     else:
-        print "incorrect"
+        print("incorrect")
 
 # add event that calls repeats
 # Time is a standard library that we will implement
