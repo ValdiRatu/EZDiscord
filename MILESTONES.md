@@ -13,6 +13,7 @@
 - Looping
 - Add events that can trigger and repeat
 - Add bots to servers using list of discord tokens
+- Will provide a standard library of various functionalities built into the language
 
 Example:
 ```
