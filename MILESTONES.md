@@ -148,3 +148,75 @@ add bot FredBot to servers [DISCORD_TOKEN_1, DISCORD_TOKEN_2]
 **Any planned follow-up tasks or features still to design**
 - Still need to discuss the limitations of the language
 - Planning to further develop language example to be more natural english
+
+## Milestone 2
+
+**Planned division of responsibilities**
+
+- Split up into small teams when starting to implement:
+    - team for lexer/parser
+    - team for ast tree design
+    - team for compiler
+
+**Roadmap**
+
+- make discord bot based on popular discord bots
+    - use this to help further restrict and simplify our language
+- First draft of DST
+    - [ ]  Have grammar ready and code examples
+    - [ ]  Pick a simple goal that our language can accomplish and write psuedo code with our language that fulfills said goal
+    - [ ]  Give DST to user with code example and see if they can explain what the code example does and get feedback
+        - can they understand what the code does/makes? why or why not?
+    - [ ]  Give DST to users and see if they are able to achieve goal using our language
+        - were they able to do it? how long did it take?
+    - [ ]  get feedback from user
+
+- implementation
+    - [ ]  After getting feedback, start with actual implementation of language
+
+**Draft Grammar**
+
+```python
+Setting program start/end
+`start bot` `end bot`--> keywords
+Variables 
+Typing for both variables and arguments
+`var name = <value>`
+Loops:
+Only use WHILE
+`while (counter<10) {}`
+Binary logic:
+Numerical comparison (>, ==, <, <=, >=, !=)
+AND/OR/NOT
+If/else
+If (true) {}
+else  {}
+Commands: → “/” commands
+`command <name>(arg, arg2, …): {STATEMENTS+}`
+If a command is added to the bot (via `addCommand(command1, “command1”)`) then it cannot be called from within another command
+STATEMENTS:
+Can be variable initialization
+Binary logic
+if/else
+Loop
+Math operation
+Adding commands as `/` callable
+`addCommand(command1, “command1”)`
+Math operations:
+operators: +, -, *, /
+NUM operator NUM
+Array operations
+Adding elements: push(<arrayName>, <value>)
+Removing elements: remove(<arrayName>, <index>)
+Accessing elements: get(<arrayname>, <index>)
+Access length of array: len(<arrayName>
+In-built functions
+print(<text> : string)Setting program start/end
+```
+
+**TA feedback  (already applied to draft grammar):**
+
+- Types can be removed
+- Array operations good
+- Figure out what specific bot we want -> write example program -> cut off what we dont need
+- Zone in on what specific bot we want to make and specialize our DSL on that
