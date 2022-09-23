@@ -220,3 +220,4 @@ print(<text> : string)Setting program start/end
 - Array operations good
 - Figure out what specific bot we want -> write example program -> cut off what we dont need
 - Zone in on what specific bot we want to make and specialize our DSL on that
+    - Looked at the most popular bots and found some trends. Used this info to decide on bot ideas for now
