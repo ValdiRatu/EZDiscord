@@ -180,7 +180,6 @@ add bot FredBot to servers [DISCORD_TOKEN_1, DISCORD_TOKEN_2]
 Setting program start/end
 `start bot` `end bot`--> keywords
 Variables 
-Typing for both variables and arguments
 `var name = <value>`
 Loops:
 Only use WHILE
