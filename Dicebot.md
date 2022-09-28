@@ -7,13 +7,14 @@ configs = {
     guildID: [“id1”]
 }
 
-var diceFace = 6
+var min = 1
+var max = 6
 var result = []
 
 
 command roll10Dice(dice, result) {
     while (counter < 10){
-        result.push(random(1,6))
+        result.push(random(min,max))
     }
     reply('here is the result:');
     for (int in result){
