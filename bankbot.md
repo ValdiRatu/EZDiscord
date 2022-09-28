@@ -59,8 +59,8 @@ command createAccount(id, amount?) {
     if (initialAmount == undefined) {
         initialAmount = 0
 	}
-    push(accountIds, id)
-    push(accountBalances, initialAmount)
+    add(accountIds, id)
+    add(accountBalances, initialAmount)
     reply("New account with $", initialAmount, " created!")	
 }
 
@@ -68,7 +68,9 @@ command deleteAccount(id) {
     // contains returns -1 if not present, else it returns the index
     var index = contains(accountIds, id)
     if (index != -1) {
-        reply("New bank balance is $", newAmount)
+        remove(accountIds, index)
+        remove(accountBalances, index)
+        reply("Account deleted!")
     } else {
         reply("Account with id ", id, " does not exist!")
     }
