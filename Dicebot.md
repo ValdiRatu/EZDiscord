@@ -15,8 +15,9 @@ command roll10Dice(dice, result) {
     while (counter < 10){
         result.push(random(1,6))
     }
+    reply('here is the result:');
     for (int in result){
-        reply(int);
+        followup(int);
     }
 }
 
