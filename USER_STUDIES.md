@@ -174,3 +174,23 @@ addCommand("add-joke", addJoke)
 
 end bot
 ```
+
+
+# User Study (Akim)
+- User only uses coding for research purposes (Python + R)
+- User tried to write a code to pick random restaurant from restaurants.csv
+- Couldn't do it without an example
+- Was confused about optional arguments
+- config part was confusing but they ignored it since the code never uses it
+
+users code:
+```
+start bot
+
+command pickToEat() {
+    restaurant = csvToArray("restaurants.csv")
+    restaurant.get(random(0, length(restaurant))) 
+}
+
+addCommant("pickFood", pickToEat)
+```
