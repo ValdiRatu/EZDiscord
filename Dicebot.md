@@ -12,8 +12,8 @@ var max = 6
 var result = []
 
 
-command roll10Dice(dice, result) {
-    while (counter < 10){
+command rollManyDice(dices: Number) {
+    while (counter < dices){
         result.push(random(min,max))
     }
     reply('here is the result:');
@@ -22,7 +22,7 @@ command roll10Dice(dice, result) {
     }
 }
 
-addCommand("roll-10-dice", roll10Dice)
+addCommand("roll-many-dice", rollManyDice)
 
 
 end bot
