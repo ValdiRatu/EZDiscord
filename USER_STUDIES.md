@@ -133,3 +133,44 @@ command deleteTodo(index: Number) {
 
 end bot
 ```
+
+# User Study (Asad)
+
+- User found the language to be very intuitive and easy to understand because of the similarities to Js and Ts
+- User was able to implement a simple joke bot in a short amount of time using simple array operations and in-built functions
+- User thought that `start bot` and `end bot` should be removed entirely
+- User was able to condense the joke bot into a single line after the initial implementation
+- User liked the idea that data can be potentially be imported from csv files
+
+## User's Code
+
+```js
+start bot
+
+token = TOKEN
+clientID = CLIENT_ID
+guildId = GUILD_ID
+
+var jokes = [
+    "I don’t have a carbon footprint.\nI just drive everywhere.",
+    "The most corrupt CEOs are those of the pretzel companies.\nThey’re always so twisted.",
+    "When we were kids, we used to be afraid of the dark.\nBut when we grew up, the electricity bill made us afraid of the light!",
+    "An apple a day keeps the doctor away…\nOr at least it does if you throw it hard enough.",
+    "I visited my friend at his new house. He told me to make myself at home.\nSo I threw him out. I hate having visitors."
+]
+// var jokes = csvToArray("jokes.csv")
+
+command joke() {
+    reply(get(jokes, random(0, len(jokes))))
+}
+
+command addJoke(joke: String) {
+    add(jokes, joke)
+    reply("Joke added!")
+}
+
+addCommand("tell-me-a-joke", joke)
+addCommand("add-joke", addJoke)
+
+end bot
+```
