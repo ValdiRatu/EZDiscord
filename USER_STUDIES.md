@@ -194,3 +194,21 @@ command pickToEat() {
 
 addCommant("pickFood", pickToEat)
 ```
+
+# User Study (Alex)
+User: CPSC major from UBC, not in 410
+
+## Can they understand the code:
+
+They can understand the code and the grammar, but also point out some ambiguous in the grammar design
+
+## Can they write:
+
+They ca use the grammar to write a bot.
+
+## Feedback:
+
+- command must has reply()
+- Need to mention we support float.
+
+
