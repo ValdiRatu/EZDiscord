@@ -220,3 +220,82 @@ print(<text> : string)Setting program start/end
 - Figure out what specific bot we want -> write example program -> cut off what we dont need
 - Zone in on what specific bot we want to make and specialize our DSL on that
     - Looked at the most popular bots and found some trends. Used this info to decide on bot ideas for now
+
+
+## Milestone 3
+
+### Concrete Grammar Design used for the user study
+_The grammar already includes feedback from the TA_
+```python
+# Setting program start/end (also reserved, key words)
+`start bot` `end bot`
+
+# Variables 
+`var name = <value>`
+
+# Loops:
+`while (counter<10) {}`
+`for (<item> in <arrayName>) {}`
+
+# Numerical comparison
+(>, ==, <, <=, >=, !=)
+
+# Logical operators
+`AND/OR/NOT`
+
+# If/else (conditional statement)
+`If (true) {}`
+`else  {}`
+
+# Math operations:
+`operators: +, -, *, /`
+`NUM operator NUM`
+
+# Array operations
+# Adding elements: 
+`push(<arrayName>, <value>)`
+# Removing elements: 
+`remove(<arrayName>, <index>)`
+# Accessing elements:
+`get(<arrayname>, <index>)`
+# Access length of array: 
+`len(<arrayName>`
+# Return the index of first match. Return -1 if can't find
+find(<arrayName>, <value>)
+
+# Commands. They will be callable from Discord using /<command name>
+`command <name>(arg, arg2, …): {STATEMENTS+}`
+
+# STATEMENTS:
+# Can be variable initialization
+# Binary logic
+# if/else
+# Loop
+# Math operation
+# Built in function
+
+# In-built functions
+# Bot will reply in channel with the input string
+reply (<text> : string)
+# Returns random number between min and max (inclusive) 
+random (min, max)
+
+# Allowed types in language
+String
+Number # will think of everything as float
+Boolean
+Array
+```
+
+### TA feedback
+- Due to time constraints, remove majority of built-in functions and focus on reply and random
+- Special classes like User and Role can be removed for now. Only implement if there is enough time
+- Goal for MVP is to implement a simple bot e.g. rock paper scissors, random item from array, etc. 
+- User studies looked good
+
+### User studies
+[Our user studies](USER_STUDIES.md)
+
+### Plan for week 4
+- Lexer team start on implementing parser for everything that can be used outside of commands and loops
+- Implementation team will start building architecture for the project
