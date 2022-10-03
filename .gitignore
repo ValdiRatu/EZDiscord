@@ -49,3 +49,4 @@ bin/
 # ide
 idea/
 vscode/
+parser/.antlr
