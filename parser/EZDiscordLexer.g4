@@ -19,6 +19,28 @@ ARRAY_START: '[';
 ARRAY_END: ']';
 ARRAY_SEPARATOR: ',';
 
+// Binary
+BINARY_OPERATOR: AND | OR;
+
+BOOL: TRUE | FALSE;
+
+BINARY_COMPARATOR: [GT | GE | LT | LE | EQ | NQ];
+AND        : 'AND' ;
+OR         : 'OR' ;
+NOT        : 'NOT';
+TRUE       : 'TRUE' ;
+FALSE      : 'FALSE' ;
+GT         : '>' ;
+GE         : '>=' ;
+LT         : '<' ;
+LE         : '<=' ;
+EQ         : '==' ;
+NQ         : '!=' ;
+LPAREN     : '(' ;
+RPAREN     : ')' ;
+DECIMAL    : '-'? [0-9]+ ( '.' [0-9]+ )? ;
+
+
 // Miscellanious
 DOUBLE_QUOTE: '"';
 
