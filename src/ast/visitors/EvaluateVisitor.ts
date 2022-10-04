@@ -9,7 +9,7 @@ import { ASTVisitor } from "./ASTVisitor";
 
 export class EvaluateVisitor implements ASTVisitor<void, void> {
 
-    private readonly fileWriter = new PrintWriter(path.resolve('./out/.env'), path.resolve("./out"));
+    private readonly fileWriter = new PrintWriter(path.resolve('./out/.env'));
 
     visitBot(bot: Bot, params: void): void {
         

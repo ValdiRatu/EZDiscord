@@ -4,12 +4,8 @@ import path from 'node:path';
 export class PrintWriter {
     filePath: string;     // filename
 
-    constructor(targetFileName: string, targetDirectory: string) {
+    constructor(targetFileName: string) {
         this.filePath = targetFileName;
-
-        if (!fs.existsSync(targetDirectory)){
-            fs.mkdirSync(targetDirectory);
-        }
 
         fs.writeFileSync(targetFileName, "");
     }
