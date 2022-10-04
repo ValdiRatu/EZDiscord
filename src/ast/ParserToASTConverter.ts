@@ -15,7 +15,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     }
 
     visitBot(ctx: BotContext) {
-        const statements = ctx.statement().map(statementContext => this.visit(statementContext));
+        const statements = ctx.statement().map(statementContext => this.visitStatement(statementContext));
         return new Bot(statements);
     }
 
