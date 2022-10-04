@@ -24,7 +24,7 @@ BINARY_OPERATOR: AND | OR;
 
 BOOL: TRUE | FALSE;
 
-BINARY_COMPARATOR: [GT | GE | LT | LE | EQ | NQ];
+BINARY_COMPARATOR: GT | GE | LT | LE | EQ | NQ;
 AND        : 'AND' ;
 OR         : 'OR' ;
 NOT        : 'NOT';
@@ -40,6 +40,14 @@ LPAREN     : '(' ;
 RPAREN     : ')' ;
 DECIMAL    : '-'? [0-9]+ ( '.' [0-9]+ )? ;
 
+
+// Math operations
+MATH_OPERATION: ADD | SUB | MULT | DIV | MOD;
+ADD: '+';
+SUB: '-';
+MULT: '*';
+DIV: '/';
+MOD: '%';
 
 // Miscellanious
 DOUBLE_QUOTE: '"';
