@@ -1,0 +1,29 @@
+start bot
+Token="fff"
+ClientID= "1111"
+GuildID=["123"]
+end bot
+
+expected --> pass
+
+start bot
+Token="fff"
+ClientID= "12f"
+GuildID=["123"]
+end bot
+
+expected --> fail
+
+start bot
+Token="fff"
+end bot
+
+expected --> fail
+
+start bot
+Token="fff"
+ClientId= "12"
+GuildId=["123"]
+end bot
+
+expected --> fail
