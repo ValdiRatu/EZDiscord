@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "ast-test": "ts-node spec/test-app.ts",
     "antlr": "antlr4ts -visitor src/parser/EZDiscordLexer.g4 src/parser/EZDiscordParser.g4"
   },
   "dependencies": {
