@@ -1,3 +1,5 @@
+import { ASTVisitor } from "../visitors/ASTVisitor";
+
 export interface ASTNode {
-    evaluate(): void;
+    accept<T, U>(visitor: ASTVisitor<T, U>, params: T): U;
 }

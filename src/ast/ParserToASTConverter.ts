@@ -15,7 +15,6 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     }
 
     visitBot(ctx: BotContext) {
-        console.log(ctx.statement());
         const statements = ctx.statement().map(statementContext => this.visit(statementContext));
         return new Bot(statements);
     }
@@ -33,13 +32,13 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
         const tokenContext = ctx.token();
         const clientIdContext = ctx.clientID();
         const guildIdContext = ctx.guildID();
-        // console.log(ctx.children ? ctx.children.map(child => child.text) : ' no children');
+
         if (tokenContext) {
-            return new Config(new Token(tokenContext.text));
+            return new Config(new Token(tokenContext.TOKEN_STRING().text.split('"').join('')));
         } else if (clientIdContext) {
-            return new Config(new ClientId(clientIdContext.text));
+            return new Config(new ClientId(clientIdContext.CLIENT_ID_STRING().text.split('"').join('')));
         } else if (guildIdContext) {
-            return new Config(new GuildId(guildIdContext.guildIDArray().GUILD_ID_STRING().map(idStringContext => idStringContext.text)))
+            return new Config(new GuildId(guildIdContext.guildIDArray().GUILD_ID_STRING().map(idStringContext => idStringContext.text.split('"').join(''))))
         }
 
         throw new Error("Empty config object");
