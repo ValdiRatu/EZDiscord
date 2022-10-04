@@ -2,7 +2,7 @@ import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor
 import { EZDiscordParserVisitor } from '../parser/EZDiscordParserVisitor';
 import { Bot } from './nodes/Bot';
 import { ASTNode } from './nodes/ASTNode';
-import { BotContext, StatementContext, ConfigContext, TokenContext } from '../parser/EZDiscordParser';
+import { BotContext, StatementContext, ConfigContext } from '../parser/EZDiscordParser';
 import { Token } from './nodes/Token';
 import { Config } from './nodes/Config';
 import { ClientId } from './nodes/ClientId';

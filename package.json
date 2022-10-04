@@ -1,7 +1,9 @@
 {
+  "name": "ezdiscord",
+  "license": "GPL-1.0+",
   "scripts": {
-    "ast-test": "ts-node spec/test-app.ts",
-    "antlr": "antlr4ts -visitor src/parser/EZDiscordLexer.g4 src/parser/EZDiscordParser.g4"
+    "ast-test": "rd /S /Q out 2>nul & mkdir out 2>nul & ts-node spec/test-app.ts",
+    "antlr": "antlr4ts -visitor src/parser/EZDiscordLexer.g4 src/parser/EZDiscordParser.g4 -o src/parser"
   },
   "dependencies": {
     "antlr4ts": "^0.5.0-alpha.4"
