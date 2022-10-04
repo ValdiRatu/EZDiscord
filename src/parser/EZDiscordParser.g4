@@ -20,6 +20,6 @@ bianryExpression:
     bianryExpression BINARY_COMPARATOR bianryExpression |
     bianryExpression BINARY_OPERATOR bianryExpression |
     BOOL |
-    DECIMAL |
-//    VARIABLE     To be done
+    DECIMAL 
+//  |  VARIABLE     To be done
     ;
