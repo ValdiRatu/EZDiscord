@@ -1,0 +1,24 @@
+start bot
+(1+1) + 1 + 2
+end bot
+
+expected --> works
+
+
+start bot
+(1*1) / (1 % 2)
+end bot
+
+expected --> works
+
+start bot
+(1*1) // (1 % 2)
+end bot
+
+expected --> does not work
+
+start bot
+((1*1) // (1 % 2))
+end bot
+
+expected --> does not work
