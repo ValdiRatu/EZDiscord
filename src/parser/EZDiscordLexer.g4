@@ -24,7 +24,7 @@ BINARY_OPERATOR: AND | OR;
 
 BOOL: TRUE | FALSE;
 
-BINARY_COMPARATOR: [GT | GE | LT | LE | EQ | NQ];
+BINARY_COMPARATOR: GT | GE | LT | LE | EQ | NQ;
 AND        : 'AND' ;
 OR         : 'OR' ;
 NOT        : 'NOT';
