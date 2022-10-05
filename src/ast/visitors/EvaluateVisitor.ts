@@ -7,7 +7,7 @@ import { GuildId } from "../nodes/GuildId";
 import { Token } from "../nodes/Token";
 import { ASTVisitor } from "./ASTVisitor";
 
-export class EvaluateVisitor implements ASTVisitor<void, void> {
+export class EvaluateVisitor implements ASTVisitor<void, any> {
 
     private readonly fileWriter = new PrintWriter(path.resolve('./out/.env'));
 
