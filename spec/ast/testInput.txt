@@ -2,4 +2,13 @@ start bot
 Token='123456789'
 ClientID = '123456789'
 GuildID=['123456789', '4567890']
+
+// should not affect anything
+var boolVarTrue = TRUE
+var boolVarFalse = FALSE
+var stringVar = 'hello world'
+var numVar = 23
+var varVar = numVar
+var arrayVarFilled = [1, 'string', TRUE, stringVar]
+var arrayVarEmpty = []
 end bot

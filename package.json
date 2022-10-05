@@ -2,7 +2,7 @@
   "name": "ezdiscord",
   "license": "GPL-1.0+",
   "scripts": {
-    "ast-test": "rd /S /Q out 2>nul & mkdir out 2>nul & ts-node spec/test-app.ts",
+    "ast-test": "rd /S /Q out 2>nul & mkdir out 2>nul & ts-node spec/ast/test-app.ts",
     "antlr": "antlr4ts -visitor src/parser/EZDiscordLexer.g4 src/parser/EZDiscordParser.g4 -o src/parser -Xexact-output-dir"
   },
   "dependencies": {

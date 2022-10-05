@@ -4,7 +4,7 @@ import { VarType } from "./VarType";
 export class StringValue extends VarType<string> {
 
     accept<T, U>(visitor: ASTVisitor<T, U>, params: T): U {
-        throw new Error("Method not implemented.");
+        return visitor.visitStringVarValue(this, params);
     }
 
 }

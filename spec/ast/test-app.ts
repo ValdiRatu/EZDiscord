@@ -7,7 +7,7 @@ import { EZDiscordLexer } from '../../src/parser/EZDiscordLexer';
 import { EZDiscordParser } from '../../src/parser/EZDiscordParser';
 
 // test input
-const testInput = fs.readFileSync(path.resolve("spec/testInput.txt")).toString();
+const testInput = fs.readFileSync(path.resolve("spec/ast/testInput.txt")).toString();
 
 const charStream = CharStreams.fromString(testInput);
 const lexer = new EZDiscordLexer(charStream);
@@ -19,5 +19,5 @@ const tree = parser.bot();
 const astConverter = new ParserToASTConverter();
 const bot = astConverter.visit(tree);
 
-const evaluator = new EvaluateVisitor();
-bot.accept(evaluator, undefined);
+// const evaluator = new EvaluateVisitor();
+// bot.accept(evaluator, undefined);
