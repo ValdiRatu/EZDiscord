@@ -20,13 +20,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     }
 
     visitStatement(ctx: StatementContext) {
-        const configContext = ctx.config();
-
-        if (configContext) {
-            return this.visitConfig(configContext);
-        } else {
-            throw Error("Other statements aren't implemented yet")
-        }
+        return this.visitChildren(ctx);
     }
 
     visitConfig(ctx: ConfigContext) {
