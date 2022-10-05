@@ -16,4 +16,4 @@ aString: ARRAY_STRING_START STRING_VALUE? STRING_END;
 aVariable: ARRAY_VARIABLE;
 aBoolean: ARRAY_BOOLEAN;
 aNumber: ARRAY_NUMBER;
-aFunction: ARRAY_FUNCTION params;
+aFunction: ARRAY_FUNCTION params;   // built ins not just arrays
