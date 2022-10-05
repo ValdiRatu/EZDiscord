@@ -7,9 +7,6 @@ START_BOT: 'start bot' -> pushMode(CREATE_BOT_MODE);
 mode CREATE_BOT_MODE;
 CREATE_BOT_WS: [\r\n\t ] -> skip;
 
-// coment
-COMMENT: '//' ~[\r\n]* -> skip;
-
 // Configs
 TOKEN_START: 'Token' -> pushMode(TOKEN_MODE);
 CLIENT_ID_START: 'ClientID' -> pushMode(CLIENT_ID_MODE);
@@ -43,7 +40,7 @@ DIV: '/';
 MOD: '%';
 
 // Variables
-ASSIGNMENT_OPERATOR: '=';
+VAR: 'var' -> pushMode(VARIABLE_MODE);
 
 // Functions
 FUNCTION: ('random' | 'add' | 'remove' | 'get' | 'set' | 'len' | 'find' | 'reply') -> pushMode(FUNCTION_MODE);
@@ -57,8 +54,10 @@ R_SQUARE : ']';
 L_PAREN : '(';
 R_PAREN : ')';
 
-// Punctuation
+// Other
 COMMA : ',';
+ASSIGNMENT_OPERATOR: '=';
+COMMENT: '//' ~[\r\n]* -> skip;
 
 END_BOT: 'end bot' -> popMode;
 
@@ -87,7 +86,7 @@ GUILD_ID_ARRAY_SEPARATOR: COMMA;
 GUILD_ID_ARRAY_OPEN: L_SQUARE;
 GUILD_ID_ARRAY_CLOSE: R_SQUARE -> popMode;
 
-// Function Modes
+// Function Mode
 mode FUNCTION_MODE;
 FUNCTION_WS: [\r\n\t ] -> skip;
 FUNCTION_NESTED: FUNCTION -> pushMode(FUNCTION_MODE);
@@ -103,6 +102,17 @@ FUNCTION_BOOLEAN: BOOL;
 FUNCTION_VARIABLE: [a-zA-Z][a-zA-Z0-9_]*;
 PARAMS_END: R_PAREN -> popMode;
 
+// Variable Mode
+mode VARIABLE_MODE;
+END_VAR: '\r'? '\n' -> popMode;
+VARIABLE_WS: [\r\n\t ] -> skip;
+VARIABLE_ASSIGNMENT : ASSIGNMENT_OPERATOR;
+VARIABLE_STRING_START: S_QUOTE -> pushMode(STRING_MODE);
+VARIABLE_NUMBER: DECIMAL;
+VARIABLE_BOOLEAN: BOOL;
+VARIABLE_NAME: [a-zA-Z][a-zA-Z0-9_]*;
+
+// String Mode
 mode STRING_MODE;
 STRING_VALUE: ~[\r\n\t']+;
 STRING_END: S_QUOTE -> popMode;
