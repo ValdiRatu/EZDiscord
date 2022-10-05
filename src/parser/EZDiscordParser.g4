@@ -1,10 +1,10 @@
 parser grammar EZDiscordParser;
-import ConfigParser, BinaryOperationsParser, MathOperationsParser;
+import ConfigParser, BinaryOperationsParser, MathOperationsParser, FunctionParser;
 options { tokenVocab=EZDiscordLexer; }
 
 bot : START_BOT statement* END_BOT EOF;
 
-statement: config | binary;
+statement: config | comment;
 
 // Configs
 config: (token | clientID | guildID);
@@ -24,3 +24,5 @@ bianryExpression:
     DECIMAL 
 //  |  VARIABLE     To be done
     ;
+    
+comment: COMMENT;

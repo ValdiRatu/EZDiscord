@@ -6,4 +6,4 @@ options { tokenVocab=EZDiscordLexer; }
 
 
 math: mathExpression;
-mathExpression: LPAREN? DECIMAL MATH_OPERATION DECIMAL RPAREN? (MATH_OPERATION? mathExpression*);
+mathExpression: L_PAREN? DECIMAL MATH_OPERATION DECIMAL R_PAREN? (MATH_OPERATION? mathExpression*);
