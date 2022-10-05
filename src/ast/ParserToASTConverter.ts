@@ -1,13 +1,7 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
 import { EZDiscordParserVisitor } from '../parser/EZDiscordParserVisitor';
-import { Bot } from './nodes/Bot';
-import { ASTNode } from './nodes/ASTNode';
 import { BotContext, StatementContext, ConfigContext } from '../parser/EZDiscordParser';
-import { Token } from './nodes/Token';
-import { Config } from './nodes/Config';
-import { ClientId } from './nodes/ClientId';
-import { GuildId } from './nodes/GuildId';
-
+import { Bot, ASTNode, Token, Config, ClientId, GuildId } from './nodes';
 
 export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> implements EZDiscordParserVisitor<ASTNode> {
     protected defaultResult(): ASTNode {
@@ -38,5 +32,4 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
 
         throw new Error("Empty config object");
     }
-
 }
