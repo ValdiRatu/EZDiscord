@@ -4,7 +4,7 @@ options { tokenVocab=EZDiscordLexer; }
 // Binary
 binary: bianryExpression;
 bianryExpression:
-    LPAREN bianryExpression RPAREN |
+    L_PAREN bianryExpression R_PAREN |
     NOT bianryExpression |
     bianryExpression BINARY_COMPARATOR bianryExpression |
     bianryExpression BINARY_OPERATOR bianryExpression |
