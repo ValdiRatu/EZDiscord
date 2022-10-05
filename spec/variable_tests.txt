@@ -1,0 +1,7 @@
+start bot
+var a = get(a, get(a))
+var b = TRUE
+var c = b
+var d = 'string'
+var e = 69
+end bot
