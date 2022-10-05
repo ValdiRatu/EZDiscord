@@ -35,11 +35,11 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
         const guildIdContext = ctx.guildID();
 
         if (tokenContext) {
-            return new Config(new Token(tokenContext.TOKEN_STRING().text.split('"').join('')));
+            return new Config(new Token(tokenContext.TOKEN_STRING().text.split("'").join('')));
         } else if (clientIdContext) {
-            return new Config(new ClientId(clientIdContext.CLIENT_ID_STRING().text.split('"').join('')));
+            return new Config(new ClientId(clientIdContext.CLIENT_ID_STRING().text.split("'").join('')));
         } else if (guildIdContext) {
-            return new Config(new GuildId(guildIdContext.guildIDArray().GUILD_ID_STRING().map(idStringContext => idStringContext.text.split('"').join(''))))
+            return new Config(new GuildId(guildIdContext.guildIDArray().GUILD_ID_STRING().map(idStringContext => idStringContext.text.split("'").join(''))))
         }
 
         throw new Error("Empty config object");
