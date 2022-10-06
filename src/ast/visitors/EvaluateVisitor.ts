@@ -13,35 +13,27 @@ import { NumberValue } from "../nodes/variables/NumberValue";
 import { StringValue } from "../nodes/variables/StringValue";
 import { Variable } from "../nodes/variables/Variable";
 import { VarNameValue } from "../nodes/variables/VarNameValue";
+import { ASTBaseVisitor } from "./ASTBaseVisitor";
 import { ASTVisitor } from "./ASTVisitor";
 import { VariableResolverVisitor } from "./VariableResolverVisitor";
 
-export class EvaluateVisitor implements ASTVisitor<void, any> {
+export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
+
+    private readonly fileWriter;
     private readonly project;
+
     constructor() {
+        super();
+        this.fileWriter = new PrintWriter(path.resolve('./out/.env'));
         this.project = new Project()
         this.project.addSourceFileAtPathIfExists('./out/*.ts')
         this.project.createSourceFile('./out/variableTest.ts', "", { overwrite: true });
     }
-    visitArrayVarValue(arrVarVal: ArrayValue, params: void) {
-        throw new Error("Method not implemented. 1");
-    }
-    visitBooleanVarValue(booleanVarVal: BooleanValue, params: void) {
-        throw new Error("Method not implemented. 2");
-    }
-    visitBuiltInFunctionVarValue(BuiltInFunction: BuiltInFunction, params: void) {
-        throw new Error("Method not implemented. 3");
-    }
-    visitNumberVarValue(numberVarValue: NumberValue, params: void) {
-        throw new Error("Method not implemented.");
-    }
-    visitStringVarValue(stringVarValue: StringValue, params: void) {
-        throw new Error("Method not implemented.");
-    }
+    
     visitVariable<Y>(variable: Variable<Y>, params: void) {
           
         this.project.getSourceFile('./out/variableTest.ts')!.addVariableStatement({
-            declarationKind: VariableDeclarationKind.Const, // defaults to "let"
+            declarationKind: VariableDeclarationKind.Let, // defaults to "let"
             declarations: [{
               name: variable.name,
               initializer: variable.value.accept(new VariableResolverVisitor(), undefined),
@@ -54,8 +46,6 @@ export class EvaluateVisitor implements ASTVisitor<void, any> {
     visitVarNameValue(varName: VarNameValue, params: void) {
         throw new Error("Method not implemented.");
     }
-
-    private readonly fileWriter = new PrintWriter(path.resolve('./out/.env'));
 
     visitBot(bot: Bot, params: void): void {
         
