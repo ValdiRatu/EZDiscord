@@ -32,15 +32,15 @@ LT         : '<' ;
 LE         : '<=' ;
 EQ         : '==' ;
 NQ         : '!=' ;
-DECIMAL    : '-'? [0-9]+ ( '.' [0-9]+ )? ;
+DECIMAL    : [0-9]+ ( '.' [0-9]+ )? ;
 
 // Math operations
-MATH_OPERATION: ADD | SUB | MULT | DIV | MOD;
 ADD: '+';
 SUB: '-';
 MULT: '*';
 DIV: '/';
 MOD: '%';
+
 
 // Variables
 ASSIGNMENT_OPERATOR: '=';
@@ -59,6 +59,9 @@ R_PAREN : ')';
 
 // Punctuation
 COMMA : ',';
+
+IF_TOKEN: 'if';
+ELSE: 'else';
 
 END_BOT: 'end bot' -> popMode;
 
@@ -106,3 +109,5 @@ PARAMS_END: R_PAREN -> popMode;
 mode STRING_MODE;
 STRING_VALUE: ~[\r\n\t']+;
 STRING_END: S_QUOTE -> popMode;
+
+
