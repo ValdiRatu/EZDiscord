@@ -17,6 +17,10 @@ export class Variable<Y> extends Statement {
         return this._value;
     }
 
+    getValue() {
+        return this._value instanceof BuiltInFunction ? "test" : this._value.value;
+    }
+
     accept<T, U>(visitor: ASTVisitor<T, U>, params: T): U {
         return visitor.visitVariable(this, params);
     }

@@ -1,6 +1,20 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
 import { EZDiscordParserVisitor } from '../parser/EZDiscordParserVisitor';
-import { BotContext, StatementContext, ConfigContext, VariableContext, VBooleanContext, VNumberContext, VStringContext, VArrayContext, VVariableContext } from '../parser/EZDiscordParser';
+import {
+    BotContext, 
+    StatementContext, 
+    ConfigContext, 
+    VariableContext, 
+    VBooleanContext, 
+    VNumberContext, 
+    VStringContext, 
+    VArrayContext, 
+    VVariableContext, 
+    ABooleanContext,
+    AVariableContext,
+    ANumberContext,
+    AStringContext
+} from '../parser/EZDiscordParser';
 import { Bot, ASTNode, Token, Config, ClientId, GuildId } from './nodes';
 import { Variable } from './nodes/variables/Variable';
 import { VarType } from './nodes/variables/VarType';
@@ -75,4 +89,26 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
 
         return new ArrayValue(elements);
     }
+
+    visitAVariable(ctx: AVariableContext) {
+        return new VarNameValue(ctx.ARRAY_VARIABLE().text);
+    }
+
+    visitABoolean(ctx: ABooleanContext) {
+        const value = JSON.parse(ctx.ARRAY_BOOLEAN().text.toLowerCase()) as boolean;
+
+        return new BooleanValue(value);
+    }
+
+    visitANumber(ctx: ANumberContext) {
+        const value = Number.parseFloat(ctx.ARRAY_NUMBER().text);
+
+        return new NumberValue(value);
+    }
+
+    visitAString(ctx: AStringContext) {
+        const stringValueCtx = ctx.STRING_VALUE();
+        return new StringValue(stringValueCtx ? stringValueCtx.text : "");
+    }
+
 }

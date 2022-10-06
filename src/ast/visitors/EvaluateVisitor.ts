@@ -1,4 +1,5 @@
 import path from "node:path";
+import { Project, VariableDeclarationKind } from "ts-morph";
 import { PrintWriter } from "../../util/PrintWriter";
 import { Bot } from "../nodes/Bot";
 import { ClientId } from "../nodes/ClientId";
@@ -13,8 +14,15 @@ import { StringValue } from "../nodes/variables/StringValue";
 import { Variable } from "../nodes/variables/Variable";
 import { VarNameValue } from "../nodes/variables/VarNameValue";
 import { ASTVisitor } from "./ASTVisitor";
+import { VariableResolverVisitor } from "./VariableResolverVisitor";
 
 export class EvaluateVisitor implements ASTVisitor<void, any> {
+    private readonly project;
+    constructor() {
+        this.project = new Project()
+        this.project.addSourceFileAtPathIfExists('./out/*.ts')
+        this.project.createSourceFile('./out/variableTest.ts', "", { overwrite: true });
+    }
     visitArrayVarValue(arrVarVal: ArrayValue, params: void) {
         throw new Error("Method not implemented. 1");
     }
@@ -31,7 +39,17 @@ export class EvaluateVisitor implements ASTVisitor<void, any> {
         throw new Error("Method not implemented.");
     }
     visitVariable<Y>(variable: Variable<Y>, params: void) {
-        throw new Error("Method not implemented.");
+          
+        this.project.getSourceFile('./out/variableTest.ts')!.addVariableStatement({
+            declarationKind: VariableDeclarationKind.Const, // defaults to "let"
+            declarations: [{
+              name: variable.name,
+              initializer: variable.value.accept(new VariableResolverVisitor(), undefined),
+            }],
+          },);
+
+        this.project.saveSync();
+
     }
     visitVarNameValue(varName: VarNameValue, params: void) {
         throw new Error("Method not implemented.");

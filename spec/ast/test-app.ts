@@ -19,5 +19,5 @@ const tree = parser.bot();
 const astConverter = new ParserToASTConverter();
 const bot = astConverter.visit(tree);
 
-// const evaluator = new EvaluateVisitor();
-// bot.accept(evaluator, undefined);
+const evaluator = new EvaluateVisitor();
+bot.accept(evaluator, undefined);
