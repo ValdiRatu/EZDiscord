@@ -29,15 +29,15 @@ LT         : '<' ;
 LE         : '<=' ;
 EQ         : '==' ;
 NQ         : '!=' ;
-DECIMAL    : '-'? [0-9]+ ( '.' [0-9]+ )? ;
+DECIMAL    : [0-9]+ ( '.' [0-9]+ )? ;
 
 // Math operations
-MATH_OPERATION: ADD | SUB | MULT | DIV | MOD;
 ADD: '+';
 SUB: '-';
 MULT: '*';
 DIV: '/';
 MOD: '%';
+
 
 // Variables
 VAR: 'var' -> pushMode(VARIABLE_MODE);
@@ -58,6 +58,9 @@ R_PAREN : ')';
 COMMA : ',';
 ASSIGNMENT_OPERATOR: '=';
 COMMENT: '//' ~[\r\n]* -> skip;
+
+IF_TOKEN: 'if';
+ELSE: 'else';
 
 END_BOT: 'end bot' -> popMode;
 
@@ -129,3 +132,4 @@ ARRAY_FUNCTION: FUNCTION -> pushMode(FUNCTION_MODE);
 ARRAY_VARIABLE: [a-zA-Z][a-zA-Z0-9_]*;
 ARRAY_SEPARATOR: COMMA;
 ARRAY_END: R_SQUARE -> popMode;
+
