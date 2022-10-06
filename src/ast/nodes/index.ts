@@ -1,10 +1,10 @@
 import { Bot } from './Bot';
 import { ASTNode } from './ASTNode';
-import { ClientId } from './ClientId';
-import { Config } from './Config';
-import { GuildId } from './GuildId';
+import { ClientId } from './config/ClientId';
+import { Config } from './config/Config';
+import { GuildId } from './config/GuildId';
 import { Statement } from './Statement';
-import { Token } from './Token';
+import { Token } from './config/Token';
 import { ArrayValue } from './variables/ArrayValue';
 import { BooleanValue } from './variables/BooleanValue';
 import { BuiltInFunction } from './variables/BuiltInFunction';

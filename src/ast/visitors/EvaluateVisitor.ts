@@ -1,7 +1,6 @@
 import path from "node:path";
 import { Project, VariableDeclarationKind } from "ts-morph";
 import { PrintWriter } from "../../util/PrintWriter";
-
 import { 
     Bot,
     ClientId,
@@ -11,7 +10,6 @@ import {
     Variable,
     VarNameValue
 } from '../nodes';
-
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
 import { VariableResolverVisitor } from "./VariableResolverVisitor";
 

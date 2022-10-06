@@ -1,5 +1,5 @@
-import { ASTVisitor } from "../visitors/ASTVisitor";
-import { ASTNode } from "./ASTNode";
+import { ASTVisitor } from "../../visitors/ASTVisitor";
+import { ASTNode } from "../ASTNode";
 
 export class Token implements ASTNode {
     constructor(private _value: string) {}
