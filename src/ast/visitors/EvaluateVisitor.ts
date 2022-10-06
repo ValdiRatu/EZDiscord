@@ -27,14 +27,12 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
     }
 
     visitBot(bot: Bot, params: void): void {
-        
         for (const statement of bot.statements) {
             statement.accept(this, params);
         }
     }
 
-    visitVariable<Y>(variable: Variable<Y>, params: void) {
-          
+    visitVariable<Y>(variable: Variable<Y>, params: void) { 
         this.project.getSourceFile('./out/variableTest.ts')!.addVariableStatement({
             declarationKind: VariableDeclarationKind.Let, // defaults to "let"
             declarations: [{
