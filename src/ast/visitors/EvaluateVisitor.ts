@@ -1,20 +1,18 @@
 import path from "node:path";
 import { Project, VariableDeclarationKind } from "ts-morph";
 import { PrintWriter } from "../../util/PrintWriter";
-import { Bot } from "../nodes/Bot";
-import { ClientId } from "../nodes/ClientId";
-import { Config } from "../nodes/Config";
-import { GuildId } from "../nodes/GuildId";
-import { Token } from "../nodes/Token";
-import { ArrayValue } from "../nodes/variables/ArrayValue";
-import { BooleanValue } from "../nodes/variables/BooleanValue";
-import { BuiltInFunction } from "../nodes/variables/BuiltInFunction";
-import { NumberValue } from "../nodes/variables/NumberValue";
-import { StringValue } from "../nodes/variables/StringValue";
-import { Variable } from "../nodes/variables/Variable";
-import { VarNameValue } from "../nodes/variables/VarNameValue";
+
+import { 
+    Bot,
+    ClientId,
+    Config,
+    GuildId,
+    Token,
+    Variable,
+    VarNameValue
+} from '../nodes';
+
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
-import { ASTVisitor } from "./ASTVisitor";
 import { VariableResolverVisitor } from "./VariableResolverVisitor";
 
 export class EvaluateVisitor extends ASTBaseVisitor<void, void> {

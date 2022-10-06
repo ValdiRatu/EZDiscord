@@ -1,15 +1,17 @@
-import { Bot } from "../nodes/Bot";
-import { ClientId } from "../nodes/ClientId";
-import { Config } from "../nodes/Config";
-import { GuildId } from "../nodes/GuildId";
-import { Token } from "../nodes/Token";
-import { ArrayValue } from "../nodes/variables/ArrayValue";
-import { BooleanValue } from "../nodes/variables/BooleanValue";
-import { BuiltInFunction } from "../nodes/variables/BuiltInFunction";
-import { NumberValue } from "../nodes/variables/NumberValue";
-import { StringValue } from "../nodes/variables/StringValue";
-import { Variable } from "../nodes/variables/Variable";
-import { VarNameValue } from "../nodes/variables/VarNameValue";
+import { 
+    Bot,
+    ClientId,
+    Config,
+    GuildId,
+    Token,
+    ArrayValue,
+    BooleanValue,
+    BuiltInFunction,
+    NumberValue,
+    StringValue,
+    Variable,
+    VarNameValue
+} from '../nodes'
 
 export interface ASTVisitor<T, U> {
     visitBot(bot: Bot, params: T): U;

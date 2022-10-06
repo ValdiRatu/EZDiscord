@@ -1,11 +1,17 @@
-import { Bot, Config, Token, ClientId, GuildId } from "../nodes";
-import { ArrayValue } from "../nodes/variables/ArrayValue";
-import { BooleanValue } from "../nodes/variables/BooleanValue";
-import { BuiltInFunction } from "../nodes/variables/BuiltInFunction";
-import { NumberValue } from "../nodes/variables/NumberValue";
-import { StringValue } from "../nodes/variables/StringValue";
-import { Variable } from "../nodes/variables/Variable";
-import { VarNameValue } from "../nodes/variables/VarNameValue";
+import { 
+    Bot, 
+    Config, 
+    Token, 
+    ClientId, 
+    GuildId,
+    ArrayValue,
+    BooleanValue,
+    BuiltInFunction,
+    NumberValue,
+    StringValue,
+    Variable,
+    VarNameValue
+} from "../nodes";
 import { ASTVisitor } from "./ASTVisitor";
 
 export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {

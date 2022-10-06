@@ -1,9 +1,11 @@
-import { ArrayValue } from "../nodes/variables/ArrayValue";
-import { BooleanValue } from "../nodes/variables/BooleanValue";
-import { BuiltInFunction } from "../nodes/variables/BuiltInFunction";
-import { NumberValue } from "../nodes/variables/NumberValue";
-import { StringValue } from "../nodes/variables/StringValue";
-import { VarNameValue } from "../nodes/variables/VarNameValue";
+import { 
+    ArrayValue,
+    BooleanValue,
+    BuiltInFunction,
+    NumberValue,
+    StringValue,
+    VarNameValue
+} from '../nodes';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
 
 export class VariableResolverVisitor extends ASTBaseVisitor<void, string> {
