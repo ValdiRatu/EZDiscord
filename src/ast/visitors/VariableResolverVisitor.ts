@@ -12,7 +12,6 @@ export class VariableResolverVisitor extends ASTBaseVisitor<void, string> {
     
     visitArrayVarValue(arrVarVal: ArrayValue, params: void): string {
         const resolvedValue = arrVarVal.value.reduce((currentArray, type) => {
-
             return `${currentArray}${type.accept(this, undefined)},`
         }, '[ ');
 
@@ -23,8 +22,15 @@ export class VariableResolverVisitor extends ASTBaseVisitor<void, string> {
         return String(booleanVarVal.value);
     }
 
-    visitBuiltInFunctionVarValue(BuiltInFunction: BuiltInFunction, params: void): string {
-        return "built in function TODO";
+    visitBuiltInFunctionVarValue(builtInFunction: BuiltInFunction, params: void): string {
+
+        const funcParams = builtInFunction.params.map(funcParam => funcParam.accept(this, undefined));
+
+        let parameters = "";
+        for (let param of funcParams) {
+            parameters += `${param}, `;
+        }
+        return `${builtInFunction.name}(${parameters.slice(0, -2)})`;
     }
 
     visitNumberVarValue(numberVarValue: NumberValue, params: void): string {

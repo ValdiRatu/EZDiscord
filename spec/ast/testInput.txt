@@ -11,4 +11,5 @@ var numVar = 23
 var varVar = numVar
 var arrayVarFilled = [1, 'string', TRUE, stringVar]
 var arrayVarEmpty = []
+var funcVar = random(1, 'two', FALSE, numVar, get(1, 'hello'))
 end bot

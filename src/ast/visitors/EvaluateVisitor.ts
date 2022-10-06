@@ -25,7 +25,14 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
         this.project.addSourceFileAtPathIfExists('./out/*.ts')
         this.project.createSourceFile('./out/variableTest.ts', "", { overwrite: true });
     }
-    
+
+    visitBot(bot: Bot, params: void): void {
+        
+        for (const statement of bot.statements) {
+            statement.accept(this, params);
+        }
+    }
+
     visitVariable<Y>(variable: Variable<Y>, params: void) {
           
         this.project.getSourceFile('./out/variableTest.ts')!.addVariableStatement({
@@ -38,16 +45,6 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
 
         this.project.saveSync();
 
-    }
-    visitVarNameValue(varName: VarNameValue, params: void) {
-        throw new Error("Method not implemented.");
-    }
-
-    visitBot(bot: Bot, params: void): void {
-        
-        for (const statement of bot.statements) {
-            statement.accept(this, params);
-        }
     }
 
     visitConfig(config: Config, params: void): void {

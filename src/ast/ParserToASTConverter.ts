@@ -13,7 +13,11 @@ import {
     ABooleanContext,
     AVariableContext,
     ANumberContext,
-    AStringContext
+    AStringContext,
+    VFunctionContext,
+    ParamContext,
+    FunctionStringContext,
+    NestedFunctionContext
 } from '../parser/EZDiscordParser';
 import { Bot, ASTNode, Token, Config, ClientId, GuildId } from './nodes';
 import { Variable } from './nodes/variables/Variable';
@@ -90,6 +94,15 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
         return new ArrayValue(elements);
     }
 
+    visitVFunction(ctx: VFunctionContext) {
+
+        const name = ctx.VARIABLE_FUNCTION().text;
+
+        const params = ctx.params().param().map(paramCtx => this.visitParam(paramCtx));
+
+        return new BuiltInFunction(name, params);
+    }
+
     visitAVariable(ctx: AVariableContext) {
         return new VarNameValue(ctx.ARRAY_VARIABLE().text);
     }
@@ -109,6 +122,40 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     visitAString(ctx: AStringContext) {
         const stringValueCtx = ctx.STRING_VALUE();
         return new StringValue(stringValueCtx ? stringValueCtx.text : "");
+    }
+
+    visitParam(ctx: ParamContext) {
+        const functionVariableCtx = ctx.FUNCTION_VARIABLE();
+        const functionNumberCtx = ctx.FUNCTION_NUMBER();
+        const functionStringCtx = ctx.functionString();
+        const functionBooleanCtx = ctx.FUNCTION_BOOLEAN();
+        const functionNestedCtx = ctx.nestedFunction();
+ 
+        if (functionVariableCtx) {
+            return new VarNameValue(functionVariableCtx.text);
+        } else if (functionNumberCtx) {
+            return new NumberValue(parseFloat(functionNumberCtx.text));
+        } else if (functionStringCtx) {
+            return this.visitFunctionString(functionStringCtx);
+        } else if (functionBooleanCtx) {
+            const value = JSON.parse(functionBooleanCtx.text.toLowerCase()) as boolean;
+            return new BooleanValue(value);
+        } else if (functionNestedCtx) {
+            return this.visitNestedFunction(functionNestedCtx);
+        }
+        throw new Error("AHHH");
+    }
+
+    visitFunctionString(ctx: FunctionStringContext) {
+        const stringCtx = ctx.STRING_VALUE();
+        return new StringValue(stringCtx ? stringCtx.text : "");
+    }
+
+    visitNestedFunction(ctx: NestedFunctionContext) {
+        const name = ctx.FUNCTION_NESTED().text;
+        const nestedParams: any = ctx.params().param().map(paramCtx => this.visitParam(paramCtx));
+
+        return new BuiltInFunction(name, nestedParams);
     }
 
 }
