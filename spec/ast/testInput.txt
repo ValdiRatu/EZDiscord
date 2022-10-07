@@ -11,3 +11,4 @@ var e = 69
 var f = ['a quick brown fox', 100, true, var_name, get(array, len(random(0, 10)))]
 var g = (2+45)/2+123*(1235)-234-(-234/2)+a+b/c-(-e)
 var h = not (a and b or (false == bool_var))
+e = 420

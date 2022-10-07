@@ -34,14 +34,22 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
     }
 
     visitVariable<Y>(variable: Variable<Y>, params: void) {
-          
-        this.project.getSourceFile('./out/variableTest.ts')!.addVariableStatement({
-            declarationKind: VariableDeclarationKind.Let, // defaults to "let"
-            declarations: [{
-              name: variable.name,
-              initializer: variable.value.accept(new VariableResolverVisitor(), undefined),
-            }],
-          },);
+        const sourceFile = this.project.getSourceFile('./out/variableTest.ts');
+
+        if (variable.isDeclaration) {
+            this.project.getSourceFile('./out/variableTest.ts')!.addVariableStatement({
+                declarationKind: VariableDeclarationKind.Let, // defaults to "let"
+                declarations: [{
+                    name: variable.name,
+                    initializer: variable.value.accept(new VariableResolverVisitor(), undefined),
+                }],
+            },);
+        } else {
+            sourceFile!.addStatements((writer => {
+                writer.write(`${variable.name} = ${variable.value.accept(new VariableResolverVisitor(), params)}`);
+            }));
+        }
+
 
         this.project.saveSync();
 

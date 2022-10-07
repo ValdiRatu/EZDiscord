@@ -1,9 +1,9 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
 import { EZDiscordParserVisitor } from '../parser/EZDiscordParserVisitor';
 import {
-    BotContext, 
-    StatementContext, 
-    ConfigContext, 
+    BotContext,
+    StatementContext,
+    ConfigContext,
     ParamContext,
     TokenContext,
     StringContext,
@@ -18,7 +18,7 @@ import {
     ArrayContext,
     ElementContext,
     MathContext,
-    BinaryContext
+    BinaryContext, VariableAssignContext
 } from '../parser/EZDiscordParser';
 import { Bot, ASTNode, Token, Config, ClientId, GuildId, MathValue, BinaryValue } from './nodes';
 import { Variable } from './nodes/variables/Variable';
@@ -79,7 +79,16 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     visitVariableDeclare(ctx: VariableDeclareContext) {
         return new Variable(
             ctx.VAR_NAME().text,
-            this.visitValue(ctx.value())
+            this.visitValue(ctx.value()),
+            true
+        )
+    }
+
+    visitVariableAssign(ctx: VariableAssignContext) {
+        return new Variable(
+            ctx.VAR_NAME().text,
+            this.visitValue(ctx.value()),
+            false
         )
     }
 

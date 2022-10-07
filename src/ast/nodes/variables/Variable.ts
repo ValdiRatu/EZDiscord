@@ -5,7 +5,7 @@ import { VarType } from "./VarType";
 
 export class Variable<Y> extends Statement {
 
-    constructor(private readonly _name: string, private readonly _value: VarType<Y> | BuiltInFunction) {
+    constructor(private readonly _name: string, private readonly _value: VarType<Y> | BuiltInFunction, private readonly _isDeclaration: boolean) {
         super();
     }
 
@@ -17,8 +17,8 @@ export class Variable<Y> extends Statement {
         return this._value;
     }
 
-    getValue() {
-        return this._value instanceof BuiltInFunction ? "test" : this._value.value;
+    get isDeclaration() {
+        return this._isDeclaration;
     }
 
     accept<T, U>(visitor: ASTVisitor<T, U>, params: T): U {
