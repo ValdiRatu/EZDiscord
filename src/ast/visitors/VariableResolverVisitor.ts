@@ -52,7 +52,8 @@ export class VariableResolverVisitor extends ASTBaseVisitor<void, string> {
     }
 
     visitBinaryValue(binaryValue: BinaryValue, params: void): string {
-        return binaryValue.value.replace("NOT", "!").replace("AND", "&&").replace("OR", "||")
+        // currently a very hacky way to go about it
+        return binaryValue.value.replace("not", "!").replace("and", "&&").replace("or", "||")
     }
     
 }
