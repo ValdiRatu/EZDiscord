@@ -22,6 +22,5 @@ if (parser.numberOfSyntaxErrors > 0) {
 const astConverter = new ParserToASTConverter();
 
 const bot = astConverter.visit(tree);
-console.log(bot)
 const evaluator = new EvaluateVisitor();
 bot.accept(evaluator, undefined);
