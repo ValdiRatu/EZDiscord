@@ -46,6 +46,11 @@ FUNCTION: ('random' | 'add' | 'remove' | 'get' | 'set' | 'len' | 'find' | 'reply
 IF: 'if';
 ELSE: 'else';
 
+// loops
+WHILE: 'while';
+FOR: 'for';
+IN: 'in';
+
 // Brackets
 L_CURLY : '{';
 R_CURLY : '}';
