@@ -3,12 +3,9 @@ import StringParser;
 options { tokenVocab=EZDiscordLexer; }
 
 config
-    : token clientID guildID
-    | token guildID clientID
-    | clientID token guildID
-    | guildID token clientID
-    | clientID guildID token
-    | guildID clientID token
+    : token (clientID guildID | guildID clientID)
+    | clientID (token guildID | guildID token)
+    | guildID (token clientID | clientID token)
     ;
 
 token: TOKEN ASSIGNMENT_OP string;

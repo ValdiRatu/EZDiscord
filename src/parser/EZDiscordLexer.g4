@@ -46,10 +46,16 @@ FUNCTION: ('random' | 'add' | 'remove' | 'get' | 'set' | 'len' | 'find' | 'reply
 IF: 'if';
 ELSE: 'else';
 
-// loops
+// Loops
 WHILE: 'while';
 FOR: 'for';
 IN: 'in';
+
+// Commands
+COMMAND: 'command';
+BOOL: 'boolean';
+NUM: 'number';
+STR: 'string';
 
 // Brackets
 L_CURLY : '{';
@@ -60,6 +66,7 @@ L_PAREN : '(';
 R_PAREN : ')';
 
 // Other
+COLON: ':';
 S_QUOTE : '\'' -> pushMode(STRING_MODE);
 COMMA : ',';
 COMMENT: '//' ~[\r\n]* -> skip;
