@@ -15,7 +15,7 @@ binaryAtom
     | number
     | var_name
     | string
-    | functionCall
+    // | functionCall same reasoning as in MathParser.g4
     ;
 
 binaryExprRight
