@@ -10,8 +10,8 @@ GUILD_ID: 'GuildID';
 
 // Types
 BOOLEAN: TRUE | FALSE;
-TRUE       : 'TRUE' ;
-FALSE      : 'FALSE';
+TRUE       : 'true' ;
+FALSE      : 'false';
 NUMBER     : [0-9]+ ( '.' [0-9]+ )? ;
 
 // Binary Logic
