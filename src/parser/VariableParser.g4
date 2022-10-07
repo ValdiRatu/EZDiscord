@@ -1,14 +1,14 @@
 parser grammar VariableParser;
-import FunctionCallParser, BinaryParser, MathParser, StringParser;
+import FunctionCallParser, BinaryParser, MathParser, PrimitiveParser;
 options { tokenVocab=EZDiscordLexer; }
 
 variableDeclare: VAR VAR_NAME ASSIGNMENT_OP value;
 variableAssign: VAR_NAME ASSIGNMENT_OP value;
 value
-    : BOOLEAN
-    | NUMBER
+    : boolean
+    | number
     | string
-    | VAR_NAME
+    | var_name
     | functionCall
     | array
     | math
@@ -18,8 +18,8 @@ value
 array: L_SQUARE (element (COMMA element)*)? R_SQUARE;
 element
     : string
-    | VAR_NAME
-    | NUMBER
-    | BOOLEAN
+    | var_name
+    | number
+    | boolean
     | functionCall
     ;

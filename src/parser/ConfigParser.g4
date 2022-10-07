@@ -1,5 +1,5 @@
 parser grammar ConfigParser;
-import StringParser;
+import PrimitiveParser;
 options { tokenVocab=EZDiscordLexer; }
 
 config

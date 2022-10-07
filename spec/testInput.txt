@@ -1,5 +1,0 @@
-start bot
-Token='123456789'
-ClientID = '123456789'
-GuildID=['123456789', '4567890']
-end bot
