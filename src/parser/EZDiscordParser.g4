@@ -1,9 +1,10 @@
 parser grammar EZDiscordParser;
-import ConfigParser, BinaryOperationsParser, MathOperationsParser, FunctionParser, VariableParser;
+import ConfigParser, VariableParser;
 options { tokenVocab=EZDiscordLexer; }
 
-bot : START_BOT statement* END_BOT EOF;
+bot : config statement* EOF;
 
-statement: config | comment | variable;
-
-comment: COMMENT;
+statement
+    : variableDeclare
+    | variableAssign
+    ;

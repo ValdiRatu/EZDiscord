@@ -1,0 +1,30 @@
+
+conditionAndLoop_bot : condition* loop* EOF;
+
+===================
+if (a) {
+var b = 0
+var c = 1
+c = 1
+reply()
+random()
+if(b){}
+else{}
+} else {
+var c = 1
+}
+
+=======
+while(a){
+if (a) {
+var b = 0
+var c = 1
+c = 1
+reply()
+random()
+if(b){}
+else{}
+} else {
+var c = 1
+}
+}
