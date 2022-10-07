@@ -10,7 +10,9 @@ import {
     NumberValue,
     StringValue,
     Variable,
-    VarNameValue
+    VarNameValue,
+    BinaryValue,
+    MathValue
 } from '../nodes'
 
 export interface ASTVisitor<T, U> {
@@ -26,4 +28,6 @@ export interface ASTVisitor<T, U> {
     visitStringVarValue(stringVarValue: StringValue, params: T): U;
     visitVariable<Y>(variable: Variable<Y>, params: T): U;
     visitVarNameValue(varName: VarNameValue, params: T): U;
+    visitBinaryValue(binaryValue: BinaryValue, params: T): U;
+    visitMathValue(mathValue: MathValue, params: T): U;
 }

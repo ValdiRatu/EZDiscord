@@ -10,11 +10,19 @@ import {
     NumberValue,
     StringValue,
     Variable,
-    VarNameValue
+    VarNameValue,
+    BinaryValue,
+    MathValue
 } from "../nodes";
 import { ASTVisitor } from "./ASTVisitor";
 
 export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
+    visitBinaryValue(binaryValue: BinaryValue, params: T): U {
+        throw new Error("Method not implemented.");
+    }
+    visitMathValue(mathValue: MathValue, params: T): U {
+        throw new Error("Method not implemented.");
+    }
     visitBot(bot: Bot, params: T): U {
         throw new Error("Method not implemented.");
     }

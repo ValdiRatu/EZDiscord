@@ -4,22 +4,23 @@ import {
     BotContext, 
     StatementContext, 
     ConfigContext, 
-    VariableContext, 
-    VBooleanContext, 
-    VNumberContext, 
-    VStringContext, 
-    VArrayContext, 
-    VVariableContext, 
-    ABooleanContext,
-    AVariableContext,
-    ANumberContext,
-    AStringContext,
-    VFunctionContext,
     ParamContext,
-    FunctionStringContext,
-    NestedFunctionContext
+    TokenContext,
+    StringContext,
+    ClientIDContext,
+    GuildIDContext,
+    VariableDeclareContext,
+    ValueContext,
+    NumberContext,
+    BooleanContext,
+    FunctionCallContext,
+    Var_nameContext,
+    ArrayContext,
+    ElementContext,
+    MathContext,
+    BinaryContext
 } from '../parser/EZDiscordParser';
-import { Bot, ASTNode, Token, Config, ClientId, GuildId } from './nodes';
+import { Bot, ASTNode, Token, Config, ClientId, GuildId, MathValue, BinaryValue } from './nodes';
 import { Variable } from './nodes/variables/Variable';
 import { VarType } from './nodes/variables/VarType';
 import { BooleanValue } from './nodes/variables/BooleanValue';
@@ -29,14 +30,18 @@ import { StringValue } from './nodes/variables/StringValue';
 import { ArrayValue } from './nodes/variables/ArrayValue';
 import { VarNameValue } from './nodes/variables/VarNameValue';
 
+type AtomValue = StringValue | VarNameValue | NumberValue | BooleanValue | BuiltInFunction
+type VariableValue = VarType<string | number | boolean> | BinaryValue
+
 export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> implements EZDiscordParserVisitor<ASTNode> {
     protected defaultResult(): ASTNode {
-        return new Bot([]);
+        return new Bot(new Config(new Token(''), new ClientId(''), new GuildId([])), []);
     }
 
     visitBot(ctx: BotContext) {
+        const config = this.visitConfig(ctx.config())
         const statements = ctx.statement().map(statementContext => this.visitStatement(statementContext));
-        return new Bot(statements);
+        return new Bot(config, statements);
     }
 
     visitStatement(ctx: StatementContext) {
@@ -44,118 +49,91 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     }
 
     visitConfig(ctx: ConfigContext) {
-        const tokenContext = ctx.token();
-        const clientIdContext = ctx.clientID();
-        const guildIdContext = ctx.guildID();
-
-        if (tokenContext) {
-            return new Config(new Token(tokenContext.TOKEN_STRING().text.split("'").join('')));
-        } else if (clientIdContext) {
-            return new Config(new ClientId(clientIdContext.CLIENT_ID_STRING().text.split("'").join('')));
-        } else if (guildIdContext) {
-            return new Config(new GuildId(guildIdContext.guildIDArray().GUILD_ID_STRING().map(idStringContext => idStringContext.text.split("'").join(''))))
+        return new Config(
+            this.visitToken(ctx.token()),
+            this.visitClientID(ctx.clientID()),
+            this.visitGuildID(ctx.guildID())
+        );
+    }
+    
+    visitToken(ctx: TokenContext) {
+        const stringNode = this.visitString(ctx.string());
+        if (!stringNode.value) {
+            throw Error("Token value is invalid")
         }
-
-        throw new Error("Empty config object");
+        return new Token(stringNode.value)
     }
 
-    visitVariable(ctx: VariableContext) {
-        const varName = ctx.vVariable().VARIABLE_NAME().text;
-        const varValue = ctx.value().accept(this) as VarType<boolean | string | number | any[]> | BuiltInFunction;
-
-        return new Variable(varName, varValue);
+    visitClientID(ctx: ClientIDContext) {
+        const stringNode = this.visitString(ctx.string());
+        if (!stringNode.value) {
+            throw Error("Client ID value is invalid")
+        }
+        return new ClientId(stringNode.value)
     }
 
-    visitVVariable(ctx: VVariableContext){
-        return new VarNameValue(ctx.VARIABLE_NAME().text);
+    visitGuildID(ctx: GuildIDContext) {
+        return new GuildId(ctx.guildIDArray().string().map(idStringContext => idStringContext.text.split("'").join('')))
+    }
+    
+    visitVariableDeclare(ctx: VariableDeclareContext) {
+        return new Variable(
+            ctx.VAR_NAME().text,
+            this.visitValue(ctx.value())
+        )
     }
 
-    visitVBoolean(ctx: VBooleanContext) {
-        const value = JSON.parse(ctx.VARIABLE_BOOLEAN().text.toLowerCase()) as boolean;
-
-        return new BooleanValue(value);
+    visitValue(ctx: ValueContext) {
+        return this.visitChildren(ctx) as VariableValue
     }
 
-
-    visitVNumber(ctx: VNumberContext) {
-        const value = Number.parseFloat(ctx.VARIABLE_NUMBER().text);
-
-        return new NumberValue(value);
+    visitString(ctx: StringContext) {
+        return new StringValue(ctx.STRING_VALUE()?.text ?? "");
     }
 
-    visitVString(ctx: VStringContext) {
-        const stringValueCtx = ctx.STRING_VALUE();
-        return new StringValue(stringValueCtx ? stringValueCtx.text : "");
+    visitNumber(ctx: NumberContext) {
+        return new NumberValue(Number.parseFloat(ctx.NUMBER().text));
     }
 
-    visitVArray(ctx: VArrayContext) {
-        const elements: any[] = ctx.element().map(e => e.accept(this));
-
-        return new ArrayValue(elements);
+    visitBoolean(ctx: BooleanContext) {
+        return new BooleanValue(JSON.parse(ctx.BOOLEAN().text.toLowerCase()));
     }
 
-    visitVFunction(ctx: VFunctionContext) {
-
-        const name = ctx.VARIABLE_FUNCTION().text;
-
-        const params = ctx.params().param().map(paramCtx => this.visitParam(paramCtx));
-
-        return new BuiltInFunction(name, params);
+    visitVar_name(ctx: Var_nameContext) {
+        return new VarNameValue(ctx.VAR_NAME().text);
     }
 
-    visitAVariable(ctx: AVariableContext) {
-        return new VarNameValue(ctx.ARRAY_VARIABLE().text);
-    }
-
-    visitABoolean(ctx: ABooleanContext) {
-        const value = JSON.parse(ctx.ARRAY_BOOLEAN().text.toLowerCase()) as boolean;
-
-        return new BooleanValue(value);
-    }
-
-    visitANumber(ctx: ANumberContext) {
-        const value = Number.parseFloat(ctx.ARRAY_NUMBER().text);
-
-        return new NumberValue(value);
-    }
-
-    visitAString(ctx: AStringContext) {
-        const stringValueCtx = ctx.STRING_VALUE();
-        return new StringValue(stringValueCtx ? stringValueCtx.text : "");
+    visitFunctionCall(ctx: FunctionCallContext) {
+        return new BuiltInFunction(
+            ctx.FUNCTION().text,
+            ctx.params().param().map(paramCtx => this.visitParam(paramCtx))
+        )
     }
 
     visitParam(ctx: ParamContext) {
-        const functionVariableCtx = ctx.FUNCTION_VARIABLE();
-        const functionNumberCtx = ctx.FUNCTION_NUMBER();
-        const functionStringCtx = ctx.functionString();
-        const functionBooleanCtx = ctx.FUNCTION_BOOLEAN();
-        const functionNestedCtx = ctx.nestedFunction();
- 
-        if (functionVariableCtx) {
-            return new VarNameValue(functionVariableCtx.text);
-        } else if (functionNumberCtx) {
-            return new NumberValue(parseFloat(functionNumberCtx.text));
-        } else if (functionStringCtx) {
-            return this.visitFunctionString(functionStringCtx);
-        } else if (functionBooleanCtx) {
-            const value = JSON.parse(functionBooleanCtx.text.toLowerCase()) as boolean;
-            return new BooleanValue(value);
-        } else if (functionNestedCtx) {
-            return this.visitNestedFunction(functionNestedCtx);
-        }
-        throw new Error("AHHH");
+        return this.visitChildren(ctx) as AtomValue
     }
 
-    visitFunctionString(ctx: FunctionStringContext) {
-        const stringCtx = ctx.STRING_VALUE();
-        return new StringValue(stringCtx ? stringCtx.text : "");
+    visitArray(ctx: ArrayContext) {
+        return new ArrayValue(
+            ctx.element().map(elementCtx => this.visitElement(elementCtx))
+        )
     }
 
-    visitNestedFunction(ctx: NestedFunctionContext) {
-        const name = ctx.FUNCTION_NESTED().text;
-        const nestedParams: any = ctx.params().param().map(paramCtx => this.visitParam(paramCtx));
-
-        return new BuiltInFunction(name, nestedParams);
+    visitElement(ctx: ElementContext) {
+        return this.visitChildren(ctx) as AtomValue
     }
 
+    visitMath(ctx: MathContext) {
+        return new MathValue(
+            ctx.text
+        )
+    }
+
+    visitBinary(ctx: BinaryContext) {
+        // TODO: properly parse this later
+        return new BinaryValue(
+           ctx.text 
+        )
+    }
 }

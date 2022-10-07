@@ -13,6 +13,8 @@ import { StringValue } from './variables/StringValue';
 import { Variable } from './variables/Variable';
 import { VarNameValue } from './variables/VarNameValue';
 import { VarType } from './variables/VarType';
+import { MathValue } from './variables/MathValue';
+import { BinaryValue } from './variables/BinaryValue';
 
 export { 
     Bot, 
@@ -29,5 +31,7 @@ export {
     StringValue,
     Variable,
     VarNameValue,
-    VarType
+    VarType,
+    MathValue,
+    BinaryValue
 };

@@ -27,7 +27,7 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
     }
 
     visitBot(bot: Bot, params: void): void {
-        
+        this.visitConfig(bot.config);
         for (const statement of bot.statements) {
             statement.accept(this, params);
         }
@@ -48,7 +48,9 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
     }
 
     visitConfig(config: Config, params: void): void {
-        config.item.accept(this, params);
+        config.token.accept(this, params);
+        config.clientId.accept(this, params);
+        config.guildId.accept(this, params)
     }
 
     visitToken(token: Token, params: void): void {

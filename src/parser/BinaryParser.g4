@@ -1,19 +1,19 @@
 parser grammar BinaryParser;
-import FunctionCallParser, StringParser;
+import FunctionCallParser, PrimitiveParser;
 options { tokenVocab=EZDiscordLexer; }
 
 binary: binaryExpr;
 
 binaryExpr
-    : L_PAREN (binaryExpr | BOOLEAN | string) R_PAREN binaryExprRight?
+    : L_PAREN (binaryExpr | boolean | string) R_PAREN binaryExprRight?
     | NOT (binaryExpr | binaryAtom) binaryExprRight?
     | binaryAtom binaryExprRight
     ;
 
 binaryAtom
-    : BOOLEAN
-    | NUMBER
-    | VAR_NAME
+    : boolean
+    | number
+    | var_name
     | string
     | functionCall
     ;

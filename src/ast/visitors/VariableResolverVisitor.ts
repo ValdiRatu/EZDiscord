@@ -1,7 +1,9 @@
 import { 
     ArrayValue,
+    BinaryValue,
     BooleanValue,
     BuiltInFunction,
+    MathValue,
     NumberValue,
     StringValue,
     VarNameValue
@@ -43,6 +45,14 @@ export class VariableResolverVisitor extends ASTBaseVisitor<void, string> {
 
     visitVarNameValue(varName: VarNameValue, params: void): string {
         return varName.value;
+    }
+
+    visitMathValue(mathValue: MathValue, params: void): string {
+        return mathValue.value;
+    }
+
+    visitBinaryValue(binaryValue: BinaryValue, params: void): string {
+        return binaryValue.value.replace("NOT", "!").replace("AND", "&&").replace("OR", "||")
     }
     
 }

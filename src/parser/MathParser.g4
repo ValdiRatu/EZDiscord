@@ -1,5 +1,5 @@
 parser grammar MathParser;
-import FunctionCallParser;
+import FunctionCallParser, PrimitiveParser;
 options { tokenVocab=EZDiscordLexer; }
 
 math: mathTerm mathExprPrime;
@@ -9,7 +9,7 @@ mathTermPrime: ((MULT | DIV | MOD) mathFactor mathTermPrime) |;
 mathFactor: (SUB)? mathAtom | L_PAREN math R_PAREN;
 
 mathAtom
-    : NUMBER
-    | VAR_NAME
-    | functionCall
+    : number
+    | var_name
+    // | functionCall This requires us to actually go into the tree which is a lot of work for now so maybe defer?
     ;
