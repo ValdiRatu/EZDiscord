@@ -6,7 +6,7 @@ import {
     GuildId,
     ArrayValue,
     BooleanValue,
-    BuiltInFunction,
+    FunctionCallValue,
     NumberValue,
     StringValue,
     Variable,
@@ -44,7 +44,7 @@ export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
     visitBooleanVarValue(booleanVarVal: BooleanValue, params: T): U {
         throw new Error("Method not implemented.");
     }
-    visitBuiltInFunctionVarValue(BuiltInFunction: BuiltInFunction, params: T): U {
+    visitBuiltInFunctionVarValue(BuiltInFunction: FunctionCallValue, params: T): U {
         throw new Error("Method not implemented.");
     }
     visitNumberVarValue(numberVarValue: NumberValue, params: T): U {

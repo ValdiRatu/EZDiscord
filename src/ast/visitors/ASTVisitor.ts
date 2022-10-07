@@ -6,7 +6,7 @@ import {
     Token,
     ArrayValue,
     BooleanValue,
-    BuiltInFunction,
+    FunctionCallValue,
     NumberValue,
     StringValue,
     Variable,
@@ -23,7 +23,7 @@ export interface ASTVisitor<T, U> {
     visitGuildId(guildId: GuildId, params: T) : U;
     visitArrayVarValue(arrVarVal: ArrayValue, params: T) : U;
     visitBooleanVarValue(booleanVarVal: BooleanValue, params: T) : U;
-    visitBuiltInFunctionVarValue(BuiltInFunction: BuiltInFunction, params: T) : U;
+    visitBuiltInFunctionVarValue(BuiltInFunction: FunctionCallValue, params: T) : U;
     visitNumberVarValue(numberVarValue: NumberValue, params: T): U;
     visitStringVarValue(stringVarValue: StringValue, params: T): U;
     visitVariable<Y>(variable: Variable<Y>, params: T): U;

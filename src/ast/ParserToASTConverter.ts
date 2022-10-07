@@ -30,7 +30,7 @@ import {
     Token,
     ArrayValue,
     BooleanValue,
-    BuiltInFunction,
+    FunctionCallValue,
     NumberValue,
     StringValue,
     Variable,
@@ -40,7 +40,7 @@ import {
     BinaryValue
 } from './nodes';
 
-type AtomValue = StringValue | VarNameValue | NumberValue | BooleanValue | BuiltInFunction
+type AtomValue = StringValue | VarNameValue | NumberValue | BooleanValue | FunctionCallValue
 type VariableValue = VarType<string | number | boolean> | BinaryValue
 
 export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> implements EZDiscordParserVisitor<ASTNode> {
@@ -123,7 +123,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     }
 
     visitFunctionCall(ctx: FunctionCallContext) {
-        return new BuiltInFunction(
+        return new FunctionCallValue(
             ctx.FUNCTION().text,
             ctx.params().param().map(paramCtx => this.visitParam(paramCtx))
         )

@@ -3,8 +3,8 @@ import { ASTNode } from "../ASTNode";
 import { VarType } from "./VarType";
 
 
-export class BuiltInFunction implements ASTNode {
-    constructor(private readonly _name: string, private readonly _params: (VarType<string | boolean | number> | BuiltInFunction)[]) {}
+export class FunctionCallValue implements ASTNode {
+    constructor(private readonly _name: string, private readonly _params: (VarType<string | boolean | number> | FunctionCallValue)[]) {}
 
     get name() {
         return this._name;

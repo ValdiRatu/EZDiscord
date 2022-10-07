@@ -1,11 +1,11 @@
 import { ASTVisitor } from "../../visitors/ASTVisitor";
 import { Statement } from "../Statement";
-import { BuiltInFunction } from "./BuiltInFunction";
+import { FunctionCallValue } from "./FunctionCallValue";
 import { VarType } from "./VarType";
 
 export class Variable<Y> extends Statement {
 
-    constructor(private readonly _name: string, private readonly _value: VarType<Y> | BuiltInFunction, private readonly _isDeclaration: boolean) {
+    constructor(private readonly _name: string, private readonly _value: VarType<Y> | FunctionCallValue, private readonly _isDeclaration: boolean) {
         super();
     }
 

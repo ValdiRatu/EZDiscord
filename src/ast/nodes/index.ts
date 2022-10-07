@@ -7,7 +7,7 @@ import { Statement } from './Statement';
 import { Token } from './config/Token';
 import { ArrayValue } from './variables/ArrayValue';
 import { BooleanValue } from './variables/BooleanValue';
-import { BuiltInFunction } from './variables/BuiltInFunction';
+import { FunctionCallValue } from './variables/FunctionCallValue';
 import { NumberValue } from './variables/NumberValue';
 import { StringValue } from './variables/StringValue';
 import { Variable } from './variables/Variable';
@@ -26,7 +26,7 @@ export {
     Token,
     ArrayValue,
     BooleanValue,
-    BuiltInFunction,
+    FunctionCallValue,
     NumberValue,
     StringValue,
     Variable,
