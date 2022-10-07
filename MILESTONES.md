@@ -299,3 +299,56 @@ Array
 ### Plan for week 4
 - Lexer team start on implementing parser for everything that can be used outside of commands and loops
 - Implementation team will start building architecture for the project
+
+
+
+## Milestone 4
+
+### Status of implementation
+#### Lexer and Parser team
+- This week Lexer & Parser team has completed implementation for majority of the features
+- Main priority is now testing the parser and lexer
+Team Board bellow: \
+![Lexer & Parser Team Board](images/ParserTeam.png?raw=true)
+
+
+#### AST and Compiler team
+- The team has completed implementation of features such as:
+  - Generating .env config file
+  - Comments
+  - Variable declaration
+  - Math operations
+  - Binary operations
+- Final features are yet to be implemented:
+  - Parsing conditions
+  - Parsing loops
+  - Parsing functions
+Team Board bellow: \
+![AST & Compiler Team Board](images/AST_Team_Chart.png)
+
+### Plans for final user study
+- Majority of the project will be finalized by Wednesday, October 12th
+- The final user study will take place right after
+- Goals:
+  - Have at least 2 users
+  - Provide documentation and basic instructions
+  - Ask the users to implement a bot of their liking or provide some ideas for them, e.g. rock-paper-scissors bot, random item in array bot, etc.
+  - Record user study
+  - Note to what extent were the users able to utilize the language features
+- The final video will include the user studies
+
+
+### Planned timeline for the remaining days
+- Complete AST and Compiler team final tickets
+- Testing
+- Create a thorough documentation
+- Main dates:
+  - October 12th, complete majority of functionality
+  - October 12th - October 14th, conduct final user study
+  - October 14th-17th, work on the final video
+
+### TA feedback
+- Attempt to do user study earlier to allow for some time to tweak the last few things
+- Had a conversation about [TS-morph](https://ts-morph.com/)
+  - Bulk of evaluation will be done by TS-morph (like math operations)
+  - The TA said it should be OK to use as long as other project details are up to standard
