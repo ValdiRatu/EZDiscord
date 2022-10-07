@@ -7,8 +7,7 @@ import {
     Config,
     GuildId,
     Token,
-    Variable,
-    VarNameValue
+    Variable
 } from '../nodes';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
 import { VariableResolverVisitor } from "./VariableResolverVisitor";

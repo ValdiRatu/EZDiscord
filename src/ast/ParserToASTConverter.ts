@@ -18,17 +18,27 @@ import {
     ArrayContext,
     ElementContext,
     MathContext,
-    BinaryContext, VariableAssignContext
+    BinaryContext,
+    VariableAssignContext
 } from '../parser/EZDiscordParser';
-import { Bot, ASTNode, Token, Config, ClientId, GuildId, MathValue, BinaryValue } from './nodes';
-import { Variable } from './nodes/variables/Variable';
-import { VarType } from './nodes/variables/VarType';
-import { BooleanValue } from './nodes/variables/BooleanValue';
-import { BuiltInFunction } from './nodes/variables/BuiltInFunction';
-import { NumberValue } from './nodes/variables/NumberValue';
-import { StringValue } from './nodes/variables/StringValue';
-import { ArrayValue } from './nodes/variables/ArrayValue';
-import { VarNameValue } from './nodes/variables/VarNameValue';
+import {
+    Bot,
+    ASTNode,
+    ClientId,
+    Config,
+    GuildId,
+    Token,
+    ArrayValue,
+    BooleanValue,
+    BuiltInFunction,
+    NumberValue,
+    StringValue,
+    Variable,
+    VarNameValue,
+    VarType,
+    MathValue,
+    BinaryValue
+} from './nodes';
 
 type AtomValue = StringValue | VarNameValue | NumberValue | BooleanValue | BuiltInFunction
 type VariableValue = VarType<string | number | boolean> | BinaryValue
