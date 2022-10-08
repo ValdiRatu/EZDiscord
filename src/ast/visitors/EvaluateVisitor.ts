@@ -1,28 +1,33 @@
 import path from "node:path";
 import { Project, VariableDeclarationKind } from "ts-morph";
 import { PrintWriter } from "../../util/PrintWriter";
-import { 
+import {
     Bot,
     ClientId,
     Config,
     GuildId,
     Token,
-    Variable
+    Variable,
+    Conditional,
+    WhileLoop,
+    ForEachLoop
 } from '../nodes';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
-import { VariableResolverVisitor } from "./VariableResolverVisitor";
+import { VariableValueResolverVisitor } from "./VariableValueResolverVisitor";
+import { StatementBlockWriterVisitor } from "./StatementBlockWriterVisitor";
 
 export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
 
     private readonly fileWriter;
     private readonly project;
+    private readonly sourceFile;
 
     constructor() {
         super();
         this.fileWriter = new PrintWriter(path.resolve('./out/.env'));
         this.project = new Project()
         this.project.addSourceFileAtPathIfExists('./out/*.ts')
-        this.project.createSourceFile('./out/variableTest.ts', "", { overwrite: true });
+        this.sourceFile = this.project.createSourceFile('./out/variableTest.ts', "", { overwrite: true });
     }
 
     visitBot(bot: Bot, params: void): void {
@@ -33,12 +38,11 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
     }
 
     visitVariable<Y>(variable: Variable<Y>, params: void) {
-        const sourceFile = this.project.getSourceFile('./out/variableTest.ts');
         const name = variable.name;
-        const value = variable.value.accept(new VariableResolverVisitor(), undefined);
+        const value = variable.value.accept(new VariableValueResolverVisitor(), undefined);
 
         if (variable.isDeclaration) {
-            this.project.getSourceFile('./out/variableTest.ts')!.addVariableStatement({
+            this.sourceFile.addVariableStatement({
                 declarationKind: VariableDeclarationKind.Let, // defaults to "let"
                 declarations: [{
                     name,
@@ -46,7 +50,7 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
                 }],
             },);
         } else {
-            sourceFile!.addStatements((writer => {
+            this.sourceFile.addStatements((writer => {
                 writer.write(`${name} = ${value}`);
             }));
         }
@@ -72,5 +76,34 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
         }, "").trimEnd();
         this.fileWriter.println(`GUILD_ID=${guildIds}`)
     }
-    
+
+    visitConditional(conditional: Conditional, params: void) {
+        this.sourceFile.addStatements([
+            writer => {
+                const statementBlockWriter = new StatementBlockWriterVisitor();
+                conditional.accept(statementBlockWriter, writer);
+            }
+        ]);
+        this.project.saveSync();
+    }
+
+    visitWhileLoop(loop: WhileLoop, params: void) {
+        this.sourceFile.addStatements([
+           writer => {
+                const statementBlockWriter = new StatementBlockWriterVisitor();
+                loop.accept(statementBlockWriter, writer);
+           }
+        ]);
+        this.project.saveSync();
+    }
+
+    visitForEachLoop(loop: ForEachLoop, params: void) {
+        this.sourceFile.addStatements([
+            writer => {
+                const statementBlockWriter = new StatementBlockWriterVisitor();
+                loop.accept(statementBlockWriter, writer);
+            }
+        ]);
+        this.project.saveSync();
+    }
 }

@@ -1,18 +1,22 @@
-import { 
-    Bot, 
-    Config, 
-    Token, 
-    ClientId, 
+import {
+    Bot,
+    Config,
+    Token,
+    ClientId,
     GuildId,
     ArrayValue,
     BooleanValue,
-    FunctionCallValue,
+    FunctionCall,
     NumberValue,
     StringValue,
     Variable,
     VarNameValue,
     BinaryValue,
-    MathValue
+    MathValue,
+    Conditional,
+    StatementBlock,
+    WhileLoop,
+    ForEachLoop
 } from "../nodes";
 import { ASTVisitor } from "./ASTVisitor";
 
@@ -44,7 +48,7 @@ export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
     visitBooleanVarValue(booleanVarVal: BooleanValue, params: T): U {
         throw new Error("Method not implemented.");
     }
-    visitBuiltInFunctionVarValue(BuiltInFunction: FunctionCallValue, params: T): U {
+    visitBuiltInFunctionVarValue(BuiltInFunction: FunctionCall, params: T): U {
         throw new Error("Method not implemented.");
     }
     visitNumberVarValue(numberVarValue: NumberValue, params: T): U {
@@ -59,5 +63,21 @@ export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
     visitVarNameValue(varName: VarNameValue, params: T): U {
         throw new Error("Method not implemented.");
     }
+    visitConditional(conditional: Conditional, params: T): U {
+        throw new Error("Method not implemented.");
+    }
+
+    visitStatementBlock(block: StatementBlock, params: T): U {
+        throw new Error("Method not implemented.");
+    }
+
+    visitForEachLoop(loop: ForEachLoop, params: T): U {
+        throw new Error("Method not implemented.");
+    }
+
+    visitWhileLoop(loop: WhileLoop, params: T): U {
+        throw new Error("Method not implemented.");
+    }
+
 
 }

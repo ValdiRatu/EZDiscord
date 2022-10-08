@@ -11,5 +11,40 @@ var e = 69
 var f = ['a quick brown fox', 100, true, var_name, get(array, len(random(0, 10)))]
 var g = (2+45)/2+123*(1235)-234-(-234/2)+a+b/c-(-e)
 var h = not (a and b or (false == bool_var))
-e = 420
-f = h
+
+// test conditionals
+if (b) {
+    var tweet = 'twoot'
+    reply('hello')
+} else {
+    b = true
+    if (h) {
+        reply('lol')
+    }
+    reply('goodbye')
+}
+
+// test loops
+while (b) {
+    var thing = 55
+    if (c) {
+        thing = 66
+    } else {
+        thing = get(array, 1)
+    }
+    reply(thing)
+}
+
+for (thing in f) {
+    if (b) {
+        var otherThing = thing
+    } else {
+        var newThing = thing
+    }
+
+    while (b) {
+        reply('infinite loop hehe xd')
+    }
+
+    reply(thing)
+}

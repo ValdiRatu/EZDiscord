@@ -1,4 +1,4 @@
-import { 
+import {
     Bot,
     ClientId,
     Config,
@@ -6,14 +6,18 @@ import {
     Token,
     ArrayValue,
     BooleanValue,
-    FunctionCallValue,
+    FunctionCall,
     NumberValue,
     StringValue,
     Variable,
     VarNameValue,
     BinaryValue,
-    MathValue
-} from '../nodes'
+    MathValue,
+    Conditional,
+    StatementBlock,
+    WhileLoop,
+    ForEachLoop
+} from '../nodes';
 
 export interface ASTVisitor<T, U> {
     visitBot(bot: Bot, params: T): U;
@@ -23,11 +27,15 @@ export interface ASTVisitor<T, U> {
     visitGuildId(guildId: GuildId, params: T) : U;
     visitArrayVarValue(arrVarVal: ArrayValue, params: T) : U;
     visitBooleanVarValue(booleanVarVal: BooleanValue, params: T) : U;
-    visitBuiltInFunctionVarValue(BuiltInFunction: FunctionCallValue, params: T) : U;
+    visitBuiltInFunctionVarValue(BuiltInFunction: FunctionCall, params: T) : U;
     visitNumberVarValue(numberVarValue: NumberValue, params: T): U;
     visitStringVarValue(stringVarValue: StringValue, params: T): U;
     visitVariable<Y>(variable: Variable<Y>, params: T): U;
     visitVarNameValue(varName: VarNameValue, params: T): U;
     visitBinaryValue(binaryValue: BinaryValue, params: T): U;
     visitMathValue(mathValue: MathValue, params: T): U;
+    visitConditional(conditional: Conditional, params: T): U;
+    visitStatementBlock(block: StatementBlock, params: T): U;
+    visitWhileLoop(loop: WhileLoop, params: T): U;
+    visitForEachLoop(loop: ForEachLoop, params: T): U;
 }

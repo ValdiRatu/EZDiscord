@@ -2,7 +2,7 @@ import {
     ArrayValue,
     BinaryValue,
     BooleanValue,
-    FunctionCallValue,
+    FunctionCall,
     MathValue,
     NumberValue,
     StringValue,
@@ -10,7 +10,7 @@ import {
 } from '../nodes';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
 
-export class VariableResolverVisitor extends ASTBaseVisitor<void, string> {
+export class VariableValueResolverVisitor extends ASTBaseVisitor<void, string> {
     
     visitArrayVarValue(arrVarVal: ArrayValue, params: void): string {
         const resolvedValue = arrVarVal.value.reduce((currentArray, type) => {
@@ -24,7 +24,7 @@ export class VariableResolverVisitor extends ASTBaseVisitor<void, string> {
         return String(booleanVarVal.value);
     }
 
-    visitBuiltInFunctionVarValue(builtInFunction: FunctionCallValue, params: void): string {
+    visitBuiltInFunctionVarValue(builtInFunction: FunctionCall, params: void): string {
 
         const funcParams = builtInFunction.params.map(funcParam => funcParam.accept(this, undefined));
 

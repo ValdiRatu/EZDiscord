@@ -7,7 +7,7 @@ import { Statement } from './Statement';
 import { Token } from './config/Token';
 import { ArrayValue } from './variables/ArrayValue';
 import { BooleanValue } from './variables/BooleanValue';
-import { FunctionCallValue } from './variables/FunctionCallValue';
+import { FunctionCall } from './FunctionCall';
 import { NumberValue } from './variables/NumberValue';
 import { StringValue } from './variables/StringValue';
 import { Variable } from './variables/Variable';
@@ -15,6 +15,10 @@ import { VarNameValue } from './variables/VarNameValue';
 import { VarType } from './variables/VarType';
 import { MathValue } from './variables/MathValue';
 import { BinaryValue } from './variables/BinaryValue';
+import { Conditional } from './conditionals/Conditional';
+import { StatementBlock } from "./conditionals/StatementBlock";
+import { WhileLoop } from "./loops/WhileLoop";
+import { ForEachLoop } from "./loops/ForEachLoop";
 
 export { 
     Bot, 
@@ -26,12 +30,16 @@ export {
     Token,
     ArrayValue,
     BooleanValue,
-    FunctionCallValue,
+    FunctionCall,
     NumberValue,
     StringValue,
     Variable,
     VarNameValue,
     VarType,
     MathValue,
-    BinaryValue
+    BinaryValue,
+    Conditional,
+    StatementBlock,
+    WhileLoop,
+    ForEachLoop
 };

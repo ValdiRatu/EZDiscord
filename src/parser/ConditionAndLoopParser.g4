@@ -7,11 +7,13 @@ conditionBlock: L_PAREN VAR_NAME R_PAREN statBlock;
 
 loop
     : WHILE whileBlock
-    | FOR forBlock
+    | FOR forEachBlock
     ;
 
 whileBlock: L_PAREN VAR_NAME R_PAREN statBlock;
-forBlock: L_PAREN VAR_NAME IN VAR_NAME R_PAREN statBlock;
+forEachBlock: L_PAREN forEachBlockArray IN forEachBlockLoopVar R_PAREN statBlock;
+forEachBlockArray: VAR_NAME;
+forEachBlockLoopVar: VAR_NAME;
 
 statBlock: L_CURLY (conditionAndLoopStatement)* R_CURLY;
 conditionAndLoopStatement
