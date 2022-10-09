@@ -16,9 +16,11 @@ import { VarType } from './variables/VarType';
 import { MathValue } from './variables/MathValue';
 import { BinaryValue } from './variables/BinaryValue';
 import { Conditional } from './conditionals/Conditional';
-import { StatementBlock } from "./conditionals/StatementBlock";
 import { WhileLoop } from "./loops/WhileLoop";
 import { ForEachLoop } from "./loops/ForEachLoop";
+import { StatementBlock } from "./StatementBlock";
+import { Argument, ArgType } from './commands/Argument';
+import { Command } from './commands/Command';
 
 export { 
     Bot, 
@@ -41,5 +43,8 @@ export {
     Conditional,
     StatementBlock,
     WhileLoop,
-    ForEachLoop
+    ForEachLoop,
+    Argument,
+    Command,
+    ArgType
 };

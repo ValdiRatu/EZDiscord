@@ -1,5 +1,5 @@
 import {ASTVisitor} from "../../visitors/ASTVisitor";
-import {StatementBlock} from "../conditionals/StatementBlock";
+import {StatementBlock} from "../StatementBlock";
 import {Statement} from "../Statement";
 
 export abstract class Loop extends Statement {

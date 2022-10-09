@@ -13,7 +13,7 @@ binaryExpr
 binaryAtom
     : boolean
     | number
-    | var_name
+    | varName
     | string
     // | functionCall same reasoning as in MathParser.g4
     ;

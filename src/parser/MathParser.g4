@@ -10,6 +10,6 @@ mathFactor: (SUB)? mathAtom | L_PAREN math R_PAREN;
 
 mathAtom
     : number
-    | var_name
+    | varName
     // | functionCall This requires us to actually go into the tree which is a lot of work for now so maybe defer?
     ;

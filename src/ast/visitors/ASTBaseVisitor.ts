@@ -13,14 +13,22 @@ import {
     VarNameValue,
     BinaryValue,
     MathValue,
-    Conditional,
-    StatementBlock,
-    WhileLoop,
-    ForEachLoop
+    Argument,
+    Command,
+    ForEachLoop,
+    WhileLoop
 } from "../nodes";
 import { ASTVisitor } from "./ASTVisitor";
+import {Conditional} from "../nodes/conditionals/Conditional";
+import {StatementBlock} from "../nodes/StatementBlock";
 
 export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
+    visitCommand(command: Command, params: T): U {
+        throw new Error("Method not implemented.");
+    }
+    visitArgument(args: Argument, params: T): U {
+        throw new Error("Method not implemented.");
+    }
     visitBinaryValue(binaryValue: BinaryValue, params: T): U {
         throw new Error("Method not implemented.");
     }
@@ -66,15 +74,12 @@ export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
     visitConditional(conditional: Conditional, params: T): U {
         throw new Error("Method not implemented.");
     }
-
     visitStatementBlock(block: StatementBlock, params: T): U {
         throw new Error("Method not implemented.");
     }
-
     visitForEachLoop(loop: ForEachLoop, params: T): U {
         throw new Error("Method not implemented.");
     }
-
     visitWhileLoop(loop: WhileLoop, params: T): U {
         throw new Error("Method not implemented.");
     }

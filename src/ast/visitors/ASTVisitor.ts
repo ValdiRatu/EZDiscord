@@ -13,11 +13,13 @@ import {
     VarNameValue,
     BinaryValue,
     MathValue,
-    Conditional,
-    StatementBlock,
-    WhileLoop,
-    ForEachLoop
-} from '../nodes';
+    Command,
+    Argument,
+    ForEachLoop,
+    WhileLoop
+} from '../nodes'
+import {Conditional} from "../nodes/conditionals/Conditional";
+import {StatementBlock} from "../nodes/StatementBlock";
 
 export interface ASTVisitor<T, U> {
     visitBot(bot: Bot, params: T): U;
@@ -36,6 +38,8 @@ export interface ASTVisitor<T, U> {
     visitMathValue(mathValue: MathValue, params: T): U;
     visitConditional(conditional: Conditional, params: T): U;
     visitStatementBlock(block: StatementBlock, params: T): U;
-    visitWhileLoop(loop: WhileLoop, params: T): U;
-    visitForEachLoop(loop: ForEachLoop, params: T): U;
+    visitCommand(command: Command, params: T): U;
+    visitArgument(arg: Argument, params: T): U;
+    visitForEachLoop(forEachLoop: ForEachLoop, params: T): U;
+    visitWhileLoop(whileLoop: WhileLoop, params: T): U;
 }

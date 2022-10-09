@@ -4,4 +4,4 @@ options { tokenVocab=EZDiscordLexer; }
 string: S_QUOTE STRING_VALUE? STRING_CLOSE;
 boolean: BOOLEAN;
 number: NUMBER;
-var_name: VAR_NAME;
+varName: VAR_NAME;

@@ -14,16 +14,20 @@ import {
     NumberContext,
     BooleanContext,
     FunctionCallContext,
-    Var_nameContext,
+    VarNameContext,
     ArrayContext,
     ElementContext,
     MathContext,
     BinaryContext,
     VariableAssignContext,
     ConditionContext,
-    StatBlockContext,
+    StatementBlockContext,
+    CommandContext,
+    ArgumentContext,
+    TypeContext,
     LoopContext,
-    WhileBlockContext, ForEachBlockContext
+    WhileBlockContext,
+    ForEachBlockContext,
 } from '../parser/EZDiscordParser';
 import {
     Bot,
@@ -44,6 +48,9 @@ import {
     BinaryValue,
     Conditional,
     StatementBlock,
+    Argument,
+    Command,
+    ArgType,
     WhileLoop,
     ForEachLoop
 } from './nodes';
@@ -126,7 +133,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
         return new BooleanValue(JSON.parse(ctx.BOOLEAN().text.toLowerCase()));
     }
 
-    visitVar_name(ctx: Var_nameContext) {
+    visitVarName(ctx: VarNameContext) {
         return new VarNameValue(ctx.VAR_NAME().text);
     }
 
@@ -164,19 +171,43 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
         )
     }
 
+    visitCommand(ctx: CommandContext) {
+        const name = ctx.VAR_NAME().text
+        const args = ctx.argument().map(argCtx => this.visitArgument(argCtx));
+        const statementBlock = this.visitStatementBlock(ctx.statementBlock());
+
+        return new Command(name, statementBlock, args);
+    }
+
+    visitArgument(ctx: ArgumentContext) {
+        const name = ctx.VAR_NAME().text;
+        const type = this.getType(ctx.type());
+
+        return new Argument(name, type);
+    }
+
+    // don't need an AST node returned so we don't use the visitor name
+    getType(ctx: TypeContext) {
+        const bool = ctx.BOOL();
+        return ctx.BOOL()
+            ? ArgType.Boolean
+            : ctx.NUM()
+            ? ArgType.Number
+            : ArgType.String
+    }
+
     visitCondition(ctx: ConditionContext) {
-
         const varName = ctx.conditionBlock().VAR_NAME().text;
-        const ifStatementBlock = this.visitStatBlock(ctx.conditionBlock().statBlock());
+        const ifStatementBlock = this.visitStatementBlock(ctx.conditionBlock().statementBlock());
 
-        const elseStatBlockCtx = ctx.statBlock();
-        const elseStatementBlock = elseStatBlockCtx ? this.visitStatBlock(elseStatBlockCtx) : undefined;
+        const elseStatBlockCtx = ctx.statementBlock();
+        const elseStatementBlock = elseStatBlockCtx ? this.visitStatementBlock(elseStatBlockCtx) : undefined;
 
         return new Conditional(varName, ifStatementBlock, elseStatementBlock);
     }
 
-    visitStatBlock(ctx: StatBlockContext) {
-        const statements = ctx.conditionAndLoopStatement().map(statCtx => this.visitChildren(statCtx));
+    visitStatementBlock(ctx: StatementBlockContext) {
+        const statements = ctx.blockStatement().map(statementCtx => this.visitChildren(statementCtx));
         return new StatementBlock(statements);
     }
 
@@ -186,14 +217,14 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
 
     visitWhileBlock(ctx: WhileBlockContext) {
         const varName = ctx.VAR_NAME().text;
-        const statementBlock = this.visitStatBlock(ctx.statBlock());
+        const statementBlock = this.visitStatementBlock(ctx.statementBlock());
         return new WhileLoop(varName, statementBlock);
     }
 
     visitForEachBlock(ctx: ForEachBlockContext) {
         const loopVarName = ctx.forEachBlockLoopVar().VAR_NAME().text;
         const arrayName = ctx.forEachBlockArray().VAR_NAME().text;
-        const statementBlock = this.visitStatBlock(ctx.statBlock());
+        const statementBlock = this.visitStatementBlock(ctx.statementBlock());
         return new ForEachLoop(loopVarName, arrayName, statementBlock);
     }
 }

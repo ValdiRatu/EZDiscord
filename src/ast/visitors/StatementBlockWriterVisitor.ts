@@ -4,13 +4,25 @@ import {
     StatementBlock,
     FunctionCall,
     Variable,
-    WhileLoop,
-    ForEachLoop
+    Command,
+    Argument,
+    ArgType,
+    ForEachLoop,
+    WhileLoop
 } from '../nodes'
 import {CodeBlockWriter} from "ts-morph";
-import {VariableValueResolverVisitor} from "./VariableValueResolverVisitor";
+import {ValueResolverVisitor} from "./ValueResolverVisitor";
 
+/**
+ * Visitor that writes block statements which are all statements within commands, conditionals, and loops to typescript
+ */
 export class StatementBlockWriterVisitor extends ASTBaseVisitor<CodeBlockWriter, void> {
+    visitStatementBlock(block: StatementBlock, writer: CodeBlockWriter): void {
+        for (let statement of block.statements) {
+            statement.accept(this, writer);
+        }
+    }
+
     visitConditional(conditional: Conditional, writer: CodeBlockWriter): void {
         const ifStatementBlock = conditional.ifBlock;
         const elseStatementBlock = conditional.elseBlock;
@@ -26,20 +38,14 @@ export class StatementBlockWriterVisitor extends ASTBaseVisitor<CodeBlockWriter,
         }
     }
 
-    visitStatementBlock(block: StatementBlock, writer: CodeBlockWriter): void {
-        for (let statement of block.statements) {
-            statement.accept(this, writer);
-        }
-    }
-
     visitBuiltInFunctionVarValue(functionCallValue: FunctionCall, writer: CodeBlockWriter): void {
-        const functionCallLiteral = functionCallValue.accept(new VariableValueResolverVisitor(), undefined);
+        const functionCallLiteral = functionCallValue.accept(new ValueResolverVisitor(), undefined);
         writer.writeLine(`${functionCallLiteral}`);
     }
 
     visitVariable<Y>(variable: Variable<Y>, writer: CodeBlockWriter): void {
         const varName = variable.name;
-        const value = variable.value.accept(new VariableValueResolverVisitor(), undefined);
+        const value = variable.value.accept(new ValueResolverVisitor(), undefined);
         const declarationKeyword = variable.isDeclaration ? "let" : "";
 
         writer.writeLine(`${declarationKeyword} ${varName} = ${value}`);
@@ -61,5 +67,16 @@ export class StatementBlockWriterVisitor extends ASTBaseVisitor<CodeBlockWriter,
         writer.write(`for (let ${loopVariable} of ${loopArray})`).block(() => {
             loopStatementBlock.accept(this, writer);
         });
+    }
+
+    visitArgument(arg: Argument, writer: CodeBlockWriter): void{
+        switch(arg.type) {
+            case ArgType.Boolean:
+                writer.write(`.addBooleanOption((options) => options.setName('${arg.name}').setRequired(true))`)
+            case ArgType.Number:
+                writer.write(`.addNumberOption((options) => options.setName('${arg.name}').setRequired(true))`)
+            case ArgType.String:
+                writer.write(`.addStringOption((options) => options.setName('${arg.name}').setRequired(true))`)
+        }
     }
 }

@@ -8,7 +8,7 @@ value
     : boolean
     | number
     | string
-    | var_name
+    | varName
     | functionCall
     | array
     | math
@@ -18,7 +18,7 @@ value
 array: L_SQUARE (element (COMMA element)*)? R_SQUARE;
 element
     : string
-    | var_name
+    | varName
     | number
     | boolean
     | functionCall

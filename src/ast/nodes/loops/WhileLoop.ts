@@ -1,6 +1,6 @@
 import {Loop} from "./Loop";
 import {ASTVisitor} from "../../visitors/ASTVisitor";
-import {StatementBlock} from "../conditionals/StatementBlock";
+import {StatementBlock} from "../StatementBlock";
 
 export class WhileLoop extends Loop {
 

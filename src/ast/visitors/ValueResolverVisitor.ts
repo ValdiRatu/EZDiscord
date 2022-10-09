@@ -1,4 +1,5 @@
 import { 
+    Argument,
     ArrayValue,
     BinaryValue,
     BooleanValue,
@@ -8,10 +9,13 @@ import {
     StringValue,
     VarNameValue
 } from '../nodes';
+import { ArgType } from '../nodes/commands/Argument';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
 
-export class VariableValueResolverVisitor extends ASTBaseVisitor<void, string> {
-    
+/**
+ * Resolves value to proper Typescript specification
+ */
+export class ValueResolverVisitor extends ASTBaseVisitor<void, string> { 
     visitArrayVarValue(arrVarVal: ArrayValue, params: void): string {
         const resolvedValue = arrVarVal.value.reduce((currentArray, type) => {
             return `${currentArray}${type.accept(this, undefined)},`
@@ -54,6 +58,17 @@ export class VariableValueResolverVisitor extends ASTBaseVisitor<void, string> {
     visitBinaryValue(binaryValue: BinaryValue, params: void): string {
         // currently a very hacky way to go about it
         return binaryValue.value.replace("not", "!").replace("and", "&&").replace("or", "||")
+    }
+
+    visitArgument(arg: Argument, params: void): string {
+        switch(arg.type) {
+            case ArgType.Boolean:
+                return `.addBooleanOption((options) => options.setName('${arg.name}').setRequired(true))`
+            case ArgType.Number:
+                return `.addNumberOption((options) => options.setName('${arg.name}').setRequired(true))`
+            case ArgType.String:
+                return `.addStringOption((options) => options.setName('${arg.name}').setRequired(true))`
+        }
     }
     
 }

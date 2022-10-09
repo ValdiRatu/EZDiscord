@@ -1,9 +1,9 @@
-import {ASTNode} from "../ASTNode";
-import {ASTVisitor} from "../../visitors/ASTVisitor";
-import {Statement} from "../Statement";
+import {ASTNode} from "./ASTNode";
+import {ASTVisitor} from "../visitors/ASTVisitor";
+import {Statement} from "./Statement";
 
 /**
- * AST node containing all the statements within an if/else block and a loop block
+ * AST node containing all the statements within a block 
  */
 export class StatementBlock implements ASTNode {
 
