@@ -54,6 +54,7 @@ import {
     WhileLoop,
     ForEachLoop
 } from './nodes';
+import {BuiltInFunction} from "./nodes/FunctionCall";
 
 type AtomValue = StringValue | VarNameValue | NumberValue | BooleanValue | FunctionCall
 type VariableValue = VarType<string | number | boolean> | BinaryValue
@@ -139,7 +140,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
 
     visitFunctionCall(ctx: FunctionCallContext) {
         return new FunctionCall(
-            ctx.FUNCTION().text,
+            ctx.FUNCTION().text as BuiltInFunction,
             ctx.params().param().map(paramCtx => this.visitParam(paramCtx))
         )
     }

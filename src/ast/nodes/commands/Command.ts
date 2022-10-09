@@ -19,6 +19,14 @@ export class Command implements Statement {
       return this._args;
     }
 
+    /**
+     * Discord Js doesn't allow upper case letters in slash command names or option names. This function will replace all uppercase letters in a name with a hyphen and the lowercase character
+     * ex: testCommand -> test-command
+     */
+    get formattedName() {
+        return this._name.replaceAll(/[A-Z]/g, char => `-${char.toLowerCase()}`);
+    }
+
     get statementBlock() {
       return this._statementBlock;
     }

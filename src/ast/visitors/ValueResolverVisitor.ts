@@ -7,10 +7,11 @@ import {
     MathValue,
     NumberValue,
     StringValue,
-    VarNameValue
+    VarNameValue,
+    ArgType
 } from '../nodes';
-import { ArgType } from '../nodes/commands/Argument';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
+import {BuiltInFunction} from "../nodes/FunctionCall";
 
 /**
  * Resolves value to proper Typescript specification
@@ -36,7 +37,11 @@ export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
         for (let param of funcParams) {
             parameters += `${param}, `;
         }
-        return `${builtInFunction.name}(${parameters.slice(0, -2)})`;
+        if (builtInFunction.function === BuiltInFunction.reply) {
+            // need to pass in the discordjs interaction object to the reply function
+            return `await ${builtInFunction.function.valueOf()}(interaction, ${parameters.slice(0, -2)})`;
+        }
+        return `${builtInFunction.function}(${parameters.slice(0, -2)})`;
     }
 
     visitNumberVarValue(numberVarValue: NumberValue, params: void): string {
@@ -63,11 +68,11 @@ export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
     visitArgument(arg: Argument, params: void): string {
         switch(arg.type) {
             case ArgType.Boolean:
-                return `.addBooleanOption((options) => options.setName('${arg.name}').setRequired(true))`
+                return `.addBooleanOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`
             case ArgType.Number:
-                return `.addNumberOption((options) => options.setName('${arg.name}').setRequired(true))`
+                return `.addNumberOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`
             case ArgType.String:
-                return `.addStringOption((options) => options.setName('${arg.name}').setRequired(true))`
+                return `.addStringOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`
         }
     }
     

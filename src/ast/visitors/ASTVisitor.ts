@@ -16,10 +16,10 @@ import {
     Command,
     Argument,
     ForEachLoop,
-    WhileLoop
-} from '../nodes'
-import {Conditional} from "../nodes/conditionals/Conditional";
-import {StatementBlock} from "../nodes/StatementBlock";
+    WhileLoop,
+    Conditional,
+    StatementBlock
+} from '../nodes';
 
 export interface ASTVisitor<T, U> {
     visitBot(bot: Bot, params: T): U;

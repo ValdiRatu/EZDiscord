@@ -2,14 +2,24 @@ import { ASTVisitor } from "../visitors/ASTVisitor";
 import { VarType } from "./variables/VarType";
 import {Statement} from "./Statement";
 
+export enum BuiltInFunction {
+    reply = "reply",
+    random = "random",
+    add = "add",
+    remove = "remove",
+    get = "get",
+    len = "len",
+    find = "find",
+    set = "set"
+}
 
 export class FunctionCall extends Statement {
-    constructor(private readonly _name: string, private readonly _params: (VarType<string | boolean | number> | FunctionCall)[]) {
+    constructor(private readonly _function: BuiltInFunction, private readonly _params: (VarType<string | boolean | number> | FunctionCall)[]) {
         super();
     }
 
-    get name() {
-        return this._name;
+    get function() {
+        return this._function;
     }
 
     get params() {

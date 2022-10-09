@@ -1,0 +1,17 @@
+Token='MTAyMDkyNzI1MTY3MzUxNDAwNA.GqH0h8.YUB7YrzAyKvOju8RPAb1p7arMpbbNwUJJoVPtM'
+ClientID = '1020927251673514004'
+GuildID=['1017141190614851594']
+
+var user = 'Joe'
+
+command echo(message: string) {
+    reply(user, message)
+}
+
+command foo() {
+    reply('bar')
+}
+
+command addition(num1: number, num2: number) {
+    reply('yeesh')
+}

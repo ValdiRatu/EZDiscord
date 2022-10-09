@@ -4,7 +4,6 @@ import {
     StatementBlock,
     FunctionCall,
     Variable,
-    Command,
     Argument,
     ArgType,
     ForEachLoop,

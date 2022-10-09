@@ -16,11 +16,11 @@ import {
     Argument,
     Command,
     ForEachLoop,
-    WhileLoop
+    WhileLoop,
+    Conditional,
+    StatementBlock
 } from "../nodes";
 import { ASTVisitor } from "./ASTVisitor";
-import {Conditional} from "../nodes/conditionals/Conditional";
-import {StatementBlock} from "../nodes/StatementBlock";
 
 export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
     visitCommand(command: Command, params: T): U {
