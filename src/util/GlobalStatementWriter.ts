@@ -1,7 +1,8 @@
 import { SourceFile, VariableDeclarationKind } from "ts-morph";
-import { ArgType, Argument, Command, Variable } from "../ast/nodes";
+import { Argument, Command, Variable } from "../ast/nodes";
 import { StatementBlockWriterVisitor } from "../ast/visitors/StatementBlockWriterVisitor";
 import { ValueResolverVisitor } from "../ast/visitors/ValueResolverVisitor";
+import { Type } from "./ScopedSymbolTable";
 
 /**
  * Helper class that writes Global Statements
@@ -58,11 +59,11 @@ export class GlobalStatementWriter {
   private static getArgumentVariableString(arg: Argument): string {
     const options = `${this.commandInternalArgument}.options` 
     switch(arg.type) {
-      case ArgType.Boolean:
+      case Type.Boolean:
         return `const ${arg.name} = ${options}.getBoolean('${arg.formattedName}')`
-      case ArgType.Number:
+      case Type.Number:
         return `const ${arg.name} = ${options}.getNumber('${arg.formattedName}')`
-      case ArgType.String:
+      case Type.String:
         return `const ${arg.name} = ${options}.getString('${arg.formattedName}')`
     }
   }

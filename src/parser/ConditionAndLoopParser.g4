@@ -11,7 +11,7 @@ loop
     ;
 
 whileBlock: L_PAREN VAR_NAME R_PAREN statementBlock;
-forEachBlock: L_PAREN forEachBlockArray IN forEachBlockLoopVar R_PAREN statementBlock;
+forEachBlock: L_PAREN forEachBlockLoopVar IN forEachBlockArray R_PAREN statementBlock;
 forEachBlockArray: VAR_NAME;
 forEachBlockLoopVar: VAR_NAME;
 

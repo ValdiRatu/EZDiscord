@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ParserToASTConverter } from '../ast/ParserToASTConverter';
 import { EvaluateVisitor } from '../ast/visitors/EvaluateVisitor';
+import { StaticCheckVisitor } from '../ast/visitors/StaticCheckVisitor';
 import { EZDiscordLexer } from '../parser/EZDiscordLexer';
 import { EZDiscordParser } from '../parser/EZDiscordParser';
 
@@ -22,5 +23,10 @@ if (parser.numberOfSyntaxErrors > 0) {
 const astConverter = new ParserToASTConverter();
 
 const bot = astConverter.visit(tree);
+const staticChecker = new StaticCheckVisitor()
+bot.accept(staticChecker, undefined)
+if (staticChecker.errors.length > 0) {
+    throw new Error(`\n${staticChecker.errors.join('\n')}`);
+}
 const evaluator = new EvaluateVisitor();
 bot.accept(evaluator, undefined);

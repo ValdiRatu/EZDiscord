@@ -1,14 +1,9 @@
+import { Type } from "../../../util/ScopedSymbolTable";
 import { ASTVisitor } from "../../visitors/ASTVisitor";
 import { ASTNode } from "../ASTNode";
 
-export enum ArgType {
-  Boolean = 'boolean',
-  Number = 'number',
-  String = 'string'
-}
-
 export class Argument implements ASTNode {
-  constructor(private readonly _name: string, private readonly _type: ArgType) {}
+  constructor(private readonly _name: string, private readonly _type: Exclude<Type, Type.Any | Type.Array | Type.Error>) {}
   accept<T, U>(visitor: ASTVisitor<T, U>, params: T): U {
     return visitor.visitArgument(this, params);
   }

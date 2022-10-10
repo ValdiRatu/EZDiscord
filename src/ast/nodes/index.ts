@@ -19,7 +19,7 @@ import { Conditional } from './conditionals/Conditional';
 import { WhileLoop } from "./loops/WhileLoop";
 import { ForEachLoop } from "./loops/ForEachLoop";
 import { StatementBlock } from "./StatementBlock";
-import { Argument, ArgType } from './commands/Argument';
+import { Argument } from './commands/Argument';
 import { Command } from './commands/Command';
 
 export { 
@@ -45,6 +45,5 @@ export {
     WhileLoop,
     ForEachLoop,
     Argument,
-    Command,
-    ArgType
+    Command
 };

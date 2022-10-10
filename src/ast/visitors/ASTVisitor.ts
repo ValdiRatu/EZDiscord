@@ -29,7 +29,7 @@ export interface ASTVisitor<T, U> {
     visitGuildId(guildId: GuildId, params: T) : U;
     visitArrayVarValue(arrVarVal: ArrayValue, params: T) : U;
     visitBooleanVarValue(booleanVarVal: BooleanValue, params: T) : U;
-    visitBuiltInFunctionVarValue(BuiltInFunction: FunctionCall, params: T) : U;
+    visitBuiltInFunctionVarValue(builtInFunction: FunctionCall, params: T) : U;
     visitNumberVarValue(numberVarValue: NumberValue, params: T): U;
     visitStringVarValue(stringVarValue: StringValue, params: T): U;
     visitVariable<Y>(variable: Variable<Y>, params: T): U;

@@ -7,11 +7,11 @@ import {
     MathValue,
     NumberValue,
     StringValue,
-    VarNameValue,
-    ArgType
+    VarNameValue
 } from '../nodes';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
 import {BuiltInFunction} from "../nodes/FunctionCall";
+import { Type } from '../../util/ScopedSymbolTable';
 
 /**
  * Resolves value to proper Typescript specification
@@ -67,11 +67,11 @@ export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
 
     visitArgument(arg: Argument, params: void): string {
         switch(arg.type) {
-            case ArgType.Boolean:
+            case Type.Boolean:
                 return `.addBooleanOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`
-            case ArgType.Number:
+            case Type.Number:
                 return `.addNumberOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`
-            case ArgType.String:
+            case Type.String:
                 return `.addStringOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`
         }
     }

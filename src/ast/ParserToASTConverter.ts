@@ -50,11 +50,11 @@ import {
     StatementBlock,
     Argument,
     Command,
-    ArgType,
     WhileLoop,
     ForEachLoop
 } from './nodes';
 import {BuiltInFunction} from "./nodes/FunctionCall";
+import { Type } from '../util/ScopedSymbolTable';
 
 type AtomValue = StringValue | VarNameValue | NumberValue | BooleanValue | FunctionCall
 type VariableValue = VarType<string | number | boolean> | BinaryValue
@@ -191,10 +191,10 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     getType(ctx: TypeContext) {
         const bool = ctx.BOOL();
         return ctx.BOOL()
-            ? ArgType.Boolean
+            ? Type.Boolean
             : ctx.NUM()
-            ? ArgType.Number
-            : ArgType.String
+            ? Type.Number
+            : Type.String
     }
 
     visitCondition(ctx: ConditionContext) {

@@ -26,7 +26,7 @@ export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
     visitCommand(command: Command, params: T): U {
         throw new Error("Method not implemented.");
     }
-    visitArgument(args: Argument, params: T): U {
+    visitArgument(arg: Argument, params: T): U {
         throw new Error("Method not implemented.");
     }
     visitBinaryValue(binaryValue: BinaryValue, params: T): U {
@@ -56,7 +56,7 @@ export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
     visitBooleanVarValue(booleanVarVal: BooleanValue, params: T): U {
         throw new Error("Method not implemented.");
     }
-    visitBuiltInFunctionVarValue(BuiltInFunction: FunctionCall, params: T): U {
+    visitBuiltInFunctionVarValue(builtInFunction: FunctionCall, params: T): U {
         throw new Error("Method not implemented.");
     }
     visitNumberVarValue(numberVarValue: NumberValue, params: T): U {

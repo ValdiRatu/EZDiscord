@@ -4,8 +4,6 @@ import {
     StatementBlock,
     FunctionCall,
     Variable,
-    Argument,
-    ArgType,
     ForEachLoop,
     WhileLoop
 } from '../nodes'
@@ -66,16 +64,5 @@ export class StatementBlockWriterVisitor extends ASTBaseVisitor<CodeBlockWriter,
         writer.write(`for (let ${loopVariable} of ${loopArray})`).block(() => {
             loopStatementBlock.accept(this, writer);
         });
-    }
-
-    visitArgument(arg: Argument, writer: CodeBlockWriter): void{
-        switch(arg.type) {
-            case ArgType.Boolean:
-                writer.write(`.addBooleanOption((options) => options.setName('${arg.name}').setRequired(true))`)
-            case ArgType.Number:
-                writer.write(`.addNumberOption((options) => options.setName('${arg.name}').setRequired(true))`)
-            case ArgType.String:
-                writer.write(`.addStringOption((options) => options.setName('${arg.name}').setRequired(true))`)
-        }
     }
 }
