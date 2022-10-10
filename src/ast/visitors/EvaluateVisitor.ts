@@ -68,8 +68,10 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
     }
 
     private setUpOutputFile(outputFile: SourceFile) {
+        // include imports of required modules
         outputFile.addImportDeclarations([
             {
+                // discord js
                 moduleSpecifier: 'discord.js',
                 namedImports: ['SlashCommandBuilder', 'ChatInputCommandInteraction']
             },
@@ -78,10 +80,12 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
                 namedImports: ['DiscordBotSlashCommand']
             },
             {
+                // functions built into our language
                 moduleSpecifier: '../src/discordjs/BuiltInFunctions',
                 namedImports: ['reply', 'random', 'add', 'remove', 'get', 'len', 'find', 'set']
             }
         ]);
+        // setup a default export of a list of the slash commands to be sent to the bot runner
         const exportedVariableName = "slashCommands";
         outputFile.addVariableStatement({
             isExported: false,
