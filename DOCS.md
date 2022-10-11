@@ -1,16 +1,16 @@
 # EZDiscord Documentation
 
-## Table of Content
+## Table of Contents
 1. [Getting Started](#getting-started)
 2. [Discord Variables](#discord-variables)
 3. [Variables](#variables)
 4. [Math](#math)
 5. [Boolean Logic](#boolean-logic)
-6. [Built-in Functions](#built-in)
+6. [Built-in Functions](#built-in-functions)
 7. [Commands](#commands)
 8. [Control Flow](#control-flow)
 
-## Getting Started <a name="getting-started"></a>
+## Getting Started
 
 To start of, create a file called `bot.ezd` in the root of the project. This file will contain the code for your bot.
 
@@ -70,7 +70,9 @@ sum: 6
 
 Now that you have a basic understanding of how to write EZDiscord code, you can start writing your own bot! You can find more information on the language below.
 
-## Discord Variables <a name="discord-variables"></a>
+## Discord Variables
+
+All discord variables **MUST** be declared in the global scope before any commands are declared.
 
 ### Token
 
@@ -102,7 +104,7 @@ Type: `string[]`
 GuildID=['123456789012345678', '987654321098765432']
 ```
 
-## Variables <a name="variables"></a>
+## Variables
 
 ### Creating Variables
 
@@ -200,7 +202,7 @@ a = 2
 
 All variables are mutable and can be assigned any value of any type after they are created.
 
-## Math <a name="math"></a>
+## Math
 
 EZDiscord supports basic math operations. These operations are:
 - `+`: addition
@@ -225,7 +227,7 @@ var i = ((h + 1) * 2) / 2
 
 You **CANNOT** use these operations on strings, arrays, or booleans or in conjunction with functions.
 
-## Boolean Logic <a name="boolean-logic"></a>
+## Boolean Logic
 
 EZDiscord supports basic boolean logic. These operations are:
 - `==`: equal to
@@ -260,7 +262,7 @@ var o = not (true or false) == a
 
 You **CANNOT** use these operations on arrays or in conjunction with functions.
 
-## Built-in Functions <a name="built-in"></a>
+## Built-in Functions
 
 ### `reply(...args)`
 
@@ -275,7 +277,7 @@ The `reply` function sends a message to the channel the command was called in. I
 ```js
 var txt = 'EzDiscord'
 var adjectives = ['cool', 'awesome', 'great']
-reply(txt, 'is', get(adjectives, 1), '!')
+reply(txt, ' is ', get(adjectives, 1), '!')
 // Output: EzDiscord is awesome!
 ```
 
@@ -299,7 +301,13 @@ reply(txt, 'is', get(adjectives, random(0, last_index)), '!')
 
 ### `concat(...args)`
 
-Concatenates all the arguments into a single string.
+Concatenates all the arguments into a single string. It can take any number of arguments. The arguments can be of the following types:
+
+- variable
+- boolean
+- number
+- string
+- function call (like `len(array)` or any other function that returns a value)
 
 ```js
 var ez = 'EzDiscord'
@@ -307,7 +315,7 @@ concat(ez, ' is ', 'awesome', '!')
 // Output: EzDiscord is awesome!
 ```
 
-## Commands <a name="commands"></a>
+## Commands
 
 ### Creating Commands
 
@@ -347,7 +355,7 @@ There are 3 types of arguments:
 
 Arguments **MUST** be provided a type. The type of the argument is specified after the argument name and a colon (`:`).
 
-## Control Flow <a name="control-flow"></a>
+## Control Flow
 
 Loops and conditionals are used to control the flow of the program. You can nest loops and conditionals.
 
@@ -415,4 +423,12 @@ The above example will send the following messages to the channel the command wa
 7
 8
 9
+```
+
+## Comments
+
+Comments can be created by using the `//` keyword. Comments are ignored by the bot. They are used to document your code.
+
+```js
+// This is a comment
 ```
