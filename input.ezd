@@ -1,34 +1,18 @@
-Token='MTAyMDkyNzI1MTY3MzUxNDAwNA.GqH0h8.YUB7YrzAyKvOju8RPAb1p7arMpbbNwUJJoVPtM'
-ClientID = '1020927251673514004'
-GuildID=['1017141190614851594']
+Token='123'
+ClientID = '1234'
+GuildID=['1234', '1234']
 
 var user = 'Joe'
-
-command echo(message: string) {
-    var message = 123
-    var apple = 23
-    reply(user, message)
-}
-
-command foo() {
-    var foo = [1,2,3,4,5,6]
-    var ayo = 'abc'
-    get(foo, 2,1)
-    get(user, 2)
-    get(foo, 'asdf')
-    set(foo, 2, foo)
-    set(foo, 5, '12')
-    set(foo, '324', noVar)
-    set(foo, 1, ayo)
-    x = 1234
-}
+var test = concat(user, 2, true)
 
 command addition(num1: number, num2: number) {
     var test = [1,2,3,4,5,6]
     var double = []
+    var message = '' 
     for (apple in test) {
         var two = apple*2
+        message = concat(message, two, '\n')
         add(double, two)
     }
-    reply()
+    reply(message)
 }

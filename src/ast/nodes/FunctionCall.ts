@@ -10,7 +10,8 @@ export enum BuiltInFunction {
     get = "get",
     len = "len",
     find = "find",
-    set = "set"
+    set = "set",
+    concat = "concat"
 }
 
 export class FunctionCall extends Statement {

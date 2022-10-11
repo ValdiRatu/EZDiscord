@@ -49,6 +49,8 @@ export class TypeResolverVisitor extends ASTBaseVisitor<TypeResolverParam, Type>
 
   visitBuiltInFunctionVarValue(builtInFunction: FunctionCall, context: TypeResolverParam): Type {
       switch(builtInFunction.function) {
+        case BuiltInFunction.concat:
+          return Type.String
         case BuiltInFunction.random:
         case BuiltInFunction.len:
         case BuiltInFunction.find:

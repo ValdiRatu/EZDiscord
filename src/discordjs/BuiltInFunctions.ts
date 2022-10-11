@@ -1,11 +1,15 @@
 import { ChatInputCommandInteraction } from 'discord.js';
 
 export const reply = async (interaction: ChatInputCommandInteraction, ...args: any) => {
+    await interaction.reply(concat(...args));
+}
+
+export const concat = (...args: any) => {
     let message = "";
     for (const arg of args) {
-        message += `${arg} `;
+        message += `${arg}`;
     }
-    await interaction.reply(message);
+    return message
 }
 
 // taken from https://stackoverflow.com/a/1527820

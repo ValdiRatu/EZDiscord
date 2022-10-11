@@ -13,17 +13,17 @@ interface StaticCheckParams {
 const nonDeclaredVariable = (varName: string) => `variable: ${chalk.blueBright(varName)} has not been declared`
 const nonArrayVariable = (varName: string) => `variable: ${chalk.blueBright(varName)} is not an array`
 
-const invalidNumFunctionParams = (numGiven: number, numNeeded: number, functionName: string, commandName: string) => 
-  `invalid number of params given for function: ${chalk.magentaBright(functionName)} in command: ${chalk.yellowBright(commandName)}. Require ${chalk.greenBright(numNeeded)}, given ${chalk.redBright(numGiven)}`
+const invalidNumFunctionParams = (numGiven: number, numNeeded: number, functionName: string, scopeName: string) => 
+  `invalid number of params given for function: ${chalk.magentaBright(functionName)} in Scope: ${chalk.yellowBright(scopeName)}. Require ${chalk.greenBright(numNeeded)}, given ${chalk.redBright(numGiven)}`
 
-const invalidFunctionParamType = (typeGiven: Type, typeNeeded: Type, functionName: string, commandName: string) => 
-  `invalid param type given for function: ${chalk.magentaBright(functionName)} in command ${chalk.yellowBright(commandName)}. Require type ${chalk.greenBright(typeNeeded)}, given ${chalk.redBright(typeGiven)}`
+const invalidFunctionParamType = (typeGiven: Type, typeNeeded: Type, functionName: string, scopeName: string) => 
+  `invalid param type given for function: ${chalk.magentaBright(functionName)} in Scope: ${chalk.yellowBright(scopeName)}. Require type ${chalk.greenBright(typeNeeded)}, given ${chalk.redBright(typeGiven)}`
 
-const invalidFunctionParamError = (position: string, functionName: string, commandName: string) => 
-  `the ${position} paramter has a type of error for function ${chalk.magentaBright(functionName)} in command ${chalk.yellowBright(commandName)}. Please look at previous error messages to see why`
+const invalidFunctionParamError = (position: string, functionName: string, scopeName: string) => 
+  `the ${position} paramter has a type of error for function ${chalk.magentaBright(functionName)} in Scope: ${chalk.yellowBright(scopeName)}. Please look at previous error messages to see why`
 
-const invalidFunctionParamArray = (functionName: string, commandName: string) => 
-  `function: ${chalk.magentaBright(functionName)} in command: ${chalk.yellowBright(commandName)} attempts to add an Array to an Array which is currently not supported` 
+const invalidFunctionParamArray = (functionName: string, scopeName: string) => 
+  `function: ${chalk.magentaBright(functionName)} in scope: ${chalk.yellowBright(scopeName)} attempts to add an Array to an Array which is currently not supported` 
 
 export class StaticCheckVisitor extends ASTBaseVisitor<StaticCheckParams | undefined, void> {
   private scopedSymbolTable: ScopedSymbolTable = new ScopedSymbolTable()
@@ -42,7 +42,13 @@ export class StaticCheckVisitor extends ASTBaseVisitor<StaticCheckParams | undef
   visitVariable<Y>(variable: Variable<Y>, params: StaticCheckParams |  undefined): void {
     const [currentScope, scopeIndex] = this.scopedSymbolTable.getCurrentScope()
     const varName = variable.name
-    const varType = variable.accept(new TypeResolverVisitor(), { table: this.scopedSymbolTable, errors: this.errors })
+    const varType = variable.accept(new TypeResolverVisitor(), { table: this.scopedSymbolTable, errors: this.errors } )
+
+    // if variable value is function call check params of function
+    if (variable.value instanceof FunctionCall) {
+      this.visitBuiltInFunctionVarValue(variable.value, params)
+    }
+
     if (variable.isDeclaration) {
       if (params && params.argNames.includes(varName)) {
         this.errors.push(`variable: ${chalk.blueBright(varName)} has same name as one of the args for command: ${chalk.yellowBright(params.command)}`)
@@ -130,80 +136,81 @@ export class StaticCheckVisitor extends ASTBaseVisitor<StaticCheckParams | undef
     const func = builtInFunction.function
     switch(func) {
       case BuiltInFunction.random:
-        return this.checkRandomFunctionParams(paramTypes, params!.command)
+        return this.checkRandomFunctionParams(paramTypes, params?.command ?? 'global')
+      case BuiltInFunction.concat:
       case BuiltInFunction.reply:
-        return this.checkReplyFunctionParams(paramTypes, params!.command)
+        return this.checkInfParamFunctionParams(paramTypes, func, params?.command ?? 'global')
       case BuiltInFunction.len:
       case BuiltInFunction.find:
       case BuiltInFunction.remove:
       case BuiltInFunction.set:
       case BuiltInFunction.add:
       case BuiltInFunction.get:
-        return this.checkArrayFunctionParams(paramTypes, func,params!.command)
+        return this.checkArrayFunctionParams(paramTypes, func, params?.command ?? 'global')
     }
   }
 
-  private checkRandomFunctionParams(paramTypes: Type[], commandName: string) {
+  private checkRandomFunctionParams(paramTypes: Type[], scopeName: string) {
     const func = BuiltInFunction.random
     if (paramTypes.length !== 2) {
-      this.errors.push(invalidNumFunctionParams(paramTypes.length, 2, func, commandName))
+      this.errors.push(invalidNumFunctionParams(paramTypes.length, 2, func, scopeName))
     } else if (paramTypes[0] !== Type.Number) {
-      this.errors.push(invalidFunctionParamType(paramTypes[0], Type.Number, func, commandName))
+      this.errors.push(invalidFunctionParamType(paramTypes[0], Type.Number, func, scopeName))
     } else if (paramTypes[1] !== Type.Number) {
-      this.errors.push(invalidFunctionParamType(paramTypes[1], Type.Number, func, commandName))
+      this.errors.push(invalidFunctionParamType(paramTypes[1], Type.Number, func, scopeName))
     }
   }
 
-  private checkReplyFunctionParams(paramTypes: Type[], commandName: string) {
+  private checkInfParamFunctionParams(paramTypes: Type[], functionName: string, scopeName: string) {
     const errorTypeIndexes: number[] = []
     for (const [index, type] of paramTypes.entries()) {
       if (type === Type.Error) {
-        errorTypeIndexes.push(index+1)
+        errorTypeIndexes.push(index)
       }
     }
     if (errorTypeIndexes.length > 0) {
-      this.errors.push(`the parameters with index ${chalk.blueBright(errorTypeIndexes)} in function: ${chalk.magentaBright(BuiltInFunction.reply)} in command: ${chalk.yellowBright(commandName)} have type error. Please look at previous error messages to see why`)
+      this.errors.push(`the parameter(s) with index ${chalk.blueBright(errorTypeIndexes)} in function: ${chalk.magentaBright(functionName)} in scope: ${chalk.yellowBright(scopeName)} have type error. Please look at previous error messages to see why`)
     }
   }
 
-  private checkArrayFunctionParams(paramTypes: Type[], arrayFunction: Exclude<BuiltInFunction, BuiltInFunction.reply | BuiltInFunction.random>, commandName: string) {
+  private checkArrayFunctionParams(paramTypes: Type[], arrayFunction: Exclude<BuiltInFunction, BuiltInFunction.reply | BuiltInFunction.random>, scopeName: string) {
     if (paramTypes[0] !== Type.Array) {
-      this.errors.push(`an array was not passed as the first argument to function: ${chalk.magentaBright(arrayFunction)} in command: ${chalk.yellowBright(commandName)}`)
+      this.errors.push(`an array was not passed as the first argument to function: ${chalk.magentaBright(arrayFunction)} in scope: ${chalk.yellowBright(scopeName)}`)
     }
     const numParams = paramTypes.length
     switch(arrayFunction) {
       case BuiltInFunction.remove:
       case BuiltInFunction.get:
         if (numParams !== 2) {
-          this.errors.push(invalidNumFunctionParams(numParams, 2, arrayFunction, commandName))
+          this.errors.push(invalidNumFunctionParams(numParams, 2, arrayFunction, scopeName))
         } else if (paramTypes[1] !== Type.Number) {
-          this.errors.push(invalidFunctionParamType(paramTypes[1], Type.Number, arrayFunction, commandName))
+          this.errors.push(invalidFunctionParamType(paramTypes[1], Type.Number, arrayFunction, scopeName))
         }
         return
       case BuiltInFunction.add:
       case BuiltInFunction.find:
         if (numParams !== 2) {
-          this.errors.push(invalidNumFunctionParams(numParams, 2, arrayFunction, commandName))
+          this.errors.push(invalidNumFunctionParams(numParams, 2, arrayFunction, scopeName))
         } else if (paramTypes[1] === Type.Error)  {
-          this.errors.push(invalidFunctionParamError('second', arrayFunction, commandName))
+          this.errors.push(invalidFunctionParamError('second', arrayFunction, scopeName))
         } else if (paramTypes[1] === Type.Array) {
-          this.errors.push(invalidFunctionParamArray(arrayFunction, commandName))
+          this.errors.push(invalidFunctionParamArray(arrayFunction, scopeName))
         }
         return
       case BuiltInFunction.len:
         if (numParams !== 1) {
-          this.errors.push(invalidNumFunctionParams(numParams, 1, arrayFunction, commandName))
+          this.errors.push(invalidNumFunctionParams(numParams, 1, arrayFunction, scopeName))
         }
         return
       case BuiltInFunction.set:
         if (numParams !== 3) {
-          this.errors.push(invalidNumFunctionParams(numParams, 3, arrayFunction, commandName))
+          this.errors.push(invalidNumFunctionParams(numParams, 3, arrayFunction, scopeName))
         } else if (paramTypes[1] !== Type.Number) {
-          this.errors.push(invalidFunctionParamType(paramTypes[1], Type.Number, arrayFunction, commandName))
+          this.errors.push(invalidFunctionParamType(paramTypes[1], Type.Number, arrayFunction, scopeName))
         } else if (paramTypes[2] === Type.Error) {
-          this.errors.push(invalidFunctionParamError('third', arrayFunction, commandName))
+          this.errors.push(invalidFunctionParamError('third', arrayFunction, scopeName))
         } else if (paramTypes[2] === Type.Array) {
-          this.errors.push(invalidFunctionParamArray(arrayFunction, commandName))
+          this.errors.push(invalidFunctionParamArray(arrayFunction, scopeName))
         }
         return 
       }

@@ -40,7 +40,7 @@ VAR: 'var';
 ASSIGNMENT_OP: '=';
 
 // Functions
-FUNCTION: ('random' | 'add' | 'remove' | 'get' | 'set' | 'len' | 'find' | 'reply');
+FUNCTION: ('random' | 'add' | 'remove' | 'get' | 'set' | 'len' | 'find' | 'reply' | 'concat');
 
 // Conditional
 IF: 'if';

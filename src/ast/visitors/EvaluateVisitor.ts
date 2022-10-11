@@ -82,7 +82,7 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
             {
                 // functions built into our language
                 moduleSpecifier: '../src/discordjs/BuiltInFunctions',
-                namedImports: ['reply', 'random', 'add', 'remove', 'get', 'len', 'find', 'set']
+                namedImports: ['reply', 'random', 'add', 'remove', 'get', 'len', 'find', 'set', 'concat']
             }
         ]);
         // setup a default export of a list of the slash commands to be sent to the bot runner
