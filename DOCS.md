@@ -72,7 +72,7 @@ Now that you have a basic understanding of how to write EZDiscord code, you can 
 
 ## Discord Variables
 
-All discord variables **MUST** be declared in the global scope before any commands are declared.
+All discord variables **MUST** be declared in the global scope before any commands or variables are declared.
 
 ### Token
 
