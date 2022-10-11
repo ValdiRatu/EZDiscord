@@ -50,7 +50,7 @@ command sum_a() {
         sum = sum + elem
         count = count + 1
     }
-    reply('sum:', sum)
+    reply('sum: ', sum)
 }
 ```
 
