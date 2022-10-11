@@ -43,12 +43,10 @@ Variables can be created by using the `var` keyword. They can be created in the 
 var a = [1, 2, 3]
 
 command sum_a() {
-    // sum and count are only accessible in this block
+    // sum is only accessible in this block
     var sum = 0
-    var count = 1
     for (elem in a) {
         sum = sum + elem
-        count = count + 1
     }
     reply('sum: ', sum)
 }
