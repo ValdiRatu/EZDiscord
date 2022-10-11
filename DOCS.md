@@ -4,11 +4,19 @@
 1. [Getting Started](#getting-started)
 2. [Discord Variables](#discord-variables)
 3. [Variables](#variables)
+   1. [number](#number)
+   2. [string](#string)
+   3. [boolean](#boolean)
+   4. [array](#array)
 4. [Math](#math)
 5. [Boolean Logic](#boolean-logic)
 6. [Built-in Functions](#built-in-functions)
 7. [Commands](#commands)
 8. [Control Flow](#control-flow)
+   1. [If-Else Statements](#if-else-statements)
+   2. [ForEach Loops](#foreach-loops)
+   3. [While Loops](#while-loops)
+9. [Comments](#comments)
 
 ## Getting Started
 
