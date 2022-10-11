@@ -8,7 +8,7 @@ import { EZDiscordLexer } from '../parser/EZDiscordLexer';
 import { EZDiscordParser } from '../parser/EZDiscordParser';
 
 // test input
-const input = fs.readFileSync(path.resolve("./input.ezd")).toString();
+const input = fs.readFileSync(path.resolve("./bot.ezd")).toString();
 
 const charStream = CharStreams.fromString(input);
 const lexer = new EZDiscordLexer(charStream);
