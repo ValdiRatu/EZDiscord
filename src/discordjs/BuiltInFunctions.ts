@@ -8,7 +8,12 @@ export const reply = async (interaction: ChatInputCommandInteraction, ...args: a
     await interaction.reply(message);
 }
 
-export const random = (min: number, max: number) => Math.random() * (max - min) + min;
+// taken from https://stackoverflow.com/a/1527820
+export const random = (min: number, max: number) => {
+    const newMin = Math.ceil(min)
+    const newMax = Math.floor(max)
+    return Math.floor(Math.random() * (newMax- newMin+ 1)) + newMin
+}
 
 // Array operators
 export const add = (array: any[], value: any) => array.push(value);
