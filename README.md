@@ -8,8 +8,11 @@ Read the [Getting Started Guide](https://github.students.cs.ubc.ca/CPSC410-2022W
 
 Documentation for the EZDiscord Language can be found [here](https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/wiki/Language-Documentation).
 
-## Compiling DSL code to TypeScript code
+## Setting up a Development Environment
+- Run `yarn install` to download dependencies
+- Run `yarn antlr` to generate the antlr files required by the parse tree to AST converter.
 
+## Compiling DSL code to TypeScript code
 - create/modify the `bot.ezd` file in the root directory. 
   - Include the bot `Token`, `ClientID` and `GuildID`s taken from the Discord Developer Portal and Discord client.
   - Define the commands and variables according to the [documentation](https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/wiki/Language-Documentation)..
