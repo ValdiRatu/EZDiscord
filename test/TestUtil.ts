@@ -1,8 +1,5 @@
 import * as fs from "fs";
 import Log from "../src/util/Log";
-import { expect } from "chai";
-import { PassThrough } from "stream";
-import { CommonTokenStream } from 'antlr4ts';
 
 export interface TestGrammar {
     title: string;

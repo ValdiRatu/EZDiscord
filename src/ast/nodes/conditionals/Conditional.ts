@@ -1,6 +1,6 @@
-import {Statement} from "../Statement";
-import {ASTVisitor} from "../../visitors/ASTVisitor";
-import {StatementBlock} from "../StatementBlock";
+import { Statement } from "../Statement";
+import { ASTVisitor } from "../../visitors/ASTVisitor";
+import { StatementBlock } from "../StatementBlock";
 
 export class Conditional extends Statement {
 

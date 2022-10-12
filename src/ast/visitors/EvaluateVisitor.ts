@@ -1,15 +1,7 @@
 import path from "node:path";
-import {Project, SourceFile, VariableDeclarationKind} from "ts-morph";
+import { Project, SourceFile, VariableDeclarationKind } from "ts-morph";
 import { PrintWriter } from "../../util/PrintWriter";
-import {
-    Bot,
-    ClientId,
-    Config,
-    GuildId,
-    Token,
-    Variable,
-    Command
-} from '../nodes';
+import { Bot, ClientId, Command, Config, GuildId, Token, Variable } from '../nodes';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
 import { GlobalStatementWriter } from "../../util/GlobalStatementWriter";
 import { DiscordBotSlashCommand } from "../../discordjs/DiscordJsTypes";
@@ -27,7 +19,7 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
         this.fileWriter = new PrintWriter(path.resolve('./out/.env'));
         this.project = new Project()
         this.project.addSourceFilesAtPaths('./out/*.ts')
-        this.outputFile = this.project.createSourceFile('./out/output.ts', '', { overwrite: true })
+        this.outputFile = this.project.createSourceFile('./out/output.ts', '', {overwrite: true})
         this.setUpOutputFile(this.outputFile);
     }
 
@@ -57,9 +49,11 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
     visitToken(token: Token, params: void): void {
         this.fileWriter.println(`TOKEN=${token.value}`)
     }
+
     visitClientId(clientId: ClientId, params: void): void {
         this.fileWriter.println(`CLIENT_ID=${clientId.value}`)
     }
+
     visitGuildId(guildId: GuildId, params: void): void {
         const guildIds = guildId.values.reduce((guildIdList, guildId) => {
             return guildIdList += guildId + " "

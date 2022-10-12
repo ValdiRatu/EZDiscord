@@ -5,7 +5,9 @@ import { Token } from "./Token";
 import { GuildId } from "./GuildId";
 
 export class Config implements ASTNode {
-    constructor(private readonly _token: Token, private readonly _clientId: ClientId, private readonly _guildId: GuildId) {}
+    constructor(private readonly _token: Token, private readonly _clientId: ClientId, private readonly _guildId: GuildId) {
+    }
+
     accept<T, U>(visitor: ASTVisitor<T, U>, params: T): U {
         return visitor.visitConfig(this, params);
     }

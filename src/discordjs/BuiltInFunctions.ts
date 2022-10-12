@@ -16,7 +16,7 @@ export const concat = (...args: any) => {
 export const random = (min: number, max: number) => {
     const newMin = Math.ceil(min)
     const newMax = Math.floor(max)
-    return Math.floor(Math.random() * (newMax- newMin+ 1)) + newMin
+    return Math.floor(Math.random() * (newMax - newMin + 1)) + newMin
 }
 
 // Array operators

@@ -1,59 +1,59 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
 import { EZDiscordParserVisitor } from '../parser/EZDiscordParserVisitor';
 import {
-    BotContext,
-    StatementContext,
-    ConfigContext,
-    ParamContext,
-    TokenContext,
-    StringContext,
-    ClientIDContext,
-    GuildIDContext,
-    VariableDeclareContext,
-    ValueContext,
-    NumberContext,
-    BooleanContext,
-    FunctionCallContext,
-    VarNameContext,
-    ArrayContext,
-    ElementContext,
-    MathContext,
-    BinaryContext,
-    VariableAssignContext,
-    ConditionContext,
-    StatementBlockContext,
-    CommandContext,
     ArgumentContext,
-    TypeContext,
-    LoopContext,
-    WhileBlockContext,
+    ArrayContext,
+    BinaryContext,
+    BooleanContext,
+    BotContext,
+    ClientIDContext,
+    CommandContext,
+    ConditionContext,
+    ConfigContext,
+    ElementContext,
     ForEachBlockContext,
+    FunctionCallContext,
+    GuildIDContext,
+    LoopContext,
+    MathContext,
+    NumberContext,
+    ParamContext,
+    StatementBlockContext,
+    StatementContext,
+    StringContext,
+    TokenContext,
+    TypeContext,
+    ValueContext,
+    VariableAssignContext,
+    VariableDeclareContext,
+    VarNameContext,
+    WhileBlockContext,
 } from '../parser/EZDiscordParser';
 import {
-    Bot,
-    ASTNode,
-    ClientId,
-    Config,
-    GuildId,
-    Token,
+    Argument,
     ArrayValue,
+    ASTNode,
+    BinaryValue,
     BooleanValue,
+    Bot,
+    ClientId,
+    Command,
+    Conditional,
+    Config,
+    ForEachLoop,
     FunctionCall,
+    GuildId,
+    MathValue,
     NumberValue,
+    StatementBlock,
     StringValue,
+    Token,
     Variable,
     VarNameValue,
     VarType,
-    MathValue,
-    BinaryValue,
-    Conditional,
-    StatementBlock,
-    Argument,
-    Command,
-    WhileLoop,
-    ForEachLoop
+    WhileLoop
 } from './nodes';
-import {BuiltInFunction} from "./nodes/FunctionCall";
+import { BuiltInFunction } from "./nodes/FunctionCall";
 import { Type } from '../util/ScopedSymbolTable';
 
 type AtomValue = StringValue | VarNameValue | NumberValue | BooleanValue | FunctionCall
@@ -81,7 +81,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
             this.visitGuildID(ctx.guildID()!)
         );
     }
-    
+
     visitToken(ctx: TokenContext) {
         const stringNode = this.visitString(ctx.string());
         if (!stringNode.value) {
@@ -101,7 +101,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     visitGuildID(ctx: GuildIDContext) {
         return new GuildId(ctx.guildIDArray().string().map(idStringContext => idStringContext.text.split("'").join('')))
     }
-    
+
     visitVariableDeclare(ctx: VariableDeclareContext) {
         return new Variable(
             ctx.VAR_NAME().text,
@@ -168,7 +168,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
     visitBinary(ctx: BinaryContext) {
         // TODO: properly parse this later
         return new BinaryValue(
-           ctx.text 
+            ctx.text
         )
     }
 
@@ -193,8 +193,8 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
         return ctx.BOOL()
             ? Type.Boolean
             : ctx.NUM()
-            ? Type.Number
-            : Type.String
+                ? Type.Number
+                : Type.String
     }
 
     visitCondition(ctx: ConditionContext) {

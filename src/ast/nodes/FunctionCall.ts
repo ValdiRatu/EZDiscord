@@ -1,6 +1,6 @@
 import { ASTVisitor } from "../visitors/ASTVisitor";
 import { VarType } from "./variables/VarType";
-import {Statement} from "./Statement";
+import { Statement } from "./Statement";
 
 export enum BuiltInFunction {
     reply = "reply",

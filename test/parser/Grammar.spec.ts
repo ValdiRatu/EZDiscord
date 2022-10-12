@@ -1,16 +1,15 @@
 import { expect } from "chai";
-import TestUtil from '../TestUtil';
-import { TestGrammar } from "../TestUtil";
-import {CharStreams, CodePointCharStream, CommonTokenStream, ConsoleErrorListener} from 'antlr4ts';
+import TestUtil, { TestGrammar } from '../TestUtil';
+import { CharStreams, CodePointCharStream, CommonTokenStream, ConsoleErrorListener } from 'antlr4ts';
 import { EZDiscordLexer } from '../../src/parser/EZDiscordLexer';
-import Log  from '../../src/util/Log';
+import Log from '../../src/util/Log';
 import { EZDiscordParser } from "../../src/parser/EZDiscordParser";
 
 
-describe('Parser Grammar Rules test', function() {
+describe('Parser Grammar Rules test', function () {
     let testGrammarFiles: TestGrammar[] = [];
 
-    before(function() {
+    before(function () {
         Log.test(`Before ${this?.test?.parent.title}`);
         try {
             testGrammarFiles = TestUtil.readTestGrammarFiles();
@@ -35,10 +34,10 @@ describe('Parser Grammar Rules test', function() {
         Log.test(`AfterTest: ${this.currentTest.title}`);
     });
 
-    it("Should run grammar tests", function() {
-        describe("Dynamic tests Grammar.spec.ts: ", function() {
+    it("Should run grammar tests", function () {
+        describe("Dynamic tests Grammar.spec.ts: ", function () {
             for (const test of testGrammarFiles) {
-                it(`[${test.filename}] ${test.title}`, function() {
+                it(`[${test.filename}] ${test.title}`, function () {
                     let charStream: CodePointCharStream;
                     let lexer: EZDiscordLexer;
                     let tokenStream: CommonTokenStream;

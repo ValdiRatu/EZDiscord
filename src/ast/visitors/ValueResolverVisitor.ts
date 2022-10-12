@@ -1,4 +1,4 @@
-import { 
+import {
     Argument,
     ArrayValue,
     BinaryValue,
@@ -10,19 +10,19 @@ import {
     VarNameValue
 } from '../nodes';
 import { ASTBaseVisitor } from "./ASTBaseVisitor";
-import {BuiltInFunction} from "../nodes/FunctionCall";
+import { BuiltInFunction } from "../nodes/FunctionCall";
 import { Type } from '../../util/ScopedSymbolTable';
 
 /**
  * Resolves value to proper Typescript specification
  */
-export class ValueResolverVisitor extends ASTBaseVisitor<void, string> { 
+export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
     visitArrayVarValue(arrVarVal: ArrayValue, params: void): string {
         const resolvedValue = arrVarVal.value.reduce((currentArray, type) => {
             return `${currentArray}${type.accept(this, undefined)},`
         }, '[ ');
 
-        return `${resolvedValue.slice(0,-1)}]`;
+        return `${resolvedValue.slice(0, -1)}]`;
     }
 
     visitBooleanVarValue(booleanVarVal: BooleanValue, params: void): string {
@@ -66,7 +66,7 @@ export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
     }
 
     visitArgument(arg: Argument, params: void): string {
-        switch(arg.type) {
+        switch (arg.type) {
             case Type.Boolean:
                 return `.addBooleanOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`
             case Type.Number:
@@ -75,5 +75,5 @@ export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
                 return `.addStringOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`
         }
     }
-    
+
 }

@@ -22,13 +22,13 @@ import { StatementBlock } from "./StatementBlock";
 import { Argument } from './commands/Argument';
 import { Command } from './commands/Command';
 
-export { 
-    Bot, 
-    ASTNode, 
-    ClientId, 
-    Config, 
-    GuildId, 
-    Statement, 
+export {
+    Bot,
+    ASTNode,
+    ClientId,
+    Config,
+    GuildId,
+    Statement,
     Token,
     ArrayValue,
     BooleanValue,

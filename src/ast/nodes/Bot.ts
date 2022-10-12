@@ -4,7 +4,9 @@ import { Config } from "./config/Config";
 import { Statement } from "./Statement";
 
 export class Bot implements ASTNode {
-    constructor(private readonly _config: Config, private readonly _statements: Statement[]) {}
+    constructor(private readonly _config: Config, private readonly _statements: Statement[]) {
+    }
+
     accept<T, U>(visitor: ASTVisitor<T, U>, params: T): U {
         return visitor.visitBot(this, params);
     }
@@ -16,5 +18,5 @@ export class Bot implements ASTNode {
     get config() {
         return this._config;
     }
-    
+
 }

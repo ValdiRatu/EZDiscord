@@ -1,14 +1,7 @@
-import {ASTBaseVisitor} from "./ASTBaseVisitor";
-import {
-    Conditional,
-    StatementBlock,
-    FunctionCall,
-    Variable,
-    ForEachLoop,
-    WhileLoop
-} from '../nodes'
-import {CodeBlockWriter} from "ts-morph";
-import {ValueResolverVisitor} from "./ValueResolverVisitor";
+import { ASTBaseVisitor } from "./ASTBaseVisitor";
+import { Conditional, ForEachLoop, FunctionCall, StatementBlock, Variable, WhileLoop } from '../nodes'
+import { CodeBlockWriter } from "ts-morph";
+import { ValueResolverVisitor } from "./ValueResolverVisitor";
 
 /**
  * Visitor that writes block statements which are all statements within commands, conditionals, and loops to typescript
