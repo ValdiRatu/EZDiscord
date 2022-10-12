@@ -8,7 +8,7 @@ import { EZDiscordLexer } from '../parser/EZDiscordLexer';
 import { EZDiscordParser } from '../parser/EZDiscordParser';
 
 // test input
-const input = fs.readFileSync(path.resolve("./bot.ezd")).toString();
+const input = fs.readFileSync(path.resolve('./bot.ezd')).toString();
 
 const charStream = CharStreams.fromString(input);
 const lexer = new EZDiscordLexer(charStream);
@@ -17,16 +17,16 @@ const parser = new EZDiscordParser(tokenStream);
 
 const tree = parser.bot();
 if (parser.numberOfSyntaxErrors > 0) {
-    throw new Error('Bad Syntax')
+	throw new Error('Bad Syntax');
 }
 
 const astConverter = new ParserToASTConverter();
 
 const bot = astConverter.visit(tree);
-const staticChecker = new StaticCheckVisitor()
-bot.accept(staticChecker, undefined)
+const staticChecker = new StaticCheckVisitor();
+bot.accept(staticChecker, undefined);
 if (staticChecker.errors.length > 0) {
-    throw new Error(`\n${staticChecker.errors.join('\n')}`);
+	throw new Error(`\n${staticChecker.errors.join('\n')}`);
 }
 const evaluator = new EvaluateVisitor();
 bot.accept(evaluator, undefined);

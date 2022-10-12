@@ -2,10 +2,11 @@
   "name": "ezdiscord",
   "license": "GPL-1.0+",
   "scripts": {
-    "ezd-compile": "rd /S /Q out 2>nul & mkdir out 2>nul & ts-node src/main/GenerateFiles.ts",
+    "ezd-compile": "rd /S /Q out 2>nul & mkdir out 2>nul & yarn antlr && ts-node src/main/GenerateFiles.ts",
     "ezd-run": "npx ts-node src/main/RunBot.ts",
     "ezd-start": "yarn ezd-compile && yarn ezd-run",
     "antlr": "antlr4ts -visitor src/parser/EZDiscordLexer.g4 src/parser/EZDiscordParser.g4 -o src/parser -Xexact-output-dir",
+    "pretty": "prettier --config ./.prettierrc.json --write \"./**/*.ts\"",
     "test": "mocha --require ts-node/register 'test/parser/*.ts' --timeout 10000"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "@types/mocha": "^10.0.0",
     "@types/node": "^18.8.1",
     "antlr4ts-cli": "^0.5.0-alpha.4",
+    "prettier": "^2.7.1",
     "chai": "^4.3.6",
     "mocha": "^10.0.0",
     "ts-mockito": "^2.6.1",

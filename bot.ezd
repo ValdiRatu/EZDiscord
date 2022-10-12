@@ -1,18 +1,18 @@
 Token='123'
-ClientID = '1234'
-GuildID=['1234', '1234']
+ClientID = '123'
+GuildID=['123', '123']
 
 var user = 'Joe'
-var test = concat(user, 2, true)
 
-command addition(num1: number, num2: number) {
-    var test = [1,2,3,4,5,6]
-    var double = []
-    var message = '' 
-    for (apple in test) {
-        var two = apple*2
-        message = concat(message, two, '\n')
-        add(double, two)
+command dWhatever(a: number) {
+    var d = a%1
+    var c = d != 0
+    if (c) {
+        reply('You Must Input an Integer')
+    } else {
+        var b = random(1,a)
+        var i = ''
+        i = concat('d', a, '=', b)
+        reply(b)
     }
-    reply(message)
 }
