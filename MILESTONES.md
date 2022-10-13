@@ -308,9 +308,9 @@ Array
 #### Lexer and Parser team
 - This week Lexer & Parser team has completed implementation for majority of the features
 - Main priority is now testing the parser and lexer
-Team Board bellow: \
-![Lexer & Parser Team Board](images/ParserTeam.png?raw=true)
+Team Board bellow:
 
+![Lexer & Parser Team Board](https://media.github.students.cs.ubc.ca/user/10171/files/fc8114f4-ab6e-4d37-989f-9bb0dd6963b7)
 
 #### AST and Compiler team
 - The team has completed implementation of features such as:
@@ -323,8 +323,10 @@ Team Board bellow: \
   - Parsing conditions
   - Parsing loops
   - Parsing functions
-Team Board bellow: \
-![AST & Compiler Team Board](images/AST_Team_Chart.png)
+Team Board bellow:
+
+![AST & Compiler Team Board](https://media.github.students.cs.ubc.ca/user/10171/files/92cd76f3-84c5-4f57-830e-c94b056f9bbe)
+
 
 ### Plans for final user study
 - Majority of the project will be finalized by Wednesday, October 12th
