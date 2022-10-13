@@ -17,7 +17,7 @@ Documentation for the EZDiscord Language can be found [here](https://github.stud
 
 - create/modify the `bot.ezd` file in the root directory. 
   - Include the bot `Token`, `ClientID` and `GuildID`s taken from the Discord Developer Portal and Discord client.
-  - Define the commands and variables according to the [documentation](https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/wiki/Language-Documentation)..
+  - Define the commands and variables according to the [documentation](https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/wiki/Language-Documentation).
 
 ![](https://media.github.students.cs.ubc.ca/user/10171/files/58805e5c-486e-45d3-8dc0-241148cedb39)
 
