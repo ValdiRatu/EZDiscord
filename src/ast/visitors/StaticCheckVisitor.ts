@@ -245,6 +245,8 @@ export class StaticCheckVisitor extends ASTBaseVisitor<StaticCheckParams | undef
 			case BuiltInFunction.len:
 				if (numParams !== 1) {
 					this.errors.push(invalidNumFunctionParams(numParams, 1, arrayFunction, scopeName));
+				} else if (paramTypes[0] !== Type.Array) {
+					this.errors.push(invalidFunctionParamArray(arrayFunction, scopeName));
 				}
 				return;
 			case BuiltInFunction.set:
