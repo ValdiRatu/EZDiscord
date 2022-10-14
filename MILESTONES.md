@@ -354,3 +354,69 @@ Team Board bellow:
 - Had a conversation about [TS-morph](https://ts-morph.com/)
   - Bulk of evaluation will be done by TS-morph (like math operations)
   - The TA said it should be OK to use as long as other project details are up to standard
+
+
+## Milestone 5
+### Status of Implementation
+- Parser and Lexer rules completed
+- AST, Evaluator, Static Checks completed
+- Parser, Lexer, Static checks tests added
+- All tests pass
+- Added Documentation and README.md overview
+- [Documentation](https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/wiki/)
+- [Overview](https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/blob/main/README.md)
+
+
+### Status/results of final user study
+- Completed 3 user studies
+- All users were able to write and compile EZD code and test the bots on the server
+- Things users were confused about:
+  - Conditionals and loops work only with variables
+    - Many user wanted to do `if (a > 10)` instead of `if (var_name)`
+  - Some were confused about the difference between `'` and `"`
+    - Some tried to set up strings with `"` but thanks to the syntax highlighting they were able to figure it out
+  - Some users thought there should also be a way to string concatenation
+    - Some tried to use `a = a + "fff"` however it was not supported in our language design
+  - One user thought `else if` should be present 
+    - One user wanted to use `else if` but quickly realized that everything his bot needed to do could be done with just `if` and `else`
+
+## Reflecting on User studies
+- One big point of confusion was the lack of binary expressions inside conditionals
+  - After much deliberation among the team members we decided that we will still not allow binary expressions inside conditionals or loops
+  - The main reasoning behind it is the posibility of more errors on run time
+  - For instance:
+  - ```
+    arr = [TRUE, '1', FALSE]
+    a = get(arr, 1)
+    if (a > 10) {
+      <code>
+    }
+  - This code will generate run time error since we won't know what the value of `a` is until we actually reach conditional statement
+  - Thus, this might increase error-proneness
+  - Furthermore, our current implementation can still do everything the users need even without allowing the binary expressions in conditionals
+  - Hence, we decided to stick with our current implementation
+- Another point of confusion was the lack of string concatenation
+  - We added a new built-in function `concat()` which can take any type of arguments and return a string concatenation of them
+  - [More in documentation](https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/wiki/Language-Documentation#concatargs) 
+- There was small confusion about lack of `else if`
+  - After some deliberation, we decided to not include `else if`
+  - Our current implementation allows for the same functionality even without `elsee if`
+  - Furthermore, only 1 user wanted the change and was still able to write the code without `else if`
+- Finally, some people were confused about `'` vs `"`
+  - As a team we decided to keep `'` instead of using `"`
+  - The functionality is the same whether it's `'` or `"`
+  - Furthermore, our syntax highlighter allows for the users to see if they make this mistake
+
+## Any changes to the language design
+- After the user study, we added `concat` function
+  - [More information about it](https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/wiki/Language-Documentation#concatargs)
+
+## Planned timeline for the remaining days 
+- Add integration tests on Friday night
+- Complete the script for the video on Saturday
+- Film video and voice-over on Saturday
+- Complete editing and submit the video on Saturday
+
+## TA feedback
+- TA was satisfied with progress
+- Suggested we include user studies in the video
