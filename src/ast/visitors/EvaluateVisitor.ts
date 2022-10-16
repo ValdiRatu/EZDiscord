@@ -4,7 +4,6 @@ import { PrintWriter } from '../../util/PrintWriter';
 import { Bot, ClientId, Command, Config, GuildId, Token, Variable } from '../nodes';
 import { ASTBaseVisitor } from './ASTBaseVisitor';
 import { GlobalStatementWriter } from '../../util/GlobalStatementWriter';
-import { DiscordBotSlashCommand } from '../../discordjs/DiscordJsTypes';
 
 /**
  * Visitor that evaluates AST and generates TS files for the discord bot

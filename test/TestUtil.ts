@@ -9,6 +9,10 @@ export interface TestGrammar {
 	filename: string;
 }
 
+/**
+ * Many of the functions in this class were taken from the package @ubccpsc310/folder-test and
+ * repurposed for testing for this project
+ */
 export default class TestUtil {
 	/**
 	 * Recursively searches for test query JSON files in the path and returns those matching the specified schema.

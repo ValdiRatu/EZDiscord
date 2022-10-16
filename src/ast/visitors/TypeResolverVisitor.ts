@@ -19,6 +19,9 @@ interface TypeResolverParam {
 	errors: string[];
 }
 
+/**
+ * Resolves the type of a variable declaration or assignment for static checking purposes
+ */
 export class TypeResolverVisitor extends ASTBaseVisitor<TypeResolverParam, Type> {
 	visitVariable<Y>(variable: Variable<Y>, context: TypeResolverParam): Type {
 		return variable.value.accept(this, context);

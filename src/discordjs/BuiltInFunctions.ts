@@ -28,8 +28,6 @@ export const get = (array: any[], index: number) => array[index];
 
 export const len = (array: any[]) => array.length;
 
-// return the index of first match
-// return -1 if not found
 export const find = (array: any[], value: any) => array.indexOf(value);
 
 export const set = (array: any[], index: number, value: any) => (array[index] = value);

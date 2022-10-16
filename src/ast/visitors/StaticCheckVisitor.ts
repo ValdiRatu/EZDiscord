@@ -62,7 +62,7 @@ export class StaticCheckVisitor extends ASTBaseVisitor<StaticCheckParams | undef
 		const varName = variable.name;
 		const varType = variable.accept(new TypeResolverVisitor(), { table: this.scopedSymbolTable, errors: this.errors });
 
-		// if variable value is function call check params of function
+		// if variable value is a function call we check the params for the function
 		if (variable.value instanceof FunctionCall) {
 			this.visitBuiltInFunctionVarValue(variable.value, params);
 		}

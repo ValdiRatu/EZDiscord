@@ -7,7 +7,6 @@ import { StaticCheckVisitor } from '../ast/visitors/StaticCheckVisitor';
 import { EZDiscordLexer } from '../parser/EZDiscordLexer';
 import { EZDiscordParser } from '../parser/EZDiscordParser';
 
-// test input
 const input = fs.readFileSync(path.resolve('./bot.ezd')).toString();
 
 const charStream = CharStreams.fromString(input);

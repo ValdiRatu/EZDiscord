@@ -1,7 +1,6 @@
 /**
  * Collection of logging methods. Useful for making the output easier to read and understand.
  */
-// test
 export default class Log {
 	public static trace(...msg: any[]): void {
 		console.log(`<T> ${new Date().toLocaleString()}:`, ...msg);

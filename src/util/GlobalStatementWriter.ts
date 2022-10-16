@@ -4,9 +4,6 @@ import { StatementBlockWriterVisitor } from '../ast/visitors/StatementBlockWrite
 import { ValueResolverVisitor } from '../ast/visitors/ValueResolverVisitor';
 import { Type } from './ScopedSymbolTable';
 
-/**
- * Helper class that writes Global Statements
- */
 export class GlobalStatementWriter {
 	private static readonly commandInternalArgument = 'interaction';
 

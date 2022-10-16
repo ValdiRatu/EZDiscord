@@ -14,7 +14,7 @@ import { BuiltInFunction } from '../nodes/FunctionCall';
 import { Type } from '../../util/ScopedSymbolTable';
 
 /**
- * Resolves value to proper Typescript specification
+ * Resolves value to proper Typescript specification for TS-morph
  */
 export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
 	visitArrayVarValue(arrVarVal: ArrayValue, params: void): string {

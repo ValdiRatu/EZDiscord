@@ -12,22 +12,22 @@ export enum Type {
  */
 export class ScopedSymbolTable {
 	// first scope in stack is global scope
-	private scopeList: Array<Map<string, Type>> = [new Map()];
+	private scopeStack: Array<Map<string, Type>> = [new Map()];
 
 	public pushScope() {
-		this.scopeList.push(new Map());
+		this.scopeStack.push(new Map());
 	}
 
 	public popScope() {
-		if (this.scopeList.length === 1) {
+		if (this.scopeStack.length === 1) {
 			throw new Error('Attempted to pop global stack');
 		}
-		this.scopeList.pop();
+		this.scopeStack.pop();
 	}
 
 	public lookupSymbol(varName: string): Type | undefined {
-		for (let i = this.scopeList.length - 1; i >= 0; i--) {
-			const scope = this.scopeList[i];
+		for (let i = this.scopeStack.length - 1; i >= 0; i--) {
+			const scope = this.scopeStack[i];
 			if (scope.has(varName)) {
 				return scope.get(varName);
 			}
@@ -41,8 +41,8 @@ export class ScopedSymbolTable {
 	}
 
 	public updateSymbol(varName: string, type: Type): boolean {
-		for (let i = this.scopeList.length - 1; i >= 0; i--) {
-			const scope = this.scopeList[i];
+		for (let i = this.scopeStack.length - 1; i >= 0; i--) {
+			const scope = this.scopeStack[i];
 			if (scope.has(varName)) {
 				scope.set(varName, type);
 				return true;
@@ -52,11 +52,11 @@ export class ScopedSymbolTable {
 	}
 
 	public getCurrentScope(): [Map<string, Type>, number] {
-		const index = this.scopeList.length - 1;
-		return [this.scopeList[index], index];
+		const index = this.scopeStack.length - 1;
+		return [this.scopeStack[index], index];
 	}
 
 	public getGlobalScope() {
-		return this.scopeList[0];
+		return this.scopeStack[0];
 	}
 }
