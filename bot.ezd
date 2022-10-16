@@ -2,17 +2,27 @@ Token='123'
 ClientID = '123'
 GuildID=['123', '123']
 
-var user = 'Joe'
+var sum = 0
+var todoList = []
 
-command dWhatever(a: number) {
-    var d = a%1
-    var c = d != 0
-    if (c) {
-        reply('You Must Input an Integer')
+command addSum(num: number, shouldReply: boolean, probabilityToReply: number) {
+    sum = sum + num
+    var probability = probabilityToReply*100
+    var willReply = shouldReply and (random(0,100) <= probability)
+    if (willReply) {
+        reply('your new sum is: ', sum)
     } else {
-        var b = random(1,a)
-        var i = ''
-        i = concat('d', a, '=', b)
-        reply(b)
+        reply('looks like we failed the reply check with probability ', probabilityToReply)
     }
+}
+
+command addToDoList(task: string) {
+    add(todoList, task)
+    var message = ''
+    for (todo in todoList) {
+        var todoIndex = find(todoList, todo)
+        var todoIndexPrime = todoIndex+1 
+        message = concat(message, '[', todoIndexPrime, ']: ', todo, '\n')
+    }
+    reply(message)
 }
