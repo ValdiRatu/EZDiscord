@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import Log from '../src/util/Log';
-import {ConsoleErrorListener, Recognizer} from "antlr4ts";
-import {RecognitionException} from "antlr4ts/RecognitionException";
+import { ConsoleErrorListener, Recognizer } from 'antlr4ts';
+import { RecognitionException } from 'antlr4ts/RecognitionException';
 
 export interface TestGrammar {
 	title: string;
@@ -112,7 +112,14 @@ export default class TestUtil {
 export class TestErrorListener extends ConsoleErrorListener {
 	private _tokenError: boolean = false;
 
-	syntaxError<T>(recognizer: Recognizer<T, any>, offendingSymbol: T, line: number, charPositionInLine: number, msg: string, e: RecognitionException | undefined) {
+	syntaxError<T>(
+		recognizer: Recognizer<T, any>,
+		offendingSymbol: T,
+		line: number,
+		charPositionInLine: number,
+		msg: string,
+		e: RecognitionException | undefined
+	) {
 		this._tokenError = true;
 		super.syntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
 	}
