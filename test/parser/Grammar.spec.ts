@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import TestUtil, { TestGrammar } from '../TestUtil';
-import { CharStreams, CodePointCharStream, CommonTokenStream, ConsoleErrorListener } from 'antlr4ts';
+import TestUtil, { TestGrammar, TestErrorListener } from '../TestUtil';
+import { CharStreams, CodePointCharStream, CommonTokenStream } from 'antlr4ts';
 import { EZDiscordLexer } from '../../src/parser/EZDiscordLexer';
 import Log from '../../src/util/Log';
 import { EZDiscordParser } from '../../src/parser/EZDiscordParser';
@@ -37,6 +37,7 @@ describe('Parser Grammar Rules test', function () {
 					let lexer: EZDiscordLexer;
 					let tokenStream: CommonTokenStream;
 					let parser: EZDiscordParser;
+					let lexerErrorListener: TestErrorListener;
 					try {
 						charStream = CharStreams.fromString(test.inputString);
 						lexer = new EZDiscordLexer(charStream);
@@ -45,11 +46,16 @@ describe('Parser Grammar Rules test', function () {
 						// Comment out to see Antlr parser errors
 						parser.removeErrorListeners();
 						// Comment out to see Antlr lexer errors
-						lexer.removeErrorListener(ConsoleErrorListener.INSTANCE);
-
+						lexer.removeErrorListeners();
+						lexer.addErrorListener(new TestErrorListener());
+						lexerErrorListener = lexer.getErrorListeners()[0] as TestErrorListener;
 						const tree = parser.bot();
 					} catch (err: any) {
-						expect.fail(`Failed to tokenize for ${test.filename}`);
+						expect.fail(`Failed to run test for ${test.filename}`);
+					}
+					if (test.result === 'TokenError') {
+						expect(lexerErrorListener.tokenError).to.equal(!test.isValid);
+						return;
 					}
 					if (test.isValid) {
 						expect(parser.numberOfSyntaxErrors).to.equal(0);
