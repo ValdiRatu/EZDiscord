@@ -9,7 +9,8 @@
     "pretty": "prettier --config ./.prettierrc.json --write \"./**/*.ts\"",
     "test-parser": "mocha --require ts-node/register 'test/parser/*.ts' --timeout 10000",
     "test-static": "mocha --require ts-node/register 'test/static-checks/*.ts' --timeout 10000",
-    "test-integration": "rd /S /Q test/integration/out 2>nul & mkdir test/integration/out 2>nul & yarn antlr && ts-node src/main/GenerateFiles.ts"
+    "test-integration": "rd /S /Q test/integration/out 2>nul & mkdir test/integration/out 2>nul & yarn antlr && ts-node src/main/GenerateFiles.ts",
+    "test": "yarn test-parser ; yarn test-static ; test-integration"
   },
   "dependencies": {
     "@discordjs/rest": "^1.3.0",

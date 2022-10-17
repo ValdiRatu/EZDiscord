@@ -34,6 +34,20 @@ Documentation for the EZDiscord Language can be found [here](https://github.stud
 
 - run `yarn ezd-start` to compile the DSL code and run the bot
 
+## Testing
+
+- You can find the test suite within `./test` directory
+- Current test suite includes (1) parser/lexer tests, (2) static error tests, (3) integration tests
+- Run `yarn test` to run all 3 test suites
+- Run `yarn test-parser` to run parser and lexer tests only
+  - The tests were set up using JSON files which include input string and whether it's valid or invalid
+  - There are 38 tests which require reading 38 JSON files, so the test might take some time
+- Run `yarn test-static` to run static error checks only
+  - Similarly to parser tests, static tests use input strings from JSON inputs and checks whether they raise static errors
+- Run `yarn test-integration` to run integration tests only
+  - Tests will use input file and attempt to create output file 
+  - In valid case, the `valid.ts` will be generated and in invalid case the file will not be generated at all
+
 ## Syntax Highlighting
 
 - Syntax highlighting is available for EZDiscord. You can install the [extension](https://marketplace.visualstudio.com/items?itemName=AsadDhorajiwala.ezdiscord-syntax-highlighter) from the VS Code Marketplace.
