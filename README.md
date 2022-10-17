@@ -51,3 +51,11 @@ Documentation for the EZDiscord Language can be found [here](https://github.stud
 ## Syntax Highlighting
 
 - Syntax highlighting is available for EZDiscord. You can install the [extension](https://marketplace.visualstudio.com/items?itemName=AsadDhorajiwala.ezdiscord-syntax-highlighter) from the VS Code Marketplace.
+
+## Organization
+- The tasks were created and assigned using issues
+- The issues were then organized by project boards
+- (AST/Compiler Team Project Board)[https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/projects/4]
+- (Lexer/Compiler Team Project Board)[https://github.students.cs.ubc.ca/CPSC410-2022W-T1/Project1Group2/projects/3]
+- All boards are currently either empty or all done since the project has been completed
+- Look into archived issues to see the progress
