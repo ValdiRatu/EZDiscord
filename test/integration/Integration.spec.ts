@@ -6,7 +6,7 @@ describe('Integration Tests', function() {
     let outFiles: string[];
 
     before(function () {
-        Log.test(`Before ${this?.test?.parent.title}`);
+        Log.test(`Before ${this!.test!.parent!.title}`);
         try {
             outFiles = TestUtil.attemptDirRead("./test/integration/out");
         } catch (err) {
