@@ -1,6 +1,10 @@
 # EZDiscord
-
 A simple, easy way to create Discord bots.
+
+## Why EZDiscord?
+Are you a Discord user who has wanted to make bots for your own servers? But when you looked into making one, you were faced with the hundreds of pages long Discord API documentation full of technical jargon, not knowing even where to start. Looking even further you might have found some libraries that wrap around the behemoth that is the Discord API to hopefully make it simpler, however said libraries also require other prerequisite knowledge on server run times such as Node.Js and asynchronous programming, something that you just do not have the time to go into.
+
+If this is you then EZDiscord is your solution. EZDiscord is a DSL that heavily simplifies the process of creating Discord Bots, allowing anyone with very basic programming knowedlge to program their very own discord bot!
 
 ## Setting up a Development Environment
 
