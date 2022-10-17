@@ -2,7 +2,7 @@
   "name": "ezdiscord-syntax-highlighter",
   "displayName": "EZDiscord Syntax Highlighter",
   "description": "Syntax highlighting for EZDiscord DSL",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "AsadDhorajiwala",
   "keywords": [
     "EZDiscord",

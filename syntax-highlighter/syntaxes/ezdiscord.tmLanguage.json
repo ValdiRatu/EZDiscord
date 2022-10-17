@@ -73,7 +73,7 @@
 			]
 		},
 		"strings": {
-			"name": "string.quoted.double.ezdiscord",
+			"name": "string.quoted.single.ezdiscord",
 			"begin": "'",
 			"end": "'",
 			"patterns": [

@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.5]
+
+- Changed `string.quoted.double.ezdiscord` to `string.quoted.single.ezdiscord`
+
 ## [0.0.4]
 
 - Added `.ezdiscord` to `support.class` and `support.function` pattern names
