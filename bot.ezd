@@ -8,7 +8,8 @@ var todoList = []
 command addSum(num: number, shouldReply: boolean, probabilityToReply: number) {
     sum = sum + num
     var probability = probabilityToReply*100
-    var willReply = shouldReply and (random(0,100) <= probability)
+    var randomNumber = random(0,100)
+    var willReply = shouldReply and (randomNumber <= probability)
     if (willReply) {
         reply('your new sum is: ', sum)
     } else {

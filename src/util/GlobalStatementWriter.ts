@@ -42,7 +42,7 @@ export class GlobalStatementWriter {
 						.block(() => {
 							for (const arg of command.args) {
 								writer.writeLine(this.getArgumentVariableString(arg));
-								writer.write(`if (!${arg.name})`).block(() => {
+								writer.write(`if (${arg.name} === null)`).block(() => {
 									writer.writeLine(`await ${this.commandInternalArgument}.reply('Failed to get ${arg.type}')`);
 									writer.write('return');
 								});

@@ -52,7 +52,7 @@ export default class TestUtil {
 					title: 'string',
 					inputString: 'string',
 					isValid: 'boolean',
-					result: null,
+					result: null as any as string,
 				});
 				query['filename'] = file;
 				testQueries.push(query);

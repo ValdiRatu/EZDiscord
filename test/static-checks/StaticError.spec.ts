@@ -12,7 +12,7 @@ describe('Static Checks rule test', function () {
 	let testGrammarFiles: TestGrammar[] = [];
 
 	before(function () {
-		Log.test(`Before ${this?.test?.parent.title}`);
+		Log.test(`Before ${this!.test!.parent!.title}`);
 		try {
 			testGrammarFiles = TestUtil.readTestGrammarFiles('test/static-checks/resources/');
 		} catch (err) {
@@ -21,15 +21,15 @@ describe('Static Checks rule test', function () {
 	});
 
 	beforeEach(function () {
-		Log.test(`BeforeTest: ${this.currentTest.title}`);
+		Log.test(`BeforeTest: ${this!.currentTest!.title}`);
 	});
 
 	after(function () {
-		Log.test(`After: ${this.test.parent.title}`);
+		Log.test(`After: ${this!.test!.parent!.title}`);
 	});
 
 	afterEach(function () {
-		Log.test(`AfterTest: ${this.currentTest.title}`);
+		Log.test(`AfterTest: ${this!.currentTest!.title}`);
 	});
 
 	it('Should run grammar tests', function () {
