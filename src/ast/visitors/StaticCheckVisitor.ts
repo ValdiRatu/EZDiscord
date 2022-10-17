@@ -34,7 +34,7 @@ const invalidFunctionParamType = (typeGiven: Type, typeNeeded: Type, functionNam
 	)}. Require type ${chalk.greenBright(typeNeeded)}, given ${chalk.redBright(typeGiven)}`;
 
 const invalidFunctionParamError = (position: string, functionName: string, scopeName: string) =>
-	`the ${position} paramter has a type of error for function ${chalk.magentaBright(
+	`the ${position} parameter has a type of ${chalk.redBright(Type.Error)} for function ${chalk.magentaBright(
 		functionName
 	)} in Scope: ${chalk.yellowBright(scopeName)}. Please look at previous error messages to see why`;
 
@@ -203,9 +203,9 @@ export class StaticCheckVisitor extends ASTBaseVisitor<StaticCheckParams | undef
 			this.errors.push(
 				`the parameter(s) with index ${chalk.blueBright(errorTypeIndexes)} in function: ${chalk.magentaBright(
 					functionName
-				)} in scope: ${chalk.yellowBright(
-					scopeName
-				)} have type error. Please look at previous error messages to see why`
+				)} in scope: ${chalk.yellowBright(scopeName)} have type ${chalk.redBright(
+					Type.Error
+				)}. Please look at previous error messages to see why`
 			);
 		}
 	}

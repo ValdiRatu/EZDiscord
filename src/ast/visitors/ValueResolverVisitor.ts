@@ -37,8 +37,14 @@ export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
 			parameters += `${param}, `;
 		}
 		if (builtInFunction.function === BuiltInFunction.reply) {
-			// need to pass in the discordjs interaction object to the reply function
-			return `await ${builtInFunction.function.valueOf()}(interaction, ${parameters.slice(0, -2)})`;
+			/**
+			 * need to pass in the discordjs interaction object to the reply function as well as check
+			 * if bot has replied already
+			 */
+			return `!interaction.replied ? await ${builtInFunction.function.valueOf()}(interaction, ${parameters.slice(
+				0,
+				-2
+			)}) : undefined`;
 		}
 		return `${builtInFunction.function}(${parameters.slice(0, -2)})`;
 	}
