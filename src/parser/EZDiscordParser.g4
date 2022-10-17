@@ -1,6 +1,5 @@
 parser grammar EZDiscordParser;
 import ConfigParser, VariableParser, CommandParser,
-ConditionAndLoopParser; // here for testing - will remove when no longer needed
 options { tokenVocab=EZDiscordLexer; }
 
 bot : config statement* EOF;
