@@ -57,7 +57,7 @@ export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
 	}
 
 	visitStringVarValue(stringVarValue: StringValue, params: void): string {
-		return `"${stringVarValue.value}"`;
+		return `'${stringVarValue.value}'`;
 	}
 
 	visitVarNameValue(varName: VarNameValue, params: void): string {
