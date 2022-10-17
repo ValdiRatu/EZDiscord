@@ -12,8 +12,7 @@ export interface TestGrammar {
 }
 
 /**
- * Many of the functions in this class were taken from the package @ubccpsc310/folder-test and
- * repurposed for testing for this project
+ * This class was largely taken from the package @cpsc310/folder-test but repurposed for tesing this specific project
  */
 export default class TestUtil {
 	/**
@@ -79,7 +78,7 @@ export default class TestUtil {
 		return filePaths;
 	}
 
-	private static attemptDirRead(currentPath: string): string[] {
+	public static attemptDirRead(currentPath: string): string[] {
 		try {
 			return fs.readdirSync(currentPath);
 		} catch (err) {

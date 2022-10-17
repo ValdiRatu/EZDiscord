@@ -9,7 +9,10 @@
     "pretty": "prettier --config ./.prettierrc.json --write \"./**/*.ts\"",
     "test-parser": "mocha --require ts-node/register 'test/parser/*.ts' --timeout 10000",
     "test-static": "mocha --require ts-node/register 'test/static-checks/*.ts' --timeout 10000",
-    "test-integration": "rd /S /Q test/integration/out 2>nul & mkdir test/integration/out 2>nul & yarn antlr && ts-node src/main/GenerateFiles.ts",
+    "integration-valid": "cross-env INPUT=./test/integration/resources/valid.ezd OUTPUT=./test/integration/out/valid.ts yarn ezd-compile",
+    "integration-invalid": "cross-env INPUT=./test/integration/resources/invalid.ezd OUT=./test/integration/out/invalid.ts yarn ezd-compile",
+    "integration-compile": "yarn integration-invalid ; yarn integration-valid",
+    "test-integration": "yarn integration-compile && mocha --require ts-node/register 'test/integration/*.ts' --timeout 10000",
     "test": "yarn test-parser ; yarn test-static ; test-integration"
   },
   "dependencies": {

@@ -4,10 +4,11 @@ import path from 'node:path';
 import { ParserToASTConverter } from '../ast/ParserToASTConverter';
 import { EvaluateVisitor } from '../ast/visitors/EvaluateVisitor';
 import { StaticCheckVisitor } from '../ast/visitors/StaticCheckVisitor';
+import { config } from '../config';
 import { EZDiscordLexer } from '../parser/EZDiscordLexer';
 import { EZDiscordParser } from '../parser/EZDiscordParser';
 
-const input = fs.readFileSync(path.resolve('./bot.ezd')).toString();
+const input = fs.readFileSync(path.resolve(config.inputFile)).toString();
 
 const charStream = CharStreams.fromString(input);
 const lexer = new EZDiscordLexer(charStream);

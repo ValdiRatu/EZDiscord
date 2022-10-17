@@ -4,6 +4,7 @@ import { PrintWriter } from '../../util/PrintWriter';
 import { Bot, ClientId, Command, Config, GuildId, Token, Variable } from '../nodes';
 import { ASTBaseVisitor } from './ASTBaseVisitor';
 import { GlobalStatementWriter } from '../../util/GlobalStatementWriter';
+import { config } from '../../config';
 
 /**
  * Visitor that evaluates AST and generates TS files for the discord bot
@@ -18,7 +19,7 @@ export class EvaluateVisitor extends ASTBaseVisitor<void, void> {
 		this.fileWriter = new PrintWriter(path.resolve('./out/.env'));
 		this.project = new Project();
 		this.project.addSourceFilesAtPaths('./out/*.ts');
-		this.outputFile = this.project.createSourceFile('./out/output.ts', '', { overwrite: true });
+		this.outputFile = this.project.createSourceFile(`./${config.outputFile}`, '', { overwrite: true });
 		this.setUpOutputFile(this.outputFile);
 	}
 
