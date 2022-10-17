@@ -126,11 +126,11 @@
 		"support": {
 			"patterns": [
 				{
-					"name": "support.class",
+					"name": "support.class.ezdiscord",
 					"match": "\\b(Token|ClientID|GuildID)\\b"
 				},
 				{
-					"name": "support.function",
+					"name": "support.function.ezdiscord",
 					"match": "\\b(random|add|remove|get|set|len|find|reply|concat)\\b"
 				}
 			]

@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.4]
+
+- Added `.ezdiscord` to `support.class` and `support.function` pattern names
+
 ## [0.0.3]
 
 - Code cleanup
