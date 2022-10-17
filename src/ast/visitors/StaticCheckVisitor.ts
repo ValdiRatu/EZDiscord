@@ -119,7 +119,22 @@ export class StaticCheckVisitor extends ASTBaseVisitor<StaticCheckParams | undef
 	visitNumberVarValue(numberVarValue: NumberValue, params: StaticCheckParams | undefined): void {}
 	visitBooleanVarValue(booleanVarVal: BooleanValue, params: StaticCheckParams | undefined): void {}
 	visitStringVarValue(stringVarValue: StringValue, params: StaticCheckParams | undefined): void {}
-	visitMathValue(mathValue: MathValue, params: StaticCheckParams | undefined): void {}
+
+	visitMathValue(mathValue: MathValue, params: StaticCheckParams | undefined): void {
+		for (const atom of mathValue.mathAtoms) {
+			atom.accept(this, params);
+			const atomType = atom.accept(new TypeResolverVisitor(), this.scopedSymbolTable);
+			if (atomType !== VariableType.Number) {
+				this.errors.push(
+					`math expressions can only contain ${chalk.greenBright(
+						VariableType.Number
+					)} however the atom: ${chalk.blueBright(
+						atom instanceof FunctionCall ? atom.function : atom.value
+					)} is of type ${chalk.redBright(atomType)}`
+				);
+			}
+		}
+	}
 
 	visitVarNameValue(varName: VarNameValue, params: StaticCheckParams | undefined): void {
 		if (!this.scopedSymbolTable.lookupSymbol(varName.value)) {
@@ -299,8 +314,6 @@ export class StaticCheckVisitor extends ASTBaseVisitor<StaticCheckParams | undef
 			case BuiltInFunction.len:
 				if (numParams !== 1) {
 					this.errors.push(invalidNumFunctionParams(numParams, 1, arrayFunction, scopeName));
-				} else if (paramTypes[0] !== VariableType.Array) {
-					this.errors.push(invalidFunctionParamArray(arrayFunction, scopeName));
 				}
 				return;
 			case BuiltInFunction.set:

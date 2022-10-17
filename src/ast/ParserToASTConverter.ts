@@ -18,7 +18,12 @@ import {
 	FunctionCallContext,
 	GuildIDContext,
 	LoopContext,
+	MathAtomContext,
 	MathContext,
+	MathExprPrimeContext,
+	MathFactorContext,
+	MathTermContext,
+	MathTermPrimeContext,
 	NumberContext,
 	ParamContext,
 	StatementBlockContext,
@@ -163,7 +168,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
 	}
 
 	visitMath(ctx: MathContext) {
-		return new MathValue(ctx.text);
+		return new MathValue(ctx.text, ctx.accept(new MathExpressionParser()));
 	}
 
 	visitBinary(ctx: BinaryContext) {
@@ -258,5 +263,54 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
 		const arrayName = ctx.forEachBlockArray().VAR_NAME().text;
 		const statementBlock = this.visitStatementBlock(ctx.statementBlock());
 		return new ForEachLoop(loopVarName, arrayName, statementBlock);
+	}
+}
+
+/**
+ * defined here to avoid circular dependencies
+ */
+class MathExpressionParser
+	extends AbstractParseTreeVisitor<Array<NumberValue | VarNameValue | FunctionCall>>
+	implements EZDiscordParserVisitor<Array<NumberValue | VarNameValue | FunctionCall>>
+{
+	protected defaultResult(): (NumberValue | VarNameValue | FunctionCall)[] {
+		return [];
+	}
+
+	visitMathAtom(ctx: MathAtomContext) {
+		const number = ctx.number()?.accept(new ParserToASTConverter()) as NumberValue | undefined;
+		const varName = ctx.varName()?.accept(new ParserToASTConverter()) as VarNameValue | undefined;
+		const functionCall = ctx.functionCall()?.accept(new ParserToASTConverter()) as FunctionCall | undefined;
+		return [number ?? varName ?? (functionCall as FunctionCall)];
+	}
+
+	visitMathFactor(ctx: MathFactorContext) {
+		const atom = ctx.mathAtom()?.accept(this) ?? [];
+		const rest = ctx.math()?.accept(this) ?? [];
+		return [...atom, ...rest];
+	}
+
+	visitMathTermPrime(ctx: MathTermPrimeContext) {
+		const factor = ctx.mathFactor()?.accept(this) ?? [];
+		const rest = ctx.mathTermPrime()?.accept(this) ?? [];
+		return [...factor, ...rest];
+	}
+
+	visitMathTerm(ctx: MathTermContext) {
+		const factor = ctx.mathFactor().accept(this);
+		const rest = ctx.mathTermPrime().accept(this);
+		return [...factor, ...rest];
+	}
+
+	visitMathExprPrime(ctx: MathExprPrimeContext) {
+		const term = ctx.mathTerm()?.accept(this) ?? [];
+		const rest = ctx.mathExprPrime()?.accept(this) ?? [];
+		return [...term, ...rest];
+	}
+
+	visitMath(ctx: MathContext) {
+		const term = ctx.mathTerm().accept(this);
+		const rest = ctx.mathExprPrime().accept(this);
+		return [...term, ...rest];
 	}
 }
