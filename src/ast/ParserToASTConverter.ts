@@ -3,7 +3,10 @@ import { EZDiscordParserVisitor } from '../parser/EZDiscordParserVisitor';
 import {
 	ArgumentContext,
 	ArrayContext,
+	BinaryAtomContext,
 	BinaryContext,
+	BinaryExprContext,
+	BinaryExprRightContext,
 	BooleanContext,
 	BotContext,
 	ClientIDContext,
@@ -33,7 +36,8 @@ import {
 	Argument,
 	ArrayValue,
 	ASTNode,
-	BinaryValue,
+	BinaryExpression,
+	BinaryRightExpression,
 	BooleanValue,
 	Bot,
 	ClientId,
@@ -54,10 +58,11 @@ import {
 	WhileLoop,
 } from './nodes';
 import { BuiltInFunction } from './nodes/FunctionCall';
-import { Type } from '../util/ScopedSymbolTable';
+import { VariableType } from '../util/ScopedSymbolTable';
+import { BinaryAtom, BinaryCompare, BinaryExpressionType, BinaryOperator } from './nodes/binary/types';
 
 type AtomValue = StringValue | VarNameValue | NumberValue | BooleanValue | FunctionCall;
-type VariableValue = VarType<string | number | boolean> | BinaryValue;
+type VariableValue = VarType<string | number | boolean> | BinaryExpression | FunctionCall;
 
 export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> implements EZDiscordParserVisitor<ASTNode> {
 	protected defaultResult(): ASTNode {
@@ -162,8 +167,44 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
 	}
 
 	visitBinary(ctx: BinaryContext) {
-		// TODO: properly parse this later
-		return new BinaryValue(ctx.text);
+		return this.visitBinaryExpr(ctx.binaryExpr());
+	}
+
+	visitBinaryExpr(ctx: BinaryExprContext) {
+		const isReg = ctx.L_PAREN();
+		const isNot = ctx.NOT();
+		const isAtom = ctx.binaryAtom();
+
+		const binaryExp = ctx.binaryExpr()?.accept(this) as BinaryExpression;
+		const boolean = ctx.boolean()?.accept(this) as BooleanValue;
+		const string = ctx.string()?.accept(this) as StringValue;
+		const atom = isAtom?.accept(this) as BinaryAtom;
+
+		const binaryRightExp = ctx.binaryExprRight()?.accept(this) as BinaryRightExpression;
+
+		if (isReg) {
+			return new BinaryExpression(BinaryExpressionType.Regular, binaryExp ?? boolean ?? string, binaryRightExp);
+		} else if (isNot) {
+			return new BinaryExpression(BinaryExpressionType.Not, binaryExp ?? atom, binaryRightExp);
+		} else {
+			return new BinaryExpression(BinaryExpressionType.Atom, atom, binaryRightExp);
+		}
+	}
+
+	visitBinaryExprRight(ctx: BinaryExprRightContext) {
+		const binaryExp = ctx.binaryExpr()?.accept(this) as BinaryExpression;
+		const atom = ctx.binaryAtom()?.accept(this) as BinaryAtom;
+		const binaryExpRight = ctx.binaryExprRight()?.accept(this) as BinaryRightExpression;
+
+		const binaryFunction = (ctx.BINARY_COMPARE()?.text || ctx.BINARY_OP()?.text) as any as
+			| BinaryCompare
+			| BinaryOperator;
+
+		return new BinaryRightExpression(binaryFunction, binaryExp ?? atom, binaryExpRight);
+	}
+
+	visitBinaryAtom(ctx: BinaryAtomContext) {
+		return this.visitChildren(ctx);
 	}
 
 	visitCommand(ctx: CommandContext) {
@@ -184,7 +225,7 @@ export class ParserToASTConverter extends AbstractParseTreeVisitor<ASTNode> impl
 	// don't need an AST node returned so we don't use the visitor name
 	getType(ctx: TypeContext) {
 		const bool = ctx.BOOL();
-		return ctx.BOOL() ? Type.Boolean : ctx.NUM() ? Type.Number : Type.String;
+		return ctx.BOOL() ? VariableType.Boolean : ctx.NUM() ? VariableType.Number : VariableType.String;
 	}
 
 	visitCondition(ctx: ConditionContext) {

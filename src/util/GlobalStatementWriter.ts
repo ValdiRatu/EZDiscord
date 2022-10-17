@@ -2,7 +2,7 @@ import { SourceFile, VariableDeclarationKind } from 'ts-morph';
 import { Argument, Command, Variable } from '../ast/nodes';
 import { StatementBlockWriterVisitor } from '../ast/visitors/StatementBlockWriterVisitor';
 import { ValueResolverVisitor } from '../ast/visitors/ValueResolverVisitor';
-import { Type } from './ScopedSymbolTable';
+import { VariableType } from './ScopedSymbolTable';
 
 export class GlobalStatementWriter {
 	private static readonly commandInternalArgument = 'interaction';
@@ -60,11 +60,11 @@ export class GlobalStatementWriter {
 	private static getArgumentVariableString(arg: Argument): string {
 		const options = `${this.commandInternalArgument}.options`;
 		switch (arg.type) {
-			case Type.Boolean:
+			case VariableType.Boolean:
 				return `const ${arg.name} = ${options}.getBoolean('${arg.formattedName}')`;
-			case Type.Number:
+			case VariableType.Number:
 				return `const ${arg.name} = ${options}.getNumber('${arg.formattedName}')`;
-			case Type.String:
+			case VariableType.String:
 				return `const ${arg.name} = ${options}.getString('${arg.formattedName}')`;
 		}
 	}

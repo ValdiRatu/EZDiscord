@@ -1,4 +1,4 @@
-export enum Type {
+export enum VariableType {
 	Number = 'number',
 	Boolean = 'boolean',
 	String = 'string',
@@ -12,7 +12,7 @@ export enum Type {
  */
 export class ScopedSymbolTable {
 	// first scope in stack is global scope
-	private scopeStack: Array<Map<string, Type>> = [new Map()];
+	private scopeStack: Array<Map<string, VariableType>> = [new Map()];
 
 	public pushScope() {
 		this.scopeStack.push(new Map());
@@ -25,7 +25,7 @@ export class ScopedSymbolTable {
 		this.scopeStack.pop();
 	}
 
-	public lookupSymbol(varName: string): Type | undefined {
+	public lookupSymbol(varName: string): VariableType | undefined {
 		for (let i = this.scopeStack.length - 1; i >= 0; i--) {
 			const scope = this.scopeStack[i];
 			if (scope.has(varName)) {
@@ -35,12 +35,12 @@ export class ScopedSymbolTable {
 		return undefined;
 	}
 
-	public declareSymbol(varName: string, type: Type) {
+	public declareSymbol(varName: string, type: VariableType) {
 		const [scope, index] = this.getCurrentScope();
 		scope.set(varName, type);
 	}
 
-	public updateSymbol(varName: string, type: Type): boolean {
+	public updateSymbol(varName: string, type: VariableType): boolean {
 		for (let i = this.scopeStack.length - 1; i >= 0; i--) {
 			const scope = this.scopeStack[i];
 			if (scope.has(varName)) {
@@ -51,7 +51,7 @@ export class ScopedSymbolTable {
 		return false;
 	}
 
-	public getCurrentScope(): [Map<string, Type>, number] {
+	public getCurrentScope(): [Map<string, VariableType>, number] {
 		const index = this.scopeStack.length - 1;
 		return [this.scopeStack[index], index];
 	}

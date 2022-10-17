@@ -2,11 +2,12 @@ import { ASTVisitor } from '../../visitors/ASTVisitor';
 import { Statement } from '../Statement';
 import { FunctionCall } from '../FunctionCall';
 import { VarType } from './VarType';
+import { BinaryExpression } from '../binary/BinaryExpression';
 
 export class Variable<Y> extends Statement {
 	constructor(
 		private readonly _name: string,
-		private readonly _value: VarType<Y> | FunctionCall,
+		private readonly _value: VarType<Y> | FunctionCall | BinaryExpression,
 		private readonly _isDeclaration: boolean
 	) {
 		super();

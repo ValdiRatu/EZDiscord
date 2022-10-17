@@ -1,7 +1,8 @@
 import {
 	Argument,
 	ArrayValue,
-	BinaryValue,
+	BinaryExpression,
+	BinaryRightExpression,
 	BooleanValue,
 	Bot,
 	ClientId,
@@ -23,15 +24,17 @@ import {
 import { ASTVisitor } from './ASTVisitor';
 
 export class ASTBaseVisitor<T, U> implements ASTVisitor<T, U> {
+	visitBinaryExpression(binary: BinaryExpression, params: T): U {
+		throw new Error('Method not implemented.');
+	}
+	visitBinaryRightExpression(binaryRight: BinaryRightExpression, params: T): U {
+		throw new Error('Method not implemented.');
+	}
 	visitCommand(command: Command, params: T): U {
 		throw new Error('Method not implemented.');
 	}
 
 	visitArgument(arg: Argument, params: T): U {
-		throw new Error('Method not implemented.');
-	}
-
-	visitBinaryValue(binaryValue: BinaryValue, params: T): U {
 		throw new Error('Method not implemented.');
 	}
 

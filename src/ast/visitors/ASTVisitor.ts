@@ -1,7 +1,8 @@
 import {
 	Argument,
 	ArrayValue,
-	BinaryValue,
+	BinaryExpression,
+	BinaryRightExpression,
 	BooleanValue,
 	Bot,
 	ClientId,
@@ -46,8 +47,6 @@ export interface ASTVisitor<T, U> {
 
 	visitVarNameValue(varName: VarNameValue, params: T): U;
 
-	visitBinaryValue(binaryValue: BinaryValue, params: T): U;
-
 	visitMathValue(mathValue: MathValue, params: T): U;
 
 	visitConditional(conditional: Conditional, params: T): U;
@@ -61,4 +60,8 @@ export interface ASTVisitor<T, U> {
 	visitForEachLoop(forEachLoop: ForEachLoop, params: T): U;
 
 	visitWhileLoop(whileLoop: WhileLoop, params: T): U;
+
+	visitBinaryExpression(binary: BinaryExpression, params: T): U;
+
+	visitBinaryRightExpression(binaryRight: BinaryRightExpression, params: T): U;
 }

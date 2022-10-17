@@ -1,7 +1,8 @@
 import {
 	Argument,
 	ArrayValue,
-	BinaryValue,
+	BinaryExpression,
+	BinaryRightExpression,
 	BooleanValue,
 	FunctionCall,
 	MathValue,
@@ -11,7 +12,9 @@ import {
 } from '../nodes';
 import { ASTBaseVisitor } from './ASTBaseVisitor';
 import { BuiltInFunction } from '../nodes/FunctionCall';
-import { Type } from '../../util/ScopedSymbolTable';
+import { VariableType } from '../../util/ScopedSymbolTable';
+import { isPartOfEnum } from '../../util/EnumUtils';
+import { BinaryCompare, BinaryExpressionType, BinaryOperator } from '../nodes/binary/types';
 
 /**
  * Resolves value to proper Typescript specification for TS-morph
@@ -65,19 +68,44 @@ export class ValueResolverVisitor extends ASTBaseVisitor<void, string> {
 		return mathValue.value;
 	}
 
-	visitBinaryValue(binaryValue: BinaryValue, params: void): string {
-		// currently a very hacky way to go about it
-		return binaryValue.value.replace('not', '!').replace('and', '&&').replace('or', '||');
-	}
-
 	visitArgument(arg: Argument, params: void): string {
 		switch (arg.type) {
-			case Type.Boolean:
+			case VariableType.Boolean:
 				return `.addBooleanOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`;
-			case Type.Number:
+			case VariableType.Number:
 				return `.addNumberOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`;
-			case Type.String:
+			case VariableType.String:
 				return `.addStringOption((options) => options.setName('${arg.formattedName}').setDescription('${arg.name}').setRequired(true))`;
 		}
+	}
+
+	visitBinaryExpression(binary: BinaryExpression, params: void): string {
+		switch (binary.type) {
+			case BinaryExpressionType.Regular:
+				return `(${binary.value.accept(this, params)})${
+					binary.rightExpression ? binary.rightExpression.accept(this, params) : ''
+				}`;
+			case BinaryExpressionType.Not:
+				return `!${binary.value.accept(this, params)}${
+					binary.rightExpression ? binary.rightExpression.accept(this, params) : ''
+				}`;
+			case BinaryExpressionType.Atom:
+				return `${binary.value.accept(this, params)}${
+					binary.rightExpression ? binary.rightExpression.accept(this, params) : ''
+				}`;
+		}
+	}
+
+	visitBinaryRightExpression(binaryRight: BinaryRightExpression, params: void): string {
+		return `${this.getBinaryFunction(binaryRight.binaryFunction)}${binaryRight.value.accept(this, params)}${
+			binaryRight.rightExpression ? binaryRight.rightExpression.accept(this, params) : ''
+		}`;
+	}
+
+	private getBinaryFunction(func: BinaryCompare | BinaryOperator): string {
+		if (isPartOfEnum(func, BinaryCompare)) {
+			return func;
+		}
+		return func === BinaryOperator.AND ? '&&' : '||';
 	}
 }

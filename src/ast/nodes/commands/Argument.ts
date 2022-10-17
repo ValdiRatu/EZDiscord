@@ -1,11 +1,11 @@
-import { Type } from '../../../util/ScopedSymbolTable';
+import { VariableType } from '../../../util/ScopedSymbolTable';
 import { ASTVisitor } from '../../visitors/ASTVisitor';
 import { ASTNode } from '../ASTNode';
 
 export class Argument implements ASTNode {
 	constructor(
 		private readonly _name: string,
-		private readonly _type: Exclude<Type, Type.Any | Type.Array | Type.Error>
+		private readonly _type: Exclude<VariableType, VariableType.Any | VariableType.Array | VariableType.Error>
 	) {}
 
 	accept<T, U>(visitor: ASTVisitor<T, U>, params: T): U {

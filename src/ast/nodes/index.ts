@@ -14,13 +14,13 @@ import { Variable } from './variables/Variable';
 import { VarNameValue } from './variables/VarNameValue';
 import { VarType } from './variables/VarType';
 import { MathValue } from './variables/MathValue';
-import { BinaryValue } from './variables/BinaryValue';
 import { Conditional } from './conditionals/Conditional';
 import { WhileLoop } from './loops/WhileLoop';
 import { ForEachLoop } from './loops/ForEachLoop';
 import { StatementBlock } from './StatementBlock';
 import { Argument } from './commands/Argument';
 import { Command } from './commands/Command';
+import { BinaryExpression, BinaryRightExpression } from './binary/BinaryExpression';
 
 export {
 	Bot,
@@ -39,11 +39,12 @@ export {
 	VarNameValue,
 	VarType,
 	MathValue,
-	BinaryValue,
 	Conditional,
 	StatementBlock,
 	WhileLoop,
 	ForEachLoop,
 	Argument,
 	Command,
+	BinaryExpression,
+	BinaryRightExpression,
 };
